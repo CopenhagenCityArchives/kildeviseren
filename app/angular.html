@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" ng-app="KSA_Bladr">
+<head>
+  <meta charset="utf-8">
+  <title>KSA Bladr</title>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+ <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-mocks.js"></script> -->
+  <script src="app.js"></script>
+  <script src="controllers/ViserCtrl2.js"></script>
+  <script src="services/BrowseService.js"></script>
+  <script src="services/MetadataManagerService.js"></script>
+  <script src="services/FormBuilderService.js"></script>
+  <script src="services/URLBuilderService.js"></script>
+  
+
+<script src="directives/formly-form.js"></script>
+<script src="directives/formly-field.js"></script>
+    
+</head>
+<body ng-controller="ViserCtrl">
+    <button ng-click="sayHallo()">Hej</button>
+    <p>{{welcomeText}}</p>
+    <div>
+            <h3>Form</h3>
+            <formly-form name="myFormName"
+                         result="formData"
+                         fields="formFields"
+                         options="formOptions"
+                         ng-submit="onSubmit()">
+            </formly-form>
+    </div>
+    <dynamic-form class="col-md-12" template="formTemplate" ng-model="testformTemplate" />
+</body>
+</html>

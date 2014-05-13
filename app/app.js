@@ -5,5 +5,10 @@ angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
 
 angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
-  'KSA_Bladr.services'
+  'KSA_Bladr.services',
+  'formly'
 ]);
+
+// Main Formly Module
+angular.module('formly', ['formly.render']);
+angular.module('formly.render', []);
