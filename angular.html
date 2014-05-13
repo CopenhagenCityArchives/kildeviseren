@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" ng-app="KSA_Bladr">
+<head>
+  <meta charset="utf-8">
+  <title>KSA Bladr</title>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+ <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-mocks.js"></script> -->
+  <script src="app/app.js"></script>
+  <script src="app/controllers/ViserCtrl.js"></script>
+  <script src="app/services/BrowseService.js"></script>
+  <script src="app/services/MetadataManagerService.js"></script>
+  <script src="app/services/FormBuilderService.js"></script>
+  <script src="app/services/URLBuilderService.js"></script>
+    
+</head>
+<body ng-controller="ViserCtrl">
+    <button ng-click="sayHallo()">Hej</button>
+    <p>{{welcomeText}}</p>
+    <dynamic-form class="col-md-12" template="stdFormTemplate" ng-model="formTemplate">
+</body>
+</html>
