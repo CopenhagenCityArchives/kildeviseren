@@ -68,6 +68,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             var data = {"type":"hierarchy","levels":[{"order":2,"gui_name":"Filmruller","gui_description":"Der er mellem 20 og 50 filmruller pr. station. Opdelingen skyldes begr\u00e6nsningen i antallet af billeder p\u00e5 en gammeldags fotofilm","gui_info_link":"http:\/\/www.kbharkiv.dk\/wiki\/registerbladenes-filmruller","name":"roll","type":"getallbyfilter","data_sql":"SELECT id, filmrulle_navn from PRB_filmrulle WHERE station_id = %d","required_filters":["station"],"data":false},{"order":1,"gui_name":"Stationer","gui_description":"Der findes seks stationer baseret p\u00e5 politidistrikternes inddeling, og to baseret p\u00e5 alfabetisk sortering","gui_info_link":"http:\/\/www.kbharkiv.dk\/registerblade\/om-stationerne","name":"station","type":"preset","data_sql":false,"data":[{"name":"Station 1","id":"26"},{"name":"Station 2","id":"29"}]}]};
             pubs.loadAndOrderLevels(data);
             pubs.metadataType = data.type;
+            console.log("Loaded mock metadatalevels");
             deferred.resolve();
         });
         
