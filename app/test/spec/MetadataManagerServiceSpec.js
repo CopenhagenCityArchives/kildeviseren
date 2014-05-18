@@ -60,6 +60,14 @@ describe("Testing MetadataManagerService", function(){
        });
     });
     
+    describe("String representation of metadata", function(){
+        it("should convert an array of metadata names and values to a human readable string", function(){
+            var metadata = [{station:1},{roll:23}];
+            MetadataManager.levels = [{order: 1, name: "station", gui_name: "Station"},{order: 2, name: "roll", gui_name: "Filmrulle"}];
+            expect(MetadataManager.getMetadataString(metadata)).toEqual("Station 1, filmrulle 23");
+        });
+    });
+    
     describe("Handling metadata levels", function(){
         
         var metadataLevelsResponse = {"levels" : [{"order":2},{"order":1}]};
@@ -79,13 +87,13 @@ describe("Testing MetadataManagerService", function(){
         
         it("should check if all required filters is set", function(){
             MetadataManager.levels = [{"filter_required": true, "filter_value": 2}, {"filter_required": false, "filter_value": 2}];
-            expect(MetadataManager.canRetrieveImages()).toEqual(true);
+            expect(MetadataManager.canRetrieveObjects()).toEqual(true);
             
             MetadataManager.levels = [{"filter_required": true, "filter_value": 2}, {"filter_required": true, "filter_value": ""}];
-            expect(MetadataManager.canRetrieveImages()).toEqual(false);      
+            expect(MetadataManager.canRetrieveObjects()).toEqual(false);      
             
             MetadataManager.levels = [{"filter_required": false, "filter_value": 2}, {"filter_required": false, "filter_value": ""}];
-            expect(MetadataManager.canRetrieveImages()).toEqual(true);              
+            expect(MetadataManager.canRetrieveObjects()).toEqual(true);              
         });        
     });
     

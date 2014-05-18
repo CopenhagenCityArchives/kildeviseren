@@ -6,7 +6,8 @@ angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
 angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
   'KSA_Bladr.services',
-  'formly'
+  'formly',
+  'autocomplete'
 ]);
 
 // Main Formly Module

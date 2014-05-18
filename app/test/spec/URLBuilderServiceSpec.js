@@ -20,6 +20,20 @@ describe("Testing URLBuilderService", function(){
         });
     });
     
+    describe("collection info", function(){
+        it("should return false when collection id is null", function(){
+            expect(URLBuilder.collectionInfoUrl(false)).toBe(false);
+        });
+        
+        it("should return URL for collection info based on collection id", function(){
+            
+            var collectionId = 1;
+            
+            var expectedUrl = URLBuilder.remoteServerUrl + "getcollectioninfo/1?callback=JSON_CALLBACK";
+            expect(URLBuilder.collectionInfoUrl(collectionId)).toBe(expectedUrl);           
+        });
+    });       
+    
     describe("metadatalevels", function(){
         it("should return false when no collection id is given", function(){
             expect(URLBuilder.metadataLevelsUrl(false)).toBe(false);

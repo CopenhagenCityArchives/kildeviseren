@@ -16,10 +16,12 @@ angular.module('KSA_Bladr.services').
         var pubs = {};
         
         pubs.currentStep = 0;
+        pubs.currentPage = 0;
         
         pubs.setContent = function(newContent){
             if(newContent instanceof Array){
                 privates.content = newContent;
+                pubs.currentStep = 0;
             }
             else{
                 throw ("Input content must be an array!");
@@ -30,12 +32,24 @@ angular.module('KSA_Bladr.services').
             return privates.content[pubs.currentStep];
         };
         
+        pubs.getCurrentPage = function(){
+            if(privates.content.length !== 0){
+                return privates.content[pubs.currentStep]['images'][pubs.currentPage];
+            }
+            
+            return null;
+        }
+        
         pubs.getContent = function(){
             return privates.content;
         };    
         
         pubs.resetContent = function(){
             privates.content = [];
+        };
+        
+        pubs.contentLength = function(){
+            return privates.content.length;
         };
         
         pubs.goToId = function(id){
@@ -54,7 +68,7 @@ angular.module('KSA_Bladr.services').
             var realStep = step;
             
             //If the step is not within the bounderies, the "real" step is calculated
-            if(step > privates.content.length || step < -privates.content.length)
+            if((step > privates.content.length || step < -privates.content.length) && privates.content.length > 0)
                 realStep = step % privates.content.length;
             
             //The new step is set
@@ -78,8 +92,6 @@ angular.module('KSA_Bladr.services').
         pubs.goToPrevious = function(){
             pubs.step(-1);
         };
-        
-        pubs.currentStep = 0;
         
         return pubs;
     }

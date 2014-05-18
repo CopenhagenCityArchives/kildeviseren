@@ -55,6 +55,14 @@ angular.module('KSA_Bladr.services').
         //Url of the remote server, base of all requests
         //pubs.remoteServerUrl = "http://www.kbharkiv.dk/data/";
         pubs.remoteServerUrl = "http://192.168.10.125/data/";
+         
+        pubs.collectionInfoUrl = function(collectionId){
+            if(!collectionId)
+                return false;
+
+            return pubs.remoteServerUrl + 'getcollectioninfo/' + collectionId + '?callback=JSON_CALLBACK';
+        };   
+        
         
         pubs.metadataLevelsUrl = function(collectionId, metadataLevel, parameters){
             

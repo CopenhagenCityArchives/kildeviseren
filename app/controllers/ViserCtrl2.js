@@ -1,41 +1,32 @@
 //Retrieves the module KSA_Bladr.controllers, and adds a new controller
 angular.module('KSA_Bladr.controllers').
     controller('ViserCtrl', function($scope, $location, $parse, BrowseService, MetadataManagerService, FormBuilderService){
-        // Public Methods
-	$scope.onSubmit = function onSubmit() {
-		$scope.submittedData = $scope.formData;
-	};
-        $scope.sayHallo = function(){
-            $scope.formFieldsStr = $scope.formFields;
-        };
-	// Private Methods
-        $scope.toPrettyJSON = function(obj, tabWidth) {
-		var strippedObj = angular.copy(obj);
-		var result = JSON.stringify(strippedObj, null, Number(tabWidth));
-		return result;
-	};
-        
-	// Events
-	$scope.$watch('formFieldsStr', function onOptionsUpdated(newValue, OldValue) {
-		try {
-			$scope.formFields = $parse(newValue)({});
-			$scope.formFieldsError = false;
-		} catch (e) {
-			// eat $parse error
-                        console.log('Formly Demo App Error: error parsing data, changes not applied');
-		}
-	});
-	$scope.$watch('formOptionsStr', function onOptionsUpdated(newValue, OldValue) {
-		try {
-			$scope.formOptions = $parse(newValue)({});
-		} catch (e) {
-			// eat $parse error
-                        console.log('Formly Demo App Error: error parsing data, changes not applied');
-		}
-	});
 
+        //browse model
+        $scope.browse = {};
+        $scope.browse.step = function(steps){
+            BrowseService.step(steps);
+            $scope.currentObject = BrowseService.getCurrentContent();
+        };
+        $scope.browse.currentObject = {};
+        $scope.browse.currentStep = BrowseService.currentStep;
+/*
 	// Public Vars
 	$scope.formFields = [{
+		key: 'firstName',
+		type: 'autocomplete',
+		label: 'First Name',
+		placeholder: 'Jane',
+                searchParam: 'søgeparameter',
+                ng_model: 'result',
+                attr_placeholder:'type to search movies...',
+                click_activation:'false',
+                data:'movies',
+                on_type:'doSomething',
+                //options : [{on_type: 'doSomething'},{'attr_placeholder':'placeholder her'}, {optionsData : [{on_type: 'doSomething'},{'attr_placeholder':'placeholder her'}]}],
+                optionsData : [{'attr_placeholder':'placeholder her'}],
+                options : [{'attr_placeholder':'placeholder her'}]
+	},{
 		key: 'firstName',
 		type: 'text',
 		label: 'First Name',
@@ -139,12 +130,49 @@ angular.module('KSA_Bladr.controllers').
 	}];
 
 	$scope.formOptions = {
-		submitCopy: 'Save'
+		submitCopy: 'Vis'
 	};
 	$scope.submittedData = null;
 	$scope.formData = {};       
         $scope.formFieldsStr = $scope.toPrettyJSON($scope.formFields, 4);
 	$scope.formOptionsStr = $scope.toPrettyJSON($scope.formOptions, 4);
         
-
+        // Public Methodsconcerning dynamic forms
+        
+	// Events
+	$scope.$watch('formFieldsStr', function onOptionsUpdated(newValue, OldValue) {
+		try {
+			$scope.formFields = $parse(newValue)({});
+			$scope.formFieldsError = false;
+		} catch (e) {
+			// eat $parse error
+                        console.log('Formly Demo App Error: error parsing data, changes not applied');
+		}
+	});
+	$scope.$watch('formOptionsStr', function onOptionsUpdated(newValue, OldValue) {
+		try {
+			$scope.formOptions = $parse(newValue)({});
+		} catch (e) {
+			// eat $parse error
+                        console.log('Formly Demo App Error: error parsing data, changes not applied');
+		}
+	});
+        $scope.doSomething = function doSomething(){
+            console.log("success!");
+        };
+        $scope.searchParam = "";
+        
+	$scope.onSubmit = function onSubmit() {
+		$scope.submittedData = $scope.formData;
+	};
+        $scope.sayHallo = function(){
+            $scope.formFieldsStr = $scope.formFields;
+        };
+	// Private Methods
+        $scope.toPrettyJSON = function(obj, tabWidth) {
+		var strippedObj = angular.copy(obj);
+		var result = JSON.stringify(strippedObj, null, Number(tabWidth));
+		return result;
+	};     
+*/
     });

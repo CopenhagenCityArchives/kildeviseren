@@ -33,6 +33,9 @@ angular.module('formly.render')
 			case 'text':
 				templateUrl = 'directives/formly-field-text.html';
 				break;
+			case 'autocomplete':
+				templateUrl = 'directives/formly-autocomplete.html';
+				break;                                
 			default :
 				templateUrl = null;
 				break;

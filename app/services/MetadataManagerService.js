@@ -26,10 +26,30 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     pubs.levels = [];
     pubs.metadataType = null;
     pubs.collection_id = null;
+    pubs.collectionInfo = {};
+    pubs._collectionInfoId = 0;
     
-    pubs.config = function(collection_id, metadataType){
+    pubs.config = function(collection_id){
         pubs.collection_id = collection_id;
-        pubs.metadataType = metadataType;
+    };
+    
+    pubs.getCollectionInfo = function(){
+        var deferred = $q.defer();
+        if(pubs._collectionInfoId !== pubs.collection_id){
+            $http.jsonp(URLBuilderService.collectionInfoUrl(pubs.collection_id))
+            .success(function(data, status, headers) {
+                pubs.collectionInfo = data;
+                deferred.resolve();
+            })
+            .error(function(){
+                deferred.reject();
+                throw "Couldn't load collection info";
+            });
+        }
+        else{
+            deferred.resolve();
+        }
+        return deferred.promise;        
     };
     
     //Retrieves metadata levels for the given collection
@@ -38,7 +58,28 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         $http.jsonp(URLBuilderService.metadataLevelsUrl(pubs.collection_id))
         .success(function(data, status, headers) {
             pubs.loadAndOrderLevels(data);
+            pubs.metadataType = data.type;
             deferred.resolve();
+        })
+        .error(function(){
+            //deferred.reject();
+            //throw "Couldn't load metadata levels";
+            //TODO: For demonstration only:
+            var data = {"type":"hierarchy","levels":[{"order":2,"gui_name":"Filmruller","gui_description":"Der er mellem 20 og 50 filmruller pr. station. Opdelingen skyldes begr\u00e6nsningen i antallet af billeder p\u00e5 en gammeldags fotofilm","gui_info_link":"http:\/\/www.kbharkiv.dk\/wiki\/registerbladenes-filmruller","name":"roll","type":"getallbyfilter","data_sql":"SELECT id, filmrulle_navn from PRB_filmrulle WHERE station_id = %d","required_filters":["station"],"data":false},{"order":1,"gui_name":"Stationer","gui_description":"Der findes seks stationer baseret p\u00e5 politidistrikternes inddeling, og to baseret p\u00e5 alfabetisk sortering","gui_info_link":"http:\/\/www.kbharkiv.dk\/registerblade\/om-stationerne","name":"station","type":"preset","data_sql":false,"data":[{"name":"Station 1","id":"26"},{"name":"Station 2","id":"29"}]}]};
+            pubs.loadAndOrderLevels(data);
+            pubs.metadataType = data.type;
+            deferred.resolve();
+        });
+        
+        return deferred.promise;
+    };
+    
+    //Retrieves objects with the given filters
+    pubs.getObjects = function(){
+        var deferred = $q.defer();
+        $http.jsonp(URLBuilderService.objectsUrl(pubs.collection_id))
+        .success(function(data, status, headers) {
+            deferred.resolve(data);
         })
         .error(function(){
             deferred.reject();
@@ -46,7 +87,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         });
         
         return deferred.promise;
-    };
+    };    
     
     pubs.loadAndOrderLevels = function(data){
         pubs.levels = data.levels;
@@ -95,6 +136,27 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             deferred.resolve();
         
         return deferred.promise;
+    };
+    
+    pubs.getMetadataString = function(metadata){
+        var metadataStr = '';
+        var first = true;
+        for(var j = 0; j < metadata.length; j++){
+            for(var i = 0; i < pubs.levels.length; i++){
+                if(metadata[j][pubs.levels[i].name] !== undefined){
+                    var gui = pubs.levels[i].gui_name;
+                    if(first){
+                        first = false;
+                    }
+                    else{
+                        gui = gui.toLowerCase();
+                    }
+                    metadataStr = metadataStr + gui + ' ' + metadata[j][pubs.levels[i].name] + ', ';
+                }
+            }
+        }
+        
+        return metadataStr.substring(0, metadataStr.length-2);
     };
     
     //Checks if the metadata should be uploaded
@@ -161,7 +223,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     };
     
     //Returns true if all required filters is set
-    pubs.canRetrieveImages = function(){
+    pubs.canRetrieveObjects = function(){
         for(var i = 0; i<pubs.levels.length; i++){
             var filter_val = pubs.levels[i].filter_value;
             if(pubs.levels[i].filter_required && (

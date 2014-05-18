@@ -45,6 +45,10 @@ describe("Testing BrowseService", function(){
            Browser.resetContent();
            expect(Browser.getContent().length).toBe(0);
         });
+        
+        it("should return number of objects in content", function(){
+            expect(Browser.contentLength()).toBe(0);
+        });
     });
     
     describe("Stepping", function(){
