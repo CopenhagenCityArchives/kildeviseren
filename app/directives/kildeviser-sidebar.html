@@ -1,0 +1,34 @@
+    <div id="sidebar">
+    <img src="assets/img/logo.jpg" alt="københavns+kommune+kildeviser+logo" id="start">
+    <div class="hideSidebar">
+      <img src="assets/img/hide_sidebar.png" id="hidebar" ng-Click="changeBarVisibility()">
+    </div>
+    <div class="sidebar-elements">
+    <!-- Sidebar elements goes here -->
+    </div>
+    
+    
+    <div id="footer">
+      <div class="menu">
+      <ul>
+        <!-- PAGE NAVIGATION -->
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-first.png" ng-click="browse.step(-5)"></div></div></li>
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-prev.png" ng-click="browse.step(-1)"></div></div></li>
+        <!-- /PAGE NAVIGATION -->
+        <!-- PAGE NUMBERS -->
+        <li class="pagenumber-left pagenumber"><div class="tb"><div class="td"><div class="browse.currentpage" ng-bind="browse.currentStep"></div></div></div></li>
+        <li class="pagenumber-middle pagenumber pageseperator"><div class="tb"><div class="td">/</div></div></li>
+        <li class="pagenumber-right pagenumber"><div class="tb"><div class="td" ng-bind="browse.numberOfObjects"></div></div></li>
+        <!-- /PAGE NUMBERS -->
+        <!-- PAGE NAVIGATION -->
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-next.png" ng-click="browse.step(1)"></div></div></li>
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-last.png" ng-click="browse.step(5)"></div></div></li>
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-back.png"></div></div></li>
+        <!-- /PAGE NAVIGATION -->
+      </ul>
+      </div>
+    </div>
+    <!-- Begynder indhold & footer -->
+    <div class="container-fluid" id="kk_viewer"></div>
+    <!-- start megazoom, display:none is added in case that js is disabled! -->
+    <div id="megazoomPlayList" style="display:none;"></div>

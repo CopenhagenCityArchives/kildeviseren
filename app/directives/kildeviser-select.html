@@ -1,0 +1,10 @@
+<div class="kk-text-input kk-input-element">
+    <div class="kk-text-input-banner"><img src="assets/img/input-banner.png"></div>
+    <div class="kk-questionmark" data-container="body" data-toggle="popover" data-placement="right" data-content="{{helptext}}">?</div>
+    <input type="text" class="kk-input kk-input-month" value="{{selectedValue}}" placeholder="{{placeholder}}" readonly="readonly">
+    <div class="monthpicker">
+        <ul>
+            <li ng-repeat="value in values" ng-click="setValue(value.text)">{{ value.text }}</li>
+        </ul>
+    </div>
+  </div>

@@ -1,2 +1,8 @@
-/nbproject/private/
-/nbproject/
+.AppleDouble
+.DS_Store
+._*
+.project
+.settings
+.vagrant*
+www/vendor*
+nbproject

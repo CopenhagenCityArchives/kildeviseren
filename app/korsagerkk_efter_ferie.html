@@ -1,0 +1,519 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="KSA_Bladr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <title>Kildeviseren</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body ng-controller="ViserCtrl">
+    <!-- Full logo -->
+    <div id="introDiv">
+        <div class="intro-luk"><img src="assets/img/video_close.png"></div>
+        <div class="intro-table">
+            <div class="intro-cell">
+                <img src="assets/img/big_play.png">
+            </div>
+        </div>
+        <div class="intro-tekst">inden du begynder...</div>
+    </div>
+    <div id="full-logo"><img src="assets/img/small-logo.jpg"></div>
+
+    <!-- Begynder sidebar & footer -->
+    <div id="sidebar">
+    <div class="sidebar-meta" ng-show="true"><strong>{{collection.short_name}}</strong> {{browse.metadata}}</div>
+    <div class="sidebar-link-parent-top">
+        <a class="sidebar-link" id="kkLink" href="#"><img class="sidebar-link" src="assets/img/logo_kilde.png" alt="københavns+kommune+kildeviser+logo" id="start"></a>
+    </div>
+    <div class="sidebar-link-parent-bottom">
+        <a class="sidebar-link" id="kkLink" target="_blank" href="http://www.kbharkiv.dk">Københavns Stadsarkiv</a>
+    </div>
+
+    <div class="hideSidebar">
+      <img src="assets/img/hide_sidebar.png" id="hidebar">
+    </div>
+
+    <!-- SIDEBAR ELEMENTS -->
+    <div class="sidebar-elements">
+    <div class="sidebar-tekst">{{collection.name}}</div>
+    <!--<kildeviser-input placeholder="Adresse" helptext="Adressen hvorpå optællingen er foretaget" values="metadata.adresses"></kildeviser-input>-->
+    <div class="kk-text-input kk-input-element">
+    <div class="kk-text-input-banner"><img src="assets/img/input-banner.png"></div>
+    <input type="text" ng-model="asyncSelected" placeholder="Adresse" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-template-url="directives/ui-bootstrap-typeahead.html"></div>
+    <kildeviser-select placeholder="År" helptext="Året for optællingen" values="metadata.years"></kildeviser-select>
+    <kildeviser-select placeholder="Måned" helptext="Måned for optællingen" values="metadata.months"></kildeviser-select>
+    <kildeviser-submit />
+    </div>
+    <!-- /SIDEBAR ELEMENTS -->
+    </div>
+
+    <div id="footer">
+      <div class="menu">
+      <ul>
+        <!-- PAGE NAVIGATION -->
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-first.png" ng-click="browse.step(-5)"></div></div></li>
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-prev.png" ng-click="browse.step(-1)"></div></div></li>
+        <!-- /PAGE NAVIGATION -->
+        <!-- PAGE NUMBERS -->
+        <li class="pagenumber-left pagenumber"><div class="tb"><div class="td"><input class="currentpage" ng-model="browse.currentStep" ng-change="browse.goTo()"></input></div></div></li>
+        <li class="pagenumber-middle pagenumber pageseperator"><div class="tb"><div class="td">/</div></div></li>
+        <li class="pagenumber-right pagenumber"><div class="tb"><div class="td" ng-bind="browse.numberOfObjects"></div></div></li>
+        <!-- /PAGE NUMBERS -->
+        <!-- PAGE NAVIGATION -->
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-next.png" ng-click="browse.step(1)"></div></div></li>
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-last.png" ng-click="browse.step(5)"></div></div></li>
+        <li><div class="tb"><div class="td"><img src="assets/img/goto-back.png"></div></div></li>
+        <!-- /PAGE NAVIGATION -->
+        <li>
+            <div class="tb">
+                <div class="td footerBtn" id="shareUrl">DEL</div>
+            </div>
+        </li>
+        <li class="right-list">
+          <div class="tb">
+              <div class="td"><img src="assets/img/licens.jpg"></div>
+          </div>
+        </li>
+      </ul>
+      </div>
+    </div>
+    <!-- Begynder indhold & footer -->
+    <div class="container-fluid" id="kk_viewer"></div>
+    <!--  SHARE AND LICENS INFO -->
+    <div>{{metadata.license}}</div>
+    <div>{{metadata.shareLink}}</div>
+    <!--  /SHARE AND LICENS INFO -->
+    <!-- start megazoom, display:none is added in case that js is disabled! -->
+    <div id="megazoomPlayList" style="display:none;"></div>
+    <input type="hidden" id="currentFactor" value="0">
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="assets/js/FWDMegazoom.js"></script>
+
+    <!-- Angular and services -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="directives/kildeviser-input.js"></script>
+    <script src="directives/kildeviser-select.js"></script>
+    <script src="directives/kildeviser-submit.js"></script>
+    <script src="directives/formly-form.js"></script>
+    <script src="directives/formly-field.js"></script>
+    <script src="directives/autocomplete.js"></script>
+    <script src="directives/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="controllers/ViserCtrl.js"></script>
+    <script src="services/BrowseService.js"></script>
+    <script src="services/MetadataManagerService.js"></script>
+    <script src="services/FormBuilderService.js"></script>
+    <script src="services/URLBuilderService.js"></script>
+
+        <script type="text/javascript">
+              var megazoom = null;
+              var data_el = $("#megazoomPlayList");
+              var inputCount = $(".kk-input").length;
+
+              checkInputsFirst();
+
+              $('.kk-input').on('keyup', function() {
+                checkInputs($(this));
+              });
+              $('.kk-input').on('keydown', function() {
+                checkInputs($(this));
+              });
+
+                //SIDEBAR
+              $('#hidebar, .submitBtn').on('click',function() {
+                if ($('#sidebar').hasClass('notVisible')) {
+                  toggleSidebar();
+                  $('#sidebar').removeClass('notVisible');
+                } else {
+                  toggleSidebar();
+                  $('#sidebar').addClass('notVisible');
+                }
+              });
+
+              $('.intro-luk').on('click', function () {
+                  $('#introDiv').fadeOut(400);
+              });
+
+
+              /* MONTHPICKER */
+           /*   $('.kk-input-month').on('focus', function() {
+                $(this).parent().find('.monthpicker').fadeIn(300);
+              });
+              $('.kk-input-month').on('blur', function() {
+                $(this).parent().find('.monthpicker').fadeOut(300);
+              });
+              $('.monthpicker ul li').on('click', function() {
+                var selVal = $(this).text();
+                $(this).parents('.kk-text-input').find('.kk-input-month').val(selVal);
+                $(this).parents('.kk-text-input').find('.monthpicker').fadeOut(200);
+                checkInputs($(this).parents('.kk-text-input').find('.kk-input-month'));
+              });
+
+    */
+              //On document ready call the change image function which in turn will create the Megazoom instance.
+              FWDUtils.onReady(function(){
+                makeSizes();
+              });
+
+              $(document).ready(function() {
+                makeSizes();
+              });
+    /*
+              $('.kk-input-number').on('keydown', function(event) {
+              // Allow special chars + arrows
+                if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9
+                    || event.keyCode == 27 || event.keyCode == 13
+                    || (event.keyCode == 65 && event.ctrlKey === true)
+                    || (event.keyCode >= 35 && event.keyCode <= 39)){
+                        return;
+                }else {
+                    // If it's not a number stop the keypress
+                    if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+                        event.preventDefault();
+                    }
+                }
+              });
+      */
+                //Setting images with angular
+                function changeImageAngular(settings){
+                    resetViewer();
+                   /* var tmpImg = new Image();
+                    var tmpNav = new Image();
+                    var doTest = new Image();
+                     */
+                    navSrc = "http://www.politietsregisterblade.dk/kildeviser/timthumb.php?" + "w=350&q=100" + "&src=" + settings.imageUrl;
+                    imgSrc = "http://www.politietsregisterblade.dk/kildeviser/timthumb.php?" + "w=3000&q=100" + "&src=" + settings.imageUrl;
+
+                    /*
+                      doTest.src=settings.imageUrl; //or  document.images[i].src;
+                      $(doTest).on('load',function(){
+                        if (doTest.width > 3000) {
+                        tmpImg.src="http://www.politietsregisterblade.dk/kildeviser/timthumb.php?" + "w=3000&q=100" + "&src=" + settings.imageUrl; //or  document.images[i].src;
+                        } else {
+                        tmpImg.src=settings.imageUrl;
+                        }
+                        tmpImg.crossOrigin = "anonymous";
+                      });
+
+
+
+                      tmpNav.src="http://www.politietsregisterblade.dk/kildeviser/timthumb.php?" + "w=300&q=100" + "&src=" + settings.imageUrl; //or  document.images[i].src;
+                      tmpNav.crossOrigin = "anonymous";
+
+                      var orgWidth = 0;
+                      var orgHeight = 0;
+                      var zoomFactor = $('#currentFactor').val();
+                      $(tmpImg).on('load',function(){
+                        orgWidth = tmpImg.width;
+                        orgHeight = tmpImg.height;
+                        zoomFactorNew = (zoomFactor * orgWidth) / 1000;
+
+
+
+                       tmpImg.unbind("load"); //Hack to ensure load is called only once
+                        /*  var canvas, ctx, neededHeight, neededWidth;
+                          var format = tmpImg.naturalWidth / 300;
+                          neededHeight = tmpImg.naturalHeight / format;
+                          neededWidth = 300;//tmpImg.naturalWidth * imagePercent / 100;
+                          canvas = document.createElement("canvas");
+                          canvas.width = neededWidth;
+                          canvas.height = neededHeight;
+                          ctx = canvas.getContext("2d");
+                          ctx.drawImage(tmpImg, 0, 0, neededWidth, neededHeight);
+                          //tmpImg.attr('src', );
+                        console.log(canvas.toDataURL("image/jpeg"));
+         */
+                    setupZoomer(
+                      imgSrc,
+                      "megazoomPlayList",
+                      navSrc, //this is the thumb
+                      3000,
+                      2000,
+                      0);
+                //  });
+
+
+                };
+
+            //   //Based on id create a different Megazoom instance with a different image and parameters.
+            //   function changeImage(id){
+            //     resetViewer();
+            //     if(id == 0){
+            //       data_el = $("#megazoomPlayList");
+            //       setupZoomer(
+            //       "http://placehold.it/5000x2926",
+            //       "megazoomPlayList",
+            //       "http://placehold.it/300x200",
+            //       5000,
+            //       2926);
+            //     }else if(id == 1){
+            //       setupZoomer(
+            //       "http://placehold.it/5000x2925",
+            //       "megazoomPlayList",
+            //       "http://placehold.it/300x200",
+            //       5000,
+            //       2926);
+            //     }else if(id == 2){
+            //       setupZoomer(
+            //       "http://placehold.it/5000x2929",
+            //       "megazoomPlayList",
+            //       "http://placehold.it/300x200",
+            //       5000,
+            //       2926);
+            //     }else if(id == 3){
+            //       setupZoomer(
+            //       "http://placehold.it/5000x2928",
+            //       "megazoomPlayList",
+            //       "http://placehold.it/300x200",
+            //       5000,
+            //       2926);
+            //     }
+            //   }
+
+              //changeImage(0);
+              function setupZoomer(imagePath, playListAndSkinId, navigatorImagePath, imageWidth, imageHeight, zFactor){
+                  megazoom =  new FWDMegazoom({
+                  //----main----//
+                  parentId:"kk_viewer",
+                  playListAndSkinId:playListAndSkinId,
+                  displayType:"responsive",
+                  skinPath:"assets/css/skin/",
+                  imagePath:imagePath,
+                  preloaderText:"- Åbner -",
+                  useEntireScreen:"yes",
+                  addKeyboardSupport:"yes",
+                  addDoubleClickSupport:"yes",
+                  imageWidth:imageWidth,
+                  imageHeight:imageHeight,
+                  zoomFactor:3,
+                  doubleClickZoomFactor:2,
+                  startZoomFactor:zFactor,
+                  panSpeed:8,
+                  zoomSpeed:.3,
+                  backgroundColor:"#000",
+                  preloaderFontColor:"#a2a3a3",
+                  preloaderBackgroundColor:"#000",
+                  //----lightbox-----//
+                  lightBoxWidth:800,
+                  lightBoxHeight:550,
+                  lightBoxBackgroundOpacity:.8,
+                  lightBoxBackgroundColor:"#000000",
+                  //----controller----//
+                  // controller buttons: "moveLeft, moveRight, moveDown, moveUp, scrollbar, hideOrShowMarkers, hideOrShowController, info, fullscreen",
+                  buttons:"scrollbar, hideOrShowController, fullscreen",
+                  buttonsToolTips:"Zoom niveau:, Skjul kontrolbar / Vis Kontrolbar, Fuld skærm / Normal skærm",
+                  controllerPosition:"bottom",
+                  inversePanDirection:"yes",
+                  startSpaceBetweenButtons:10,
+                  spaceBetweenButtons:10,
+                  startSpaceForScrollBarButtons:10,
+                  startSpaceForScrollBar:4,
+                  hideControllerDelay:0,
+                  controllerMaxWidth:500,
+                  controllerBackgroundOpacity:1,
+                  controllerOffsetY:10,
+                  scrollBarOffsetX:0,
+                  scrollBarHandlerToolTipOffsetY:4,
+                  zoomInAndOutToolTipOffsetY:-4,
+                  buttonsToolTipOffsetY:0,
+                  hideControllerOffsetY:7,
+                  buttonToolTipFontColor:"#fff",
+                  //----navigator----//
+                  showNavigator:"yes",
+                  showNavigatorOnMobile:"yes",
+                  navigatorImagePath:navigatorImagePath,
+                  navigatorPosition:"topright",
+                  navigatorOffsetX:6,
+                  navigatorOffsetY:6,
+                  navigatorHandlerColor:"#000",
+                  navigatorBorderColor:"#000",
+                  //----info window----//
+                  infoWindowBackgroundOpacity:.6,
+                  infoWindowBackgroundColor:"#000000",
+                  infoWindowScrollBarColor:"#999999",
+                  //----markers-----//
+                  showMarkersInfo:"no",
+                  markerToolTipOffsetY:0,
+                  //----context menu----//
+                  showScriptDeveloper:"no",
+                  contextMenuLabels:"",
+                  contextMenuBackgroundColor:"#4c4c4c",
+                  contextMenuBorderColor:"#727272",
+                  contextMenuSpacerColor:"#727272",
+                  contextMenuItemNormalColor:"#a2a3a3",
+                  contextMenuItemSelectedColor:"#FFFFFF",
+                  contextMenuItemDisabledColor:"#595b5b"
+                });
+            //console.log(megazoom.getZoomLvl);
+        };
+        $('.kk-questionmark').popover({
+          trigger: 'hover'
+        });
+
+
+
+
+          $(window).resize(function(event) {
+            makeSizes();
+            setTimeout(function() { makeSizes(); }, 800);
+          });
+
+          function checkInputsFirst() {
+           /* $.each($(".kk-input"), function(index, val) {
+              $(this).attr('rel',index);
+               if (index > 0) {
+                  $(this).addClass('notEditable');
+                  $(this).css({
+                    opacity:inputCount / index / 10 + 0.3
+                  });
+                  $(this).prop('disabled', true);
+               } else {
+
+               }
+            });*/
+            showBtn();
+          };
+
+
+
+          function checkInputs(elem) {
+            /*var next = parseInt(elem.attr('rel'))+1;
+              if (elem.val().length > 0) {
+
+                $('.kk-input[rel='+next+']').css({
+                  opacity:1
+                });
+                $('.kk-input[rel='+next+']').prop('disabled', false);
+              } else {
+                $.each($('.kk-input').not(elem), function(index, value){
+                  var calval = index + next;
+                    $('.kk-input[rel='+calval+']').css({
+                      opacity:inputCount / index / 10 + 0.3
+                    });
+                    $('.kk-input[rel='+calval+']').prop('disabled', true);
+                  });
+
+              }*/
+              showBtn();
+          };
+
+          function showBtn() {
+            /*var empty = $('.kk-input').filter(function() {
+                    return this.value === "";
+                });
+                if(empty.length) {
+                   $('.kk-input-button').hide();
+                } else {
+                  $('.kk-input-button').show();
+                }
+              */
+                $('.kk-input-button').show();
+          };
+    //SIDEBAR
+          function toggleSidebar() {
+            if ($('#sidebar').hasClass('notVisible')) {
+              $('#full-logo').animate({
+                top: '-54px'
+              },400, function() {
+
+              });
+              $('.sidebar-meta').animate({
+                left: '275px',
+                height: '30px',
+                'line-height':'30px'
+              },400, function() {
+
+              });
+              $('.hideSidebar').animate({
+                right: '0px'
+              },400, function() {
+
+                $('#hidebar').attr('src','assets/img/hide_sidebar.png');
+                $('#sidebar').animate({
+                  left: '0px'
+                },600, function() {
+                  // changeImage(0);
+                  makeSizes();
+                });
+              });
+            } else {
+              $('.sidebar-meta').animate({
+                left: '138px',
+                height: '54px',
+                'line-height':'54px'
+              },400, function() {
+
+              });
+              $('#sidebar').animate({
+                left: '-275px'
+              },600, function() {
+                // changeImage(0);
+                makeSizes();
+                $('#full-logo').animate({
+                  top: '0px'
+                },400, function() {
+
+                });
+                $('#hidebar').attr('src','assets/img/show_sidebar.png');
+                $('.hideSidebar').animate({
+                  right: '-57px'
+                },400, function() {
+                });
+              });
+
+            }
+          };
+
+          function resetViewer() {
+            if(megazoom){
+              megazoom.destroy();
+              $('#kk_viewer').append(data_el);
+            }
+          };
+          function makeSizes() {
+              $('#kk_viewer').css({
+                height:parseInt($(window).height())-58+'px',
+                width:$(window).width()
+              });
+
+              $('#footer').css({
+                width:$(window).width()
+              });
+
+              $('#sidebar').css({
+                height:parseInt($(window).height())-58+'px'
+              });
+          };
+
+
+        </script>
+  </body>
+</html>
