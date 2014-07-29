@@ -34,11 +34,12 @@ angular.module('KSA_Bladr.services').
         
         pubs.getCurrentPage = function(){
             if(privates.content.length !== 0){
-                return privates.content[pubs.currentStep]['images'][pubs.currentPage];
+                //TODO: No page turning implemented. This always shows the first page
+                return privates.content[pubs.currentStep]['images'][0];
             }
             
             return null;
-        }
+        };
         
         pubs.getContent = function(){
             return privates.content;
@@ -83,6 +84,17 @@ angular.module('KSA_Bladr.services').
             else{
                 pubs.currentStep = newStep;
             }
+            
+            if(privates.content.length === 0){
+                pubs.currentPage = 0;
+            }
+            else{
+                pubs.currentPage = pubs.currentStep+1;
+            }
+        };
+        
+        pubs.goTo = function(number){
+            pubs.step(number-pubs.currentStep);  
         };
         
         pubs.goToNext = function(){

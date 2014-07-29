@@ -138,5 +138,46 @@ describe("Testing BrowseService", function(){
             Browser.goToNext();
             expect(Browser.currentStep).toBe(0);            
         });
+        
+        it("should set currentPage to currentStep+1 unless no content is given", function(){
+            Browser.currentStep = 0;
+            Browser.goToNext();
+            expect(Browser.currentPage).toBe(2);
+            
+            Browser.currentStep = 0;
+            Browser.goToPrevious();
+            expect(Browser.currentPage).toBe(100);      
+            
+            Browser.setContent([]);
+            Browser.goToNext();
+            expect(Browser.currentPage).toBe(0);            
+        });        
     });
+    
+    describe("Go to number", function(){
+       var content = [];
+       
+        //Adding content
+        beforeEach(function(){
+           Browser.resetContent();
+           content = [];
+           for(var i = 0; i<100; i++){
+               var name = "page"+i.toString();
+               var psudeoRandomId = i* 3;
+               content.push({"name": name, "id":psudeoRandomId });
+           }
+            Browser.setContent(content);
+        });
+        
+        it("should go to specific step when number is given", function(){
+            Browser.currentStep = 0;
+            Browser.goTo(6);
+            expect(Browser.currentStep).toBe(6);
+            
+            /*Browser.currentStep = 0;
+            Browser.goToId(2);
+            expect(Browser.currentStep).toBe(0);            
+            */
+        });
+    });    
 });

@@ -1,205 +1,184 @@
 //Retrieves the module KSA_Bladr.controllers, and adds a new controller
 angular.module('KSA_Bladr.controllers').
-    controller('ViserCtrl', function($scope, $location, BrowseService, MetadataManagerService, FormBuilderService){
-        $scope.welcomeText = "";
-        $scope.formTemplate = false;
-  $scope.testformTemplate = {};
-        $scope.sayHallo = function(){
-            $scope.welcomeText = "hejsa";
-        };        
+    controller('ViserCtrl', function($scope, $location, $window, BrowseService, MetadataManagerService, FormBuilderService, $http, $location){
         
         //browse model
         $scope.browse = {};
         $scope.browse.currentStep = 0;
+        $scope.browse.currentPage = 0;
         $scope.browse.currentObject = {};
-        $scope.collection = {};
+        $scope.browse.numberOfObjects = 0;
+        $scope.browse.canLoadObjects = false;     
+        $scope.collectionInfo = {};
+        $scope.browse.collectionLoaded = false;
         
+        //Temp, hardcoded metadata filters
+        $scope.metadata = {};
+        $scope.metadata.selectedYear = "1866";
+        $scope.metadata.selectedMonth = "Maj";
+        $scope.metadata.selectedStreet = "";
+        
+        $scope.$watch('metadata.selectedMonth', function(newVal, old){
+            $scope.changeFilter("month", newVal);
+        });
+        $scope.$watch('metadata.selectedYear', function(newVal, old){
+            $scope.changeFilter("year", newVal);
+        });   
+        $scope.$watch('metadata.selectedStreet', function(newVal, old){
+            $scope.changeFilter("streetname", newVal);
+        });        
+        
+        //Gets the streetname from the API. TODO: This should be a generic solution
+        $scope.getLocation = function(val) {
+           //return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+           return $http.jsonp('http://www.politietsregisterblade.dk/api/1?type=road&callback=JSON_CALLBACK', {
+             params: {
+               name: val,
+               limit: 20
+             }
+           }).then(function(res){
+             var addresses = [];
+             var data = res.data.slice(0,res.data.length-1);
+             angular.forEach(data, function(item){
+               addresses.push(item.name);
+             });
+             return addresses;
+           });
+         };        
+        
+        $scope.init = function(){
+            //Harcoded configuration of the MetadataManagerService
+            MetadataManagerService.config(2);
+            
+            //Get collection info, including name, short name, description, link to info an so on
+            MetadataManagerService.getCollectionInfo().then(function(){
+                $scope.browse.collectionLoaded = true;
+                $scope.collectionInfo = MetadataManagerService.collectionInfo;
+            });
+            
+            MetadataManagerService.getMetadataLevels().then(function(){
+                    console.log("should update filter form here, data hardcoded instead");  
+                    $scope.metadata.years = MetadataManagerService.levels[0].data;
+                    $scope.metadata.months = MetadataManagerService.levels[1].data;
+                }       
+            );
+            
+            //Get metadata filters for the collection
+            //Note that this is hardcoded until a more generic solution is needed
+        };
+
+        $scope.changeFilter = function(filterName, value){
+            if(value){
+                //Get and apply filters
+                MetadataManagerService.changeFilterValue(filterName, value);
+                $scope.browse.canLoadObjects = MetadataManagerService.canRetrieveObjects();
+                console.log('filter changed');
+            }
+        };       
+        
+        /**
+         * 
+         * Moves forward or backwards, according to the steps given
+         * 
+         * @param integer the number of steps (positive or negative)
+         * @returns void
+         */
         $scope.browse.step = function(steps){
             BrowseService.step(steps);
-            $scope.browse.currentObject = BrowseService.getCurrentContent();
-            BrowseService.currentPage = 0;
-            $scope.browse.currentStep = BrowseService.currentStep;
-            $scope.browse.imageUrl = BrowseService.getCurrentPage();
-            $scope.browse.metadata = MetadataManagerService.getMetadataString($scope.browse.currentObject.metadata);
-            console.log("stepped");
         };
         
-        $scope.browse.goToId = function(id){
-            BrowseService.goToId(id);
-            $scope.browse.currentObject = BrowseService.getCurrentContent();
-            $scope.browse.currentStep = BrowseService.currentStep;
-            console.log("went to id");
-        };
- 
-        $scope.loadCollectionInfo = function(){
-            MetadataManagerService.getCollectionInfo().then(function(){
-                $scope.collection = MetadataManagerService.collectionInfo;
-                console.log("loaded collection info");
-            });            
+        /**
+         * Goes to a specific page number
+         * 
+         * @returns void
+         */
+        $scope.browse.goTo = function(){
+            BrowseService.goTo($scope.browse.currentStep);
         };
         
-        $scope.loadContent = function(){
-            //if(MetadataManagerService.canLoadObjects()){
-                var mockArr = [
+        //Changes of the current step. Updates current step, object data and metadata as well as image URL
+        $scope.$watch(
+            function(){
+                return BrowseService.currentStep;
+            },
+            function(){
+                $scope.browse.updateCurrentObject();
+            },
+            true
+        );       
+        
+        $scope.browse.updateCurrentObject = function(){
+                console.log("BrowseService.currentStep changed");
+
+                //Current page and step
+                $scope.browse.currentStep = BrowseService.currentStep;
+                $scope.browse.currentPage = BrowseService.currentPage;
+                
+                var metadata = BrowseService.getCurrentContent();
+
+                //If there is any content, load it and update metadata and image
+                if(metadata){
+                    //Current object containing metadata
+                    $scope.browse.currentObject = metadata;
+                    
+                    //Metadata as a string
+                    $scope.collectionInfo.metadataText = MetadataManagerService.getMetadataString(metadata.metadata);
+                    
+                    //URL to current location
+                    $scope.collectionInfo.URL = $location.absUrl() + $location.path();
+                    
+                    //Image URL
+                    $window.changeImageAngular({imageUrl : BrowseService.getCurrentPage()});   
+                }            
+        };
+        
+        $scope.browse.loadContent = function(){
+            if(MetadataManagerService.canRetrieveObjects()){
+                /*var mockArr = [
                     {
                         'id' : 2,
                         'metadata' : [{'station' : 3},{ 'roll' : '24'}],
                         'images' : [
-                            'http://www.politietsregisterblade.dk/registerblade/6/0001/000001a.jpg',
-                            'http://www.politietsregisterblade.dk/registerblade/6/0001/000001b.jpg'
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00004.jpg',
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00004.jpg'
                         ]
                     },
                     {
                         'id' : 3,
                         'metadata' : [{'station' : 3},{ 'roll' : '25'}],
                         'images' : [
-                            'http://www.politietsregisterblade.dk/registerblade/6/0001/000003a.jpg',
-                            'http://www.politietsregisterblade.dk/registerblade/6/0001/000003b.jpg'
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00005.jpg',
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00005.jpg'
                         ]
                     },
                     {
                         'id' : 4,
                         'metadata' : [{'station' : 4},{ 'roll' : '29'}],
                         'images' : [
-                            'http://www.politietsregisterblade.dk/registerblade/6/0001/000003a.jpg',
-                            'http://www.politietsregisterblade.dk/registerblade/6/0001/000003b.jpg'
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00006.jpg',
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00006.jpg'
                         ]
-                    }                    
-                ];
-                BrowseService.setContent(mockArr);
-                $scope.browse.step(0);
-            //}
-        };
-        
-        $scope.years = [{year: 1866}, {year:1867}];
-        $scope.months = [{month: 'MAJ'}, {month:'NOV'}];
-        $scope.selectedMonth;
-        $scope.selectedYear;
-        $scope.selectedStreetname;
-        
-	// Public Vars
-	$scope.formFields = [
-            {
-		key: 'Adresse',
-		type: 'autocomplete',
-		label: 'Adresse',
-		options: [
-		]
-            },
-           {
-		key: 'År',
-		type: 'select',
-		label: 'År',
-		options: [
-		]
-            },            
-            {
-		key: 'month',
-		type: 'select',
-		label: 'Måned',
-                change : 'change()',
-		options: [
-                    {
-                        'name' : 'MAJ',
-                        'value' : 'MAJ'
                     },
                     {
-                        'name': 'NOV',
-                        'value' : 'NOV'
-                    }
-		]
-            }            
-        ];
-
-$scope.change = function(){
-    console.log("change");
-}
-	$scope.formOptions = {
-		submitCopy: 'Vis'
-	};    
-        
-	$scope.formData = {};          
-        
-        /*
-        * When the controller starts:
-        * Get metadata levels
-        * Get form data
-        * Build form from form data
-        * Add event handlers?
-        *
-        */
-        $scope.metadata = {};
-        $scope.metadata.filterChanged = function(filterName){
-            var value = $scope[filterName]();
-            MetadataManagerService.changeFilterValue(filterName, value);
-        };
-        
-        /*
-        * Used when filters for the current collection are created for the first time
-        */
-        $scope.metadata.setMetadataLevelsFilters = function(){
-            MetadataManagerService.getMetadataLevels().then(
-                function(){
-                    $scope.createForm();
-                },
-                function(){
-                    console.log("Could not load metadata levels");
-            });            
-        };
-        
-        $scope.createForm = function(){
-            //$scope.formTemplate = FormBuilderService.createFormData(MetadataManagerService.levels);
-            //this.$render();
-            console.log(FormBuilderService.createFormData(MetadataManagerService.levels));
-        };
-        $scope.convertCollectionNameToId = function(name){
-            if(name == 'mandtaller')
-                MetadataManagerService.config(1);
-        };
-        
-        //The controller parses the URL on init
-        $scope.init = function(){
-            /*
-            * Two cases:
-            * 1: A collection is given in the format index.html#!/mandtaller/
-            * The data for the collection is loaded, displaying no images and using no filters
-            * 2: A specific image i given using the formation index.html#!registerblade/3242343/2, where id and page of the object is given
-            * The data for the collection is loaded, the metadata for the object is loaded, and the filters is rebuilt
-            */
-            var pathArr = $location.path().split("/");
-            console.log(pathArr.length);
-            
-            //If no collection is given, mandtaller is assumed
-            if(pathArr.length == 1){
-                $scope.convertCollectionNameToId("mandtaller");
-                $scope.loadCollectionInfo();
-                $scope.metadata.setMetadataLevelsFilters();
-            }
-            
-            //Only collection name is given. Load collection, display filters and wait for user input
-            if(pathArr.length == 2){
-                $scope.convertCollectionNameToId(pathArr[1]);
-                $scope.loadCollectionInfo();
-                $scope.metadata.setMetadataLevelsFilters();
-            }
-            
-            //Collection and object id is given. Load collection, go to object, get filters
-            if(pathArr.length == 3){
-                $scope.convertCollectionNameToId(pathArr[1]);
-                $scope.loadCollectionInfo();
-                $scope.metadata.setMetadataLevelsFilters();
-                $scope.browse.goToId(pathArr[2]); 
-            }
-            
-            //Collection, object and page is given, load collection, go to object, display page, get filters
-            if(pathArr.length == 4){
-                $scope.convertCollectionNameToId(pathArr[1]);
-                $scope.loadCollectionInfo();
-                $scope.metadata.setMetadataLevelsFilters(); 
-                $scope.browse.goToId(pathArr[2]);
-              //  BrowseService.goToPage(pathArr[3]);
+                        'id' : 4,
+                        'metadata' : [{'station' : 4},{ 'roll' : '29'}],
+                        'images' : [
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00007.jpg',
+                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00007.jpg'
+                        ]
+                    }                        
+                ];*/
+                
+                //Loads the objects from server, and sets the content and length
+                MetadataManagerService.getObjects().then(function(value){
+                    BrowseService.setContent(value);
+                    $scope.browse.numberOfObjects = BrowseService.contentLength();
+                    BrowseService.step(0);
+                    $scope.browse.updateCurrentObject();
+                    console.log("Content loaded");                    
+                });
             }
         };
         
-        $scope.init();
+        $scope.init();       
 });

@@ -30,7 +30,7 @@ describe("Testing MetadataManagerService", function(){
     describe("Handling metadata filters", function(){
        it("should throw exception if necessary values not given, otherwise add filter", function(){
            
-           MetadataManager.levels =  [{"order":2, "name":"station", "filter_value" : "1"},{"order":1, "name":"roll", "filter_value" : "2"}];
+           MetadataManager.levels =  [{"order":2, "name":"station"},{"order":1, "name":"roll"}];
            
            var testFunc = function(){
                MetadataManager.addFilter({"station":"1"});
@@ -43,29 +43,56 @@ describe("Testing MetadataManagerService", function(){
            expect(MetadataManager.levels[0]['filter_value']).toEqual("1"); 
        });
        
+       it("should not add filters with empty values", function(){
+           
+           MetadataManager.levels =  [{"order":2, "name":"station", "filter_value": ""},{"order":1, "name":"roll", "filter_value" : null}];
+
+           expect(MetadataManager.getFilters()).toEqual([]); 
+       });       
+       
        it("should remove a given filter if it exists", function(){
             var givenFilter = {"name":"station", "value":"1"};
-            var ungivenFilter = {"name":"foo", "value":"bar"};
-            
+   
             MetadataManager.levels =  [{"order":2, "name":"station"},{"order":1, "name":"roll"}];
             
             MetadataManager.addFilter(givenFilter);
             
-            MetadataManager.removeFilter(ungivenFilter);
+            MetadataManager.removeFilter("foo");
             
             expect(MetadataManager.levels[0]['filter_value']).toEqual('1');
             
-            MetadataManager.removeFilter(givenFilter);
+            MetadataManager.removeFilter("station");
             expect(MetadataManager.levels[0]['filter_value']).toBe(null);
        });
+       
+       it("should return an array of filters", function(){
+            var givenFilter = {"name":"station", "value":"1"};
+            var givenFilter2 = {"name":"roll", "value":"2"};
+            
+            MetadataManager.levels =  [{"order":2, "name":"station"},{"order":1, "name":"roll"}];
+            
+            MetadataManager.addFilter(givenFilter);
+            MetadataManager.addFilter(givenFilter2);
+            var filters = [{"name":"station","value":"1"},{"name":"roll","value":"2"}];
+            expect(MetadataManager.getFilters()).toEqual(filters);
+       });       
     });
     
     describe("String representation of metadata", function(){
         it("should convert an array of metadata names and values to a human readable string", function(){
-            var metadata = [{station:1},{roll:23}];
+            var metadata = {station:1,roll:23};
             MetadataManager.levels = [{order: 1, name: "station", gui_name: "Station"},{order: 2, name: "roll", gui_name: "Filmrulle"}];
             expect(MetadataManager.getMetadataString(metadata)).toEqual("Station 1, filmrulle 23");
+            
+            metadata = {station:1,roll:23};
+            MetadataManager.levels = [{order: 1, name: "station", gui_name: "Station"},{order: 2, name: "roll", gui_name: "Filmrulle", hideInMetadataString: true}];
+            expect(MetadataManager.getMetadataString(metadata)).toEqual("Station 1, 23");            
         });
+        it("should return empty string when no input is given", function(){
+            var metadata = null;
+            MetadataManager.levels = [{order: 1, name: "station", gui_name: "Station"},{order: 2, name: "roll", gui_name: "Filmrulle"}];
+            expect(MetadataManager.getMetadataString(metadata)).toEqual("");
+        });        
     });
     
     describe("Handling metadata levels", function(){
@@ -86,13 +113,13 @@ describe("Testing MetadataManagerService", function(){
         });
         
         it("should check if all required filters is set", function(){
-            MetadataManager.levels = [{"filter_required": true, "filter_value": 2}, {"filter_required": false, "filter_value": 2}];
+            MetadataManager.levels = [{"required": true, "filter_value": 2}, {"required": false, "filter_value": 2}];
             expect(MetadataManager.canRetrieveObjects()).toEqual(true);
             
-            MetadataManager.levels = [{"filter_required": true, "filter_value": 2}, {"filter_required": true, "filter_value": ""}];
+            MetadataManager.levels = [{"required": true, "filter_value": 2}, {"required": true, "filter_value": ""}];
             expect(MetadataManager.canRetrieveObjects()).toEqual(false);      
             
-            MetadataManager.levels = [{"filter_required": false, "filter_value": 2}, {"filter_required": false, "filter_value": ""}];
+            MetadataManager.levels = [{"required": false, "filter_value": 2}, {"required": false, "filter_value": ""}];
             expect(MetadataManager.canRetrieveObjects()).toEqual(true);              
         });        
     });

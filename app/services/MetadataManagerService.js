@@ -65,7 +65,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             //deferred.reject();
             //throw "Couldn't load metadata levels";
             //TODO: For demonstration only:
-            var data = {"type":"hierarchy","levels":[{"order":2,"gui_name":"Filmruller","gui_description":"Der er mellem 20 og 50 filmruller pr. station. Opdelingen skyldes begr\u00e6nsningen i antallet af billeder p\u00e5 en gammeldags fotofilm","gui_info_link":"http:\/\/www.kbharkiv.dk\/wiki\/registerbladenes-filmruller","name":"roll","type":"getallbyfilter","data_sql":"SELECT id, filmrulle_navn from PRB_filmrulle WHERE station_id = %d","required_filters":["station"],"data":false},{"order":1,"gui_name":"Stationer","gui_description":"Der findes seks stationer baseret p\u00e5 politidistrikternes inddeling, og to baseret p\u00e5 alfabetisk sortering","gui_info_link":"http:\/\/www.kbharkiv.dk\/registerblade\/om-stationerne","name":"station","type":"preset","data_sql":false,"data":[{"name":"Station 1","id":"26"},{"name":"Station 2","id":"29"}]}]};
+            var data = {"type":"hierarchy","levels":[{"order":2,"gui_name":"Filmrulle","gui_description":"Der er mellem 20 og 50 filmruller pr. station. Opdelingen skyldes begr\u00e6nsningen i antallet af billeder p\u00e5 en gammeldags fotofilm","gui_info_link":"http:\/\/www.kbharkiv.dk\/wiki\/registerbladenes-filmruller","name":"roll","type":"getallbyfilter","data_sql":"SELECT id, filmrulle_navn from PRB_filmrulle WHERE station_id = %d","required_filters":["station"],"data":false},{"order":1,"gui_name":"Station","gui_description":"Der findes seks stationer baseret p\u00e5 politidistrikternes inddeling, og to baseret p\u00e5 alfabetisk sortering","gui_info_link":"http:\/\/www.kbharkiv.dk\/registerblade\/om-stationerne","name":"station","type":"preset","data_sql":false,"data":[{"name":"Station 1","id":"26"},{"name":"Station 2","id":"29"}]}]};
             pubs.loadAndOrderLevels(data);
             pubs.metadataType = data.type;
             console.log("Loaded mock metadatalevels");
@@ -78,13 +78,13 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     //Retrieves objects with the given filters
     pubs.getObjects = function(){
         var deferred = $q.defer();
-        $http.jsonp(URLBuilderService.objectsUrl(pubs.collection_id))
+        $http.jsonp(URLBuilderService.objectsUrl(pubs.collection_id, null, pubs.getFilters()))
         .success(function(data, status, headers) {
             deferred.resolve(data);
         })
         .error(function(){
             deferred.reject();
-            throw "Couldn't load metadata levels";
+            throw "Couldn't load objects";
         });
         
         return deferred.promise;
@@ -140,27 +140,35 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     };
     
     pubs.getMetadataString = function(metadata){
-        var metadataStr = '';
-        var first = true;
-        for(var j = 0; j < metadata.length; j++){
-            for(var i = 0; i < pubs.levels.length; i++){
-                if(metadata[j][pubs.levels[i].name] !== undefined){
-                    var gui = pubs.levels[i].gui_name;
-                    if(first){
-                        first = false;
+        if(metadata){
+            var metadataStr = '';
+            var first = true;
+            //for(var j = 0; j < metadata.length; j++){
+                for(var i = 0; i < pubs.levels.length; i++){
+                    if(metadata[pubs.levels[i].name] !== undefined){
+                        var gui = pubs.levels[i].gui_name + ' ';
+                        if(pubs.levels[i].hideInMetadataString)
+                            gui = "";
+                        
+                        if(first){
+                            first = false;
+                        }
+                        else{
+                            gui = gui.toLowerCase();
+                        }
+                        metadataStr = metadataStr + gui + metadata[pubs.levels[i].name] + ', ';
                     }
-                    else{
-                        gui = gui.toLowerCase();
-                    }
-                    metadataStr = metadataStr + gui + ' ' + metadata[j][pubs.levels[i].name] + ', ';
                 }
-            }
+           // }
+
+            return metadataStr.substring(0, metadataStr.length-2);
         }
-        
-        return metadataStr.substring(0, metadataStr.length-2);
+        else{
+            return "";
+        }
     };
     
-    //Checks if the metadata should be uploaded
+    //Checks if the metadata should be updated
     pubs.doRefreshMetadata = function(data, request, latestRequest){
         if(latestRequest !== request)
             return true;
@@ -175,8 +183,10 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     pubs.getFilters = function(){
         var filters = [];
         
-        for(var i = 0; i< pubs.levels; i++){
-            filters.push({"name" : pubs.levels[i].name, "value" : pubs.levels[i].filter});
+        for(var i = 0; i< pubs.levels.length; i++){
+            if(pubs.levels[i].filter_value){
+                filters.push({"name" : pubs.levels[i].name, "value" : pubs.levels[i].filter_value});
+            }
         }
         
         return filters;
@@ -207,7 +217,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     //Removes metadata filter
     pubs.removeFilter = function(filterToRemove){
         for(var i = 0; i < pubs.levels.length; i++){
-            if(pubs.levels[i].name == filterToRemove.name)
+            if(pubs.levels[i].name == filterToRemove)
                 pubs.levels[i].filter_value = null;
         }
     };
@@ -225,13 +235,15 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     
     //Returns true if all required filters is set
     pubs.canRetrieveObjects = function(){
+        var allRequiredFiltersSet = false;
         for(var i = 0; i<pubs.levels.length; i++){
-            var filter_val = pubs.levels[i].filter_value;
-            if(pubs.levels[i].filter_required && (
-                !pubs.levels[i].hasOwnProperty('filter_value') || 
-                filter_val === null || 
-                filter_val == ""))
-                return false;
+            if(pubs.levels[i].required){
+                if(!pubs.levels[i].hasOwnProperty('filter_value') || 
+                    pubs.levels[i].filter_value === null || 
+                    pubs.levels[i].filter_value == ""){
+                    return false;
+                }
+            }
         }
         
         return true;

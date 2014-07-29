@@ -69,8 +69,8 @@ angular.module('formly.render')
 		},
 		controller: function fieldController($scope) {
 			$scope.options = $scope.optionsData();
-			if ($scope.options.default) {
-				$scope.value = $scope.options.default;
+			if ($scope.options['default']) {
+				$scope.value = $scope.options['default'];
 			}
 
 			// set field id to link labels and fields
