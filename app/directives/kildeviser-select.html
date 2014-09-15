@@ -8,3 +8,12 @@
         </ul>
     </div>
   </div>
+
+<div class="form-group">
+    <input type="text" class="form-control top_box_input floatlabel" data-placehold="Gade" data-label="Indtast gadens navn" id="gade" value="{{selectedValue}}" placeholder="{{placeholder}}">
+    <div>
+        <ul>
+            <li ng-repeat="value in values" ng-click="setValue(value.text)">{{ value.text }}</li>
+        </ul>
+    </div>
+</div>
