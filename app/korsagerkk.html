@@ -58,20 +58,26 @@
     <!-- SIDEBAR ELEMENTS -->
     <div class="sidebar-elements">
     <div class="sidebar-tekst">{{collectionInfo.info}}</div>
-    <!--<kildeviser-input placeholder="Adresse" helptext="Adressen hvorpå optællingen er foretaget" values="metadata.adresses"></kildeviser-input>--> 
-    
+    <!--<kildeviser-input placeholder="Adresse" helptext="Adressen hvorpå optællingen er foretaget" values="metadata.adresses"></kildeviser-input>-->
+
     <div class="kk-text-input kk-input-element">
+    <input type="text" ng-model="metadata.selectedStreet" placeholder="Adresse" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations">
+    </div>
+
+    <div class="kk-select-input kk-input-element">
     <div class="kk-text-input-banner"><img src="assets/img/input-banner.png"></div>
-    <input type="text" ng-model="metadata.selectedStreet" placeholder="Adresse" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations"></div>
     <select ng-model="metadata.selectedYear" ng-options="year.id as year.text for year in metadata.years">
-        <option value=""></option>
+        <option value="">Vælg år</option>
     </select>
-    
-    <select ng-model="metadata.selectedMonth" ng-options="month as month.text for month in metadata.months">
-        <option value=""></option>
-    </select>     
-    
-    
+    </div>
+
+    <div class="kk-select-input kk-input-element">
+    <div class="kk-text-input-banner"><img src="assets/img/input-banner.png"></div>
+    <select ng-model="metadata.selectedMonth" ng-options="month.id as month.text for month in metadata.months">
+        <option value="">Vælg måned</option>
+    </select>
+    </div>
+
     <div class="kk-text-input kk-input-button">
         <div class="submitBtn" ng-show="browse.canLoadObjects" ng-click="browse.loadContent()">Find</div>
     </div>
@@ -129,17 +135,20 @@
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script type="text/javascript" src="assets/js/FWDMegazoom.js"></script>
-
     <!-- Angular and services -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
     <script src="app.js"></script>
-    <script src="directives/kildeviser-input.js"></script>
+<!--    <script src="directives/kildeviser-input.js"></script>
     <script src="directives/kildeviser-select.js"></script>
     <script src="directives/kildeviser-submit.js"></script>
     <script src="directives/formly-form.js"></script>
     <script src="directives/formly-field.js"></script>
-    <script src="directives/autocomplete.js"></script>
+    <script src="directives/autocomplete.js"></script>-->
+
+    <!-- ui select -->
+    <script src="directives/ui-bootstrap-0.11.0.min.js"></script>
     <script src="directives/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="app.js"></script>
     <script src="controllers/ViserCtrl.js"></script>
     <script src="services/BrowseService.js"></script>
     <script src="services/MetadataManagerService.js"></script>
@@ -173,6 +182,47 @@
 
               $('.intro-luk').on('click', function () {
                   $('#introDiv').fadeOut(400);
+              });
+
+              $(".search-input").on('click',function(e){
+                      setTimeout(function(){
+                          $(this).find(".search-option:first").focus();
+                      },100);
+              });
+
+
+
+              $(".search-option").keydown(function(e){
+                  if(e.which == 40) { // down
+                      $(this).parent().next().find(".search-option").focus();
+                      return false; // stops the page from scrolling
+                  }
+                  if(e.which == 38) { // up
+                      $(this).parent().prev().find(".search-option").focus();
+                      return false; // stops the page from scrolling
+                  }
+                  if(e.which == 13) { // enter
+                      alert("Do something");
+                  }
+              });
+
+              $(function( $ ) {
+                  var keymap = {};
+
+                  // LEFT
+                  keymap[ 37 ] = -1;
+                  // RIGHT
+                  keymap[ 39 ] = 1;
+
+                  $( document ).on( "keyup", function(event) {
+                      var href,
+                          selector = keymap[ event.which ];
+                      // if the key pressed was in our map, check for the href
+                      if ( selector ) {
+                         angular.element("#kk_viewer").scope().browse.step(selector);
+                        angular.element("#kk_viewer").scope().$apply();
+                      }
+                  });
               });
 
 
