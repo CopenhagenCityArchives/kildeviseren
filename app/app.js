@@ -6,5 +6,5 @@ angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
 angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
   'KSA_Bladr.services',
-  'ui.bootstrap'
+  'localytics.directives'
 ]);
