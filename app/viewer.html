@@ -67,46 +67,39 @@
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 topcontrols_form col-lg-offset-1 col-sm-offset-1 col-md-offset-1">
           <form class="form-inline" role="form">
-                    <div class="form-group">
-                      <input type="text" class="form-control top_box_input floatlabel" data-placehold="Gade" data-label="Indtast gadens navn" id="gade" ng-model="metadata.selectedStreet" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations">
-                    </div>
-                    <div class="form-group">
-                      <select
-                        chosen
-                        allow-single-deselect="true"
-                        data-placeholder="Måned"
-                        no-results-text="'Ingen resultater'"
-                        ng-model="metadata.selectedYear"
-                        ng-options="year.id as year.text for year in metadata.years"
-                        style="width:200px;">
-                        <option value=""></option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <h2>Chosen with static options: {{ bar }}</h2>
-                      <select chosen disable-search="true" ng-model="bar">
-                        <option>Hi</option>
-                        <option>This is fun</option>
-                        <option>I like Chosen so much</option>
-                        <option>I also like bunny rabbits</option>
-                        <option value=""></option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control top_box_input floatlabel" data-placehold="Måned" data-label="Indtast måned" id="month">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control top_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem1">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control top_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem2">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control top_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem3">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default btn-submit">Find</button>
-                    </div>
+            <div class="form-group">
+              <select
+                chosen
+                data-placeholder="Gade"
+                no-results-text="'Ingen resultater'"
+                ng-model="metadata.selectedStreet"
+                ng-options="value as label for (value, label) in metadata.streets"
+                style="width:300px;">
+                <option value=""></option>
+              </select>
+               <select
+                chosen
+                disable-search="true"
+                allow-single-deselect="true"
+                data-placeholder="År"
+                no-results-text="'Ingen resultater'"
+                ng-model="metadata.selectedYear"
+                ng-options="year.id as year.text for year in metadata.years"
+                style="width:300px;">
+                <option value=""></option>
+              </select>
+              <select
+                chosen
+                disable-search="true"
+                allow-single-deselect="true"
+                data-placeholder="Måned"
+                no-results-text="'Ingen resultater'"
+                ng-model="metadata.selectedMonth"
+                ng-options="month.id as month.text for month in metadata.months"
+                style="width:300px;">
+                <option value=""></option>
+              </select>
+            </div>
           </form>
         </div>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 topcontrols_form ">
