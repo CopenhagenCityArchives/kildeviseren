@@ -140,6 +140,6 @@ function loadPage(origin,destination) {
     destination.css({
       'position':'relative'
     });
-    window.location.href = 'viewer.html?t=lolcat';
+    window.location.href = 'viewer.html';
   }});
 }

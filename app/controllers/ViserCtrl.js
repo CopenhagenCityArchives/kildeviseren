@@ -94,7 +94,7 @@ angular.module('KSA_Bladr.controllers').
          * @returns void
          */
         $scope.browse.goTo = function(){
-            BrowseService.goTo(BrowseService.currentPage);
+            BrowseService.goTo($scope.browse.currentPage);
         };
 
         //Changes of the current step. Updates current step, object data and metadata as well as image URL
@@ -126,7 +126,8 @@ angular.module('KSA_Bladr.controllers').
                     $scope.collectionInfo.metadataText = MetadataManagerService.getMetadataString(metadata.metadata);
 
                     //URL to current location
-                    $scope.collectionInfo.URL = $location.absUrl() + $location.path();
+                  //  $scope.collectionInfo.URL = $location.absUrl() + $location.path();
+                    $location.path('2/' + $scope.browse.currentObject.id);
 
                     //Image URL
                     $window.showImage(BrowseService.getCurrentPage(), 'square');
@@ -135,41 +136,6 @@ angular.module('KSA_Bladr.controllers').
 
         $scope.browse.loadContent = function(){
             if(true ||MetadataManagerService.canRetrieveObjects()){
-                /*var mockArr = [
-                    {
-                        'id' : 2,
-                        'metadata' : [{'station' : 3},{ 'roll' : '24'}],
-                        'images' : [
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00004.jpg',
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00004.jpg'
-                        ]
-                    },
-                    {
-                        'id' : 3,
-                        'metadata' : [{'station' : 3},{ 'roll' : '25'}],
-                        'images' : [
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00005.jpg',
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00005.jpg'
-                        ]
-                    },
-                    {
-                        'id' : 4,
-                        'metadata' : [{'station' : 4},{ 'roll' : '29'}],
-                        'images' : [
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00006.jpg',
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00006.jpg'
-                        ]
-                    },
-                    {
-                        'id' : 4,
-                        'metadata' : [{'station' : 4},{ 'roll' : '29'}],
-                        'images' : [
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00007.jpg',
-                            'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00007.jpg'
-                        ]
-                    }
-                ];*/
-
                 //Loads the objects from server, and sets the content and length
                 MetadataManagerService.getObjects().then(function(value){
                     BrowseService.setContent(value);
@@ -182,39 +148,4 @@ angular.module('KSA_Bladr.controllers').
         };
 
         $scope.init();
-       // $scope.browse.loadContent();
-    var KeyCodes = {
-        BACKSPACE : 8,
-        TABKEY : 9,
-        RETURNKEY : 13,
-        ESCAPE : 27,
-        SPACEBAR : 32,
-        LEFTARROW : 37,
-        UPARROW : 38,
-        RIGHTARROW : 39,
-        DOWNARROW : 40,
-    };
-
-    $scope.onKeydown = function(item, $event) {
-        var e = $event;
-        var $target = $(e.target);
-        var nextTab;
-        switch (e.keyCode) {
-            case KeyCodes.ESCAPE:
-                $target.blur();
-                break;
-            case KeyCodes.UPARROW:
-                nextTab = - 1;
-                break;
-            case KeyCodes.RETURNKEY: e.preventDefault();
-            case KeyCodes.DOWNARROW:
-                nextTab = 1;
-                break;
-        }
-        if (nextTab != undefined) {
-            // do this outside the current $digest cycle
-            // focus the next element by tabindex
-           $timeout($('[tabindex=' + (parseInt($target.attr("tabindex")) + nextTab) + ']').focus());
-        }
-    };
 });

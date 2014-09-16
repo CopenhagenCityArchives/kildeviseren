@@ -2,64 +2,10 @@
 
     var stopCounter = false, topDown = false, controlsHidden = false, viewer = null, currentZoomLvl = 0, controlHover = false, navWaitTime = 6000, preventControls = false;
 
-    var images = {
-    '1' : {
-        'url' : 'http://kbhkilder.dk/collections/eksempler/IA_1658_1-3200px60pct.jpg',
-        'type' : 'rectangle'
-    },
-    '2' : {
-        'url' : 'http://kbhkilder.dk/collections/eksempler/IA_1744_4-3200px60pct.jpg',
-        'type' : 'square'
-    },
-    '3' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00011.jpg',
-        'type' : 'square'
-    },
-    '4' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00012.jpg',
-        'type' : 'square'
-    },
-    '5' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00013.jpg',
-        'type' : 'square'
-    },
-    '6' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00014.jpg',
-        'type' : 'square'
-    },
-    '7' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00004.jpg',
-        'type' : 'square'
-    },
-    '8' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00005.jpg',
-        'type' : 'square'
-    },
-    '9' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00006.jpg',
-        'type' : 'square'
-    },
-    '10' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00007.jpg',
-        'type' : 'square'
-    },
-    '11' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00008.jpg',
-        'type' : 'square'
-    },
-    '12' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00009.jpg',
-        'type' : 'square'
-    },
-    '13' : {
-        'url' : 'http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00010.jpg',
-        'type' : 'square'
-    }
-    };
-    var imgCount = Object.keys(images).length;
-    $('.pager-pages').html(imgCount);
-    var currentImage = 1;
-    $('.pager-input').val(currentImage);
+   // var imgCount = Object.keys(images).length;
+   // $('.pager-pages').html(imgCount);
+   // var currentImage = 1;
+  //  $('.pager-input').val(currentImage);
 
 
 $(document).ready(function() {
@@ -573,9 +519,9 @@ function showImage(imageSrc,condition) {
   } else {
     conInt = 300;
   }
-  var navThumb = new Image();
-  navThumb.src = "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc;
-  $(navThumb).on('load',function(){
+ // var navThumb = new Image();
+//  navThumb.src = "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc;
+ // $(navThumb).on('load',function(){
     var settings = {
     "viewportWidth" : "100%",
     "viewportHeight" : "100%",
@@ -601,8 +547,8 @@ function showImage(imageSrc,condition) {
     "intNavFitToViewportBtt" : false,
     "intNavFullSizeBtt" : false,
     "intNavBttSizeRation" : 1,
-    "mapEnable" : true,
-    "mapThumb" : "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc,
+    "mapEnable" : false,
+    //"mapThumb" : "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc,
     "mapPos" : "TR",
     "popupShowAction" : "tap",
     "testMode" : false
@@ -610,21 +556,21 @@ function showImage(imageSrc,condition) {
     if ($('#map').length != 0) {
       $("#map").lhpMegaImgViewer("destroy");
       $("#map").lhpMegaImgViewer(settings);
-      $('.pager-input').val(currentImage);
+    //  $('.pager-input').val(currentImage);
     }
-    $('.pager-input').val(currentImage);
+    //$('.pager-input').val(currentImage);
     $('.controls').removeClass('disabled').css({
     opacity:1
     });
     preventControls = false;
-  });
+  //});
 }
 
 
 function init() {
   setSize();
   $("input.numeric").numeric();
-showImage(images[currentImage]['url'],images[currentImage]['type']);
-  startTimer();
+//showImage(images[currentImage]['url'],images[currentImage]['type']);
+ // startTimer();
 }
 

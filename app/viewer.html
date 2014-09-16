@@ -144,7 +144,7 @@
     <div id="darkBackside" class="controls controlArrowDarker rightArrow"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
     <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><img src="assets/img/controls/questionmark.png" class="maxWidthImage" alt=""></div></div>
   <!-- PAGER -->
-    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" value="3" class="pager-input numeric" id="pageNumber" ng-model="BrowseService.currentPage" ng-blur="browse.goTo()"><span class="page-seperator">/</span><span class="pager-pages">176</span></div></div>
+    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" value="3" class="pager-input numeric" id="pageNumber" ng-model="browse.currentPage" ng-enter="browse.goTo()"><span class="page-seperator">/</span><span class="pager-pages">{{browse.numberOfObjects}}</span></div></div>
     <!-- start megazoom, display:none is added in case that js is disabled! -->
     <div id="map"></div>
   </div>
@@ -167,6 +167,7 @@
 
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js"></script>
 
 <!--     <script type="text/javascript" src="assets/js/FWDMegazoom.js"></script> -->
 
