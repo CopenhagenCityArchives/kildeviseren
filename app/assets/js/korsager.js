@@ -7,7 +7,6 @@
    // var currentImage = 1;
   //  $('.pager-input').val(currentImage);
 
-
 $(document).ready(function() {
   init();
       /*GLOBAL PLACEHOLDER FIX + LABELS*/
@@ -58,7 +57,7 @@ height: $(window).height()
 });
 
   /*var element = document.getElementById("map");
-  jester(element).tap(function() {
+  jester(element).fastClick(function() {
      // alert("You hit the target!");
   });
   jester(element).pinchwiden(function() {
@@ -84,20 +83,37 @@ height: $(window).height()
 
 
 
-
-    $(document).on('tap','#darkQuestionmark', function() {
+    $(document).on('fastClick','#print', function() {
+      $('.lhp_miv_content_holder' ).print();
+    });
+    $(document).on('fastClick','#darkQuestionmark', function() {
       var _frontV = $('#infoLayer');
       showControls();
       stopCounter = true;
       _frontV.show();
       TweenMax.fromTo(_frontV, 0.5, {scaleX:0.6,scaleY:0.6,autoAlpha:0},{scaleX:1,scaleY:1,autoAlpha:1,ease:Power4.easeInOut});
     });
-    $(document).on('tap','#infoClose', function() {
+    $(document).on('fastClick','#infoClose', function() {
       var _frontV = $('#infoLayer');
       TweenMax.fromTo(_frontV, 0.5, {scaleX:1,scaleY:1,autoAlpha:1},{scaleX:0.6,scaleY:0.6,autoAlpha:0,ease:Power4.easeInOut, onComplete: function() {
         _frontV.hide();
         stopCounter = false;
       }});
+    });
+      $(document).on('fastClick','.qmark', function() {
+    var thecontent = $(this).data('content'), overbox = $(this).parent(), themark = $(this), theinput = $(this).parent().find('.chosen-container > a.chosen-single > span');
+
+      themark.fadeOut(10, function() {
+        theinput.hide();
+        overbox.find('.form_box_input_help').html(thecontent).fadeIn(100, function() {
+          setTimeout(function() {
+            overbox.find('.form_box_input_help').html(thecontent).fadeOut(100, function() {
+              theinput.show();
+              themark.fadeIn(300);
+             });
+          }, 2000);
+        });
+      });
     });
 
     $(document).on('contextmenu','.controls', function(event) {
@@ -112,7 +128,7 @@ height: $(window).height()
 
 
 /*
-    $(document).on('tap','#bigRight', function() {
+    $(document).on('fastClick','#bigRight', function() {
       if (!preventControls) {
         if (currentImage === imgCount) {
           currentImage = 1;
@@ -123,7 +139,7 @@ height: $(window).height()
         showImage(images[currentImage]['url'],images[currentImage]['type']);
       }
     });
-    $(document).on('tap','#bigLeft', function() {
+    $(document).on('fastClick','#bigLeft', function() {
       if (!preventControls) {
       if (currentImage === 1) {
         currentImage = imgCount;
@@ -134,13 +150,13 @@ height: $(window).height()
       }
     });
 
-    $(document).on('tap','#smallLeft', function() {
+    $(document).on('fastClick','#smallLeft', function() {
       if (!preventControls) {
       currentImage = 1;
       showImage(images[currentImage]['url'],images[currentImage]['type']);
       }
     });
-    $(document).on('tap','#smallRight', function() {
+    $(document).on('fastClick','#smallRight', function() {
       if (!preventControls) {
       currentImage = imgCount;
       showImage(images[currentImage]['url'],images[currentImage]['type']);
@@ -149,7 +165,7 @@ height: $(window).height()
 
 */
 
-    $(document).on('tap','.btnGem', function() {
+    $(document).on('fastClick','.btnGem', function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
         $(this).css({
@@ -168,7 +184,7 @@ height: $(window).height()
       }
     });
 
-    $(document).on('tap','.btnLink', function() {
+    $(document).on('fastClick','.btnLink', function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
         $(this).css({
@@ -183,26 +199,34 @@ height: $(window).height()
           'border-bottom-right-radius': '0',
           'border-top-right-radius': '0'
         });
-        $(this).find('.linkDiv').val(images[currentImage]['url']).fadeIn(300).focus();
+        /*$(this).find('.linkDiv').val(images[currentImage]['url']).fadeIn(300).focus();*/
       }
     });
 
-    $(document).on('tap','.linkDivCont', function(event) {
+    $(document).on('fastClick','.linkDivCont', function(event) {
       event.preventDefault();
       /*event.stopPropagation();*/
       return false;
     });
-    $(document).on('tap','.gemDiv', function(event) {
+    $(document).on('fastClick','.gemDiv', function(event) {
       event.preventDefault();
       /*event.stopPropagation();*/
       return false;
     });
 
-    $(document).on('tap','.linkDiv', function() {
+    $(document).on('fastClick','.linkDiv', function() {
         $(this).get(0).setSelectionRange(0,9999);
     });
     $(document).on('focus','.linkDiv', function() {
         $(this).get(0).setSelectionRange(0,9999);
+        $(this)
+        .one('mouseup', function () {
+            $(this).select();
+            stopCounter = true;
+            $(this).addClass('focussed');
+            return false;
+        })
+        .select();
     });
 
 
@@ -211,7 +235,7 @@ height: $(window).height()
 
 
     $(document).on({
-    tap: function() {
+    fastClick: function() {
         if (!preventControls) {
           showControls();
           startTimer();
@@ -255,7 +279,7 @@ height: $(window).height()
           startTimer();
         }
     },
-    tap: function() {
+    fastClick: function() {
 
         if ($('input.pager-input').hasClass('focussed')) {
           stopCounter = true;
@@ -346,8 +370,7 @@ height: $(window).height()
     }, "#infoLayer");
 
 
-     $(document).on('tap singleTap','#toggleTop', function() {
-      if (!preventControls) {
+     $(document).on('fastClick','#toggleTop', function() {
       var topControls = $('.topcontrols'), findText = $('.findtext');
       if (topDown) {
         findText.html('- - -');
@@ -366,11 +389,9 @@ height: $(window).height()
           topDown = true;
           preventControls = true;
           $('.controls').not('#toggleTop').fadeOut(400, function() {
-
           });
           findText.html('LUK');
         }});
-      }
       }
     });
 
@@ -382,14 +403,22 @@ height: $(window).height()
     // resize on page load
     .each(resizeInput);
 
-    $('input.pager-input').on('focus', function() {
-      stopCounter = true;
-      $(this).addClass('focussed');
 
-    });
-    $('input.pager-input').on('tap', function() {
+    $('input.pager-input').on('fastClick', function() {
       stopCounter = true;
       $(this).get(0).setSelectionRange(0,9999);
+      $(this).get(0).select();
+    });
+
+    $('input.pager-input').on('focus', function (e) {
+    $(this)
+        .one('mouseup', function () {
+            $(this).select();
+            stopCounter = true;
+            $(this).addClass('focussed');
+            return false;
+        })
+        .select();
     });
 
     $('input.pager-input').on('blur', function() {
@@ -533,7 +562,7 @@ function showImage(imageSrc,condition) {
     "animTime" : 300,
     "draggInertia" : 0,
     "zoomLevel" : 4,
-    "zoomStep" : 0.5,
+    "zoomStep" : 0.25,
     "contentUrl" : imageSrc,
     "intNavEnable" : true,
     "intNavPos" : "BL",
@@ -550,7 +579,7 @@ function showImage(imageSrc,condition) {
     "mapEnable" : false,
     //"mapThumb" : "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc,
     "mapPos" : "TR",
-    "popupShowAction" : "tap",
+    "popupShowAction" : "fastClick",
     "testMode" : false
     };
     if ($('#map').length != 0) {
@@ -574,3 +603,7 @@ function init() {
  // startTimer();
 }
 
+function PrintElem(elem)
+{
+    Popup($(elem).html());
+}

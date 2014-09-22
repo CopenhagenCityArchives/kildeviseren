@@ -81,7 +81,9 @@
 ul li.lhp_miv_nav_btt_disab {
 	cursor:default;
 }
-
+.lhp_miv_content_holder {
+	width:100%;
+}
 /*
 * map palette
 */

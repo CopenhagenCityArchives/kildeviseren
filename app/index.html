@@ -1,132 +1,158 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="KSA_Bladr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="assets/favicon.ico">
-
-    <title>Kildeviseren</title>
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script type="text/javascript" src="//use.typekit.net/qna6hyw.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-  </head>
-  <body>
-  <div id="preload">
-    <div id="preload-animation"></div>
-    <p class="preloader-text">ÅBNER KK-VIEWER</p>
-  </div>
-  <div id="frontvideo">
-  <div class="close-frontvideo"><i class="glyphicon glyphicon-remove closeVideo"></i></div>
-      <div class="container">
-          <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="video_screen"></div>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-              </div>
-          </div>
-      </div>
-  </div>
-  <div id="page_find" class="container page first">
-      <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="header">
-                    <img src="assets/img/big_kk.png" class="header_logo">
-                </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="header_text">
-                        Politiets mandtaller 1866-1899 er skemaer over personer
-                        over 10 år bosat i København, registreret to gange årligt af
-                        Københavns Politi. Her er et eksempel på et <a href="#">link</a>
-                </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="form_box">
-                    <div id="videoToggle" class="btn btn-default"><i class="glyphicon glyphicon-play video_play_icon"></i>Inden du begynder</div>
-                    <div class="form-group">
-                        <div class="qmark"
-                        data-content="Her kan du indtaste den ønskede gade/vej">
-                            <img src="assets/img/qmark.png">
-                        </div>
-                        <div class="form_box_input_help"></div>
-                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Gade" data-label="Indtast gadens navn" id="gade">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="År" data-label="Indtast år" id="year">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Måned" data-label="Indtast måned" id="month">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem1">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem2">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem3">
-                    </div>
-                    <p class="form-text-bottom">Alle felter skal udfyldes</p>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default btn-submit">Find</button>
-                    </div>
-                    <!-- <div class="cc_footer">
-                        <img src="assets/img/cc.png">
-                    </div> -->
-                </div>
-          </div>
-      </div>
-  </div>
-  <div id="redirector" class="container-fluid page secondpage">
-      <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <span class="goBack"></span>
-          </div>
-      </div>
-  </div>
-
-    <!-- SCRIPTS -->
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="assets/js/bootstrap.js"></script>
-    <!-- PLUGINS -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/easing/EasePack.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/jquery.gsap.min.js"></script>
-    <script src="assets/js/plugins/canvasLoader.js"></script>
-
-    <!-- CUSTOM READY SCRIPTS -->
-    <script type="text/javascript">
-    var cl = new CanvasLoader('preload-animation');
-    cl.setShape('square'); // default is 'oval'
-    cl.setDiameter(60); // default is 40
-    cl.setDensity(8); // default is 40
-    cl.setRange(1.3); // default is 1.3
-    cl.setSpeed(1); // default is 2
-    cl.setFPS(18); // default is 24
-    cl.show(); // Hidden by default
-    </script>
-    <script src="assets/js/front.js"></script>
- </body>
+<!DOCTYPE html>
+<html lang="en" ng-app="KSA_Bladr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+    <title>Kildeviseren</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="//use.typekit.net/qna6hyw.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+  </head>
+  <body>
+  <div id="preload">
+    <div id="preload-animation"></div>
+    <p class="preloader-text">ÅBNER KK-VIEWER</p>
+  </div>
+  <div id="frontvideo">
+  <div class="close-frontvideo"><i class="glyphicon glyphicon-remove closeVideo"></i></div>
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="video_screen"></div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <div id="page_find" class="container page first">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="header">
+                    <img src="assets/img/big_kk.png" class="header_logo">
+                </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="header_text">
+                        Politiets mandtaller 1866-1899 er skemaer over personer
+                        over 10 år bosat i København, registreret to gange årligt af
+                        Københavns Politi. Her er et eksempel på et <a href="#">link</a>
+                </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form_box">
+                    <div id="videoToggle" class="btn btn-default"><i class="glyphicon glyphicon-play video_play_icon"></i>Inden du begynder</div>
+                    <div class="form-group">
+                        <div class="qmark"
+                        data-content="Her kan du indtaste den ønskede gade/vej">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help"></div>
+                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Gade" data-label="Indtast gadens navn" id="gade">
+                    </div>
+                    <div class="form-group">
+                        <div class="qmark"
+                        data-content="Her kan du indtaste det ønskede år">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help"></div>
+                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="År" data-label="Indtast år" id="year">
+                    </div>
+                    <div class="form-group">
+                        <div class="qmark"
+                        data-content="Her kan du indtaste den ønskede måned">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help"></div>
+                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Måned" data-label="Indtast måned" id="month">
+                    </div>
+                    <div class="form-group">
+                        <div class="qmark"
+                        data-content="Lorem ipsum">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help"></div>
+                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem1">
+                    </div>
+                    <div class="form-group">
+                        <div class="qmark"
+                        data-content="Lorem ipsum">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help"></div>
+                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem2">
+                    </div>
+                    <div class="form-group">
+                        <div class="qmark"
+                        data-content="Lorem ipsum">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help"></div>
+                        <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem3">
+                    </div>
+                    <p class="form-text-bottom">Alle felter skal udfyldes</p>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default btn-submit">Find</button>
+                    </div>
+                    <!-- <div class="cc_footer">
+                        <img src="assets/img/cc.png">
+                    </div> -->
+                </div>
+          </div>
+      </div>
+  </div>
+  <div id="redirector" class="container-fluid page secondpage">
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <span class="goBack"></span>
+          </div>
+      </div>
+  </div>
+
+    <!-- SCRIPTS -->
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <!-- PLUGINS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/easing/EasePack.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/jquery.gsap.min.js"></script>
+    <script src="assets/js/plugins/canvasLoader.js"></script>
+
+    <!-- CUSTOM READY SCRIPTS -->
+    <script type="text/javascript">
+    var cl = new CanvasLoader('preload-animation');
+    cl.setShape('square'); // default is 'oval'
+    cl.setDiameter(60); // default is 40
+    cl.setDensity(8); // default is 40
+    cl.setRange(1.3); // default is 1.3
+    cl.setSpeed(1); // default is 2
+    cl.setFPS(18); // default is 24
+    cl.show(); // Hidden by default
+    </script>
+    <script src="assets/js/front.js"></script>
+ </body>
 </html>

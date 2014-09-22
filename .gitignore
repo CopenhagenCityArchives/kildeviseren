@@ -6,3 +6,4 @@
 .vagrant*
 www/vendor*
 nbproject
+app/test/node_modules*
