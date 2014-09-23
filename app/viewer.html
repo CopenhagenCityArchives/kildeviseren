@@ -133,19 +133,19 @@
         <div class="btn btn-light btnGem">Gem
           <div class="gemDiv">
             <ul>
-              <li><a target="_blank" href="dl.php?fn=http://www.kbhkilder.dk/collections/mandtal/donor_0001/project_4804/007529669_1367345514/007529669_00005.jpg">Lille</a></li>
+              <li><a target="_blank" href="{{collectionInfo.URL}}">Lille</a></li>
               <li>Stor</li>
             </ul>
           </div>
         </div><br/>
         <div class="btn btn-light btnLink">Link
-          <div class="linkDivCont"><input type="text" class="linkDiv" value="" id="linkInput"></div>
+          <div class="linkDivCont"><input type="text" class="linkDiv" value="{{collectionInfo.URL}}" id="linkInput"></div>
           </div>
         </div>
         </div>
         <div class="topcontrols_container">
           <div id="toggleTop" class="topcontrols-button findBtn"><span class="findtext">MENU</span></div>
-          <div class="topcontrols-button sourceText"><div class="sourcetext">politiets mandtal <span class="bold">københavn 1897, maj, vognmagergade</span></div></div>
+          <div class="topcontrols-button sourceText"><div class="sourcetext">politiets mandtal <span class="bold">{{collectionInfo.metadataText}}</span></div></div>
         </div>
       </div>
     </div>
@@ -160,7 +160,7 @@
     <div id="darkBackside" class="controls controlArrowDarker rightArrow"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
     <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><img src="assets/img/controls/questionmark.png" class="maxWidthImage" alt=""></div></div>
   <!-- PAGER -->
-    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" value="3" class="pager-input numeric" id="pageNumber" ng-model="browse.currentPage" ng-enter="browse.goTo()"><span class="page-seperator">/</span><span class="pager-pages">{{browse.numberOfObjects}}</span></div></div>
+    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="browse.currentPage" ng-enter="browse.goTo()" ng-blur="browse.goTo()"><span class="page-seperator">/</span><span class="pager-pages">{{browse.numberOfObjects}}</span></div></div>
     <!-- start megazoom, display:none is added in case that js is disabled! -->
     <div id="map"></div>
   </div>
@@ -184,13 +184,14 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-touch.min.js"></script>
 
 <!--     <script type="text/javascript" src="assets/js/FWDMegazoom.js"></script> -->
 
 
         <!-- Chosen directive for Angular -->
-    <script src="assets/js/chosen.jquery.js"></script>
-    <script src="directives/chosen.js"></script>
+   <script src="assets/js/chosen.jquery.js"></script>
+
 <!--     <script>L_PREFER_CANVAS = true;</script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script src="assets/js/plugins/leaflet-minimap.js"></script> -->
@@ -199,6 +200,7 @@
     <!--<script src="directives/ui-bootstrap-0.11.0.min.js"></script>
     <script src="directives/ui-bootstrap-tpls-0.11.0.min.js"></script>-->
     <script src="app.js"></script>
+    <script src="directives/chosen.js"></script>
     <script src="controllers/ViserCtrl.js"></script>
     <script src="services/BrowseService.js"></script>
     <script src="services/MetadataManagerService.js"></script>

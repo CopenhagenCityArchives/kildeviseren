@@ -7,7 +7,8 @@ var app = angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
   'KSA_Bladr.services',
   'localytics.directives',
-  'ngRoute'
+  'ngRoute',
+  'ngTouch'
 ]);
 
 app.config(function ($routeProvider, $locationProvider) {
