@@ -1,0 +1,126 @@
+<div id="preload"></div>
+  <div id="page_viewer">
+  <div id="infoLayer">
+  <div class="info-big info-left" style="left:60px">Forrige Side</div>
+  <div class="info-big info-right" style="right:60px">Næste Side</div>
+  <div class="info-small info-left" style="left:40px">Første side</div>
+  <div class="info-small info-right" style="right:40px">Sidste side</div>
+  <div class="info-menu">Menu</div>
+  <div class="info-map">Overblik</div>
+  <div class="info-zoom">Zoom</div>
+  <div class="info-sidetal">Sidetal</div>
+  <div id="infoClose"><i class="glyphicon glyphicon-remove"></i><span class="closeInfoText">LUK INFO</span></div>
+  </div>
+    <div id="topfind" class="topcontrols">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-6 col-sm-1 col-md-1 col-lg-1 alignLeft">
+          <a href="index.html" class="btn btn-default">forside</a>
+        </div>
+        <div class="col-xs-6 col-sm-11 col-md-11 col-lg-11">
+          <div class="form_text">
+            Politiets mandtaller 1866-1899 er skemaer over personer
+            over 10 år bosat i København, registreret to gange årligt af
+            Københavns Politi. Her er et eksempel på et <a href="#">link</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 topcontrols_form">
+          <form class="form-inline padTheForm" role="form">
+            <div class="form-group">
+
+              <select
+                chosen
+                data-placeholder="Gade"
+                no-results-text="'Ingen resultater'"
+                ng-model="metadata.selectedStreet"
+                ng-options="value as label for (value, label) in metadata.streets"
+                style="width:300px;">
+                <option value=""></option>
+              </select>
+              <div class="qmark qmarktop"
+                        data-content="Her kan du indtaste den ønskede gade/vej">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help input_help_top"></div>
+            </div>
+            <div class="form-group">
+
+              <select
+                chosen
+                disable-search="true"
+                allow-single-deselect="true"
+                data-placeholder="År"
+                no-results-text="'Ingen resultater'"
+                ng-model="metadata.selectedYear"
+                ng-options="year.id as year.text for year in metadata.years"
+                style="width:300px;">
+                <option value=""></option>
+              </select>
+              <div class="qmark qmarktop"
+                        data-content="Her kan du indtaste den ønskede år">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help input_help_top"></div>
+            </div>
+              <div class="form-group">
+
+                <select
+                chosen
+                disable-search="true"
+                allow-single-deselect="true"
+                data-placeholder="Måned"
+                no-results-text="'Ingen resultater'"
+                ng-model="metadata.selectedMonth"
+                ng-options="month.id as month.text for month in metadata.months"
+                style="width:300px;">
+                <option value=""></option>
+              </select>
+              <div class="qmark qmarktop"
+                        data-content="Her kan du indtaste den ønskede måned">
+                            <img src="assets/img/qmark.png">
+                        </div>
+                        <div class="form_box_input_help input_help_top"></div>
+              </div>
+              <div class="form-group">
+                        <button type="submit" class="btn btn-default btn-submit">Find</button>
+                  </div>
+          </form>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 topcontrols_form ">
+        <div class="btn btn-light" id="print">Print</div>
+        <div class="btn btn-light btnGem">Gem
+          <div class="gemDiv">
+            <ul>
+              <li><a target="_blank" href="{{collectionInfo.URL}}">Lille</a></li>
+              <li>Stor</li>
+            </ul>
+          </div>
+        </div><br/>
+        <div class="btn btn-light btnLink">Link
+          <div class="linkDivCont"><input type="text" class="linkDiv" value="{{collectionInfo.URL}}" id="linkInput"></div>
+          </div>
+        </div>
+        </div>
+        <div class="topcontrols_container">
+          <div id="toggleTop" class="topcontrols-button findBtn"><span class="findtext">MENU</span></div>
+          <div class="topcontrols-button sourceText"><div class="sourcetext">politiets mandtal <span class="bold">{{collectionInfo.metadataText}}</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  <!-- BIG ARROWS -->
+    <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="browse.step(-1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
+    <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="browse.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
+  <!-- SMALLER ARROWS -->
+    <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="browse.step(-5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
+    <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="browse.step(5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
+  <!-- DARKER CONTROLS -->
+    <div id="darkBackside" class="controls controlArrowDarker rightArrow"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
+    <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><img src="assets/img/controls/questionmark.png" class="maxWidthImage" alt=""></div></div>
+  <!-- PAGER -->
+    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="browse.currentPage" ng-enter="browse.goTo()" ng-blur="browse.goTo()"><span class="page-seperator">/</span><span class="pager-pages">{{browse.numberOfObjects}}</span></div></div>
+    <!-- start megazoom, display:none is added in case that js is disabled! -->
+    <div id="map"></div>
+  </div>

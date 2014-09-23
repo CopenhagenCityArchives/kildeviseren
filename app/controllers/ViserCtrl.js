@@ -1,6 +1,6 @@
 //Retrieves the module KSA_Bladr.controllers, and adds a new controller
 angular.module('KSA_Bladr.controllers').
-    controller('ViserCtrl', function($scope, $location, $window, BrowseService, MetadataManagerService, FormBuilderService, $http, $location){
+    controller('ViserCtrl', function($scope, $location, $window, BrowseService, MetadataManagerService, FormBuilderService, $http){
 
         //browse model
         $scope.browse = {};
@@ -67,6 +67,14 @@ angular.module('KSA_Bladr.controllers').
             //Get metadata filters for the collection
             //Note that this is hardcoded until a more generic solution is needed
         };
+
+$scope.searchObjects = function(){
+    $location.url("/2/1");
+}
+
+$scope.goToSearch = function(){
+    $location.url("/2");
+}
 
         $scope.changeFilter = function(filterName, value){
             if(value){
