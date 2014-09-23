@@ -69,11 +69,11 @@ angular.module('KSA_Bladr.controllers').
         };
 
 $scope.searchObjects = function(){
-    $location.url("/2/1");
+    $location.path('2/1');
 }
 
 $scope.goToSearch = function(){
-    $location.url("/2");
+    $location.path('2/');
 }
 
         $scope.changeFilter = function(filterName, value){
