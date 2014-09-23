@@ -94,7 +94,7 @@ angular.module('KSA_Bladr.services').
         };
         
         pubs.goTo = function(number){
-            pubs.step(number-pubs.currentStep);  
+            pubs.step(number-1-pubs.currentStep);
         };
         
         pubs.goToNext = function(){
