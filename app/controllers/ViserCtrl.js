@@ -68,6 +68,8 @@ angular.module('KSA_Bladr.controllers').
             //Note that this is hardcoded until a more generic solution is needed
         };
 
+$scope.$on('$viewContentLoaded', function() {$window.preloaderHide();});
+
 $scope.searchObjects = function(){
     $location.path('2/1');
 }

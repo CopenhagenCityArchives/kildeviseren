@@ -19,17 +19,17 @@ app.config(function ($routeProvider, $locationProvider) {
     **/
     // route for single archiveversion in admin view
     .when('/:collectionId', {
-        templateUrl: '/partials-filter.html',
+        templateUrl: 'partials-filter.html',
         controller: 'ViserCtrl'
     })
     // route for list of archiveversions in admin view
     .when('/:collectionId/:itemId', {
-        templateUrl: '/partials-viewer.html',
+        templateUrl: 'partials-viewer.html',
         controller: 'ViserCtrl'
     })
     // route for list of archiveversions in admin view
     .when('/', {
-        templateUrl: '/partials-filter.html',
+        templateUrl: 'partials-filter.html',
         controller: 'ViserCtrl'
     });
 
