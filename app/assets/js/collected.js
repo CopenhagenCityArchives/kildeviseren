@@ -40,7 +40,7 @@ $(document).ready(function() {
     ===========================================*/
 
     /*==========  ÅBNER INFO LAG  ==========*/
-    $(document).on('fastClick','#darkQuestionmark', function() {
+    $(document).on('click','#darkQuestionmark', function() {
       var _frontV = $('#infoLayer');
       showControls();
       stopCounter = true;
@@ -50,7 +50,7 @@ $(document).ready(function() {
 
     /*==========  LUKKER INFOLAG / KRYDS I MIDTEN  ==========*/
 
-    $(document).on('fastClick','#infoClose', function() {
+    $(document).on('click','#infoClose', function() {
       var _frontV = $('#infoLayer');
       TweenMax.fromTo(_frontV, 0.5, {scaleX:1,scaleY:1,autoAlpha:1},{scaleX:0.6,scaleY:0.6,autoAlpha:0,ease:Power4.easeInOut, onComplete: function() {
         _frontV.hide();
@@ -64,7 +64,7 @@ $(document).ready(function() {
     /*================================================
     =            SPØRGSMÅLSTEGN ANIMATION            =
     ================================================*/
-    $(document).on('fastClick','.qmark', function() {
+    $(document).on('click','.qmark', function() {
     var thecontent = $(this).data('content'), overbox = $(this).parent(), themark = $(this), theinput = $(this).parent().find('.chosen-container > a.chosen-single > span');
       themark.fadeOut(10, function() {
         theinput.hide();
@@ -94,7 +94,7 @@ $(document).ready(function() {
     =            TOPBOX LINK TIL HØJRE            =
     =============================================*/
     /*==========  GEM KNAPPEN  ==========*/
-    $(document).on('fastClick','.btnGem', function() {
+    $(document).on('click','.btnGem', function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
         $(this).css({
@@ -113,7 +113,7 @@ $(document).ready(function() {
       }
     });
     /*==========  LINK KNAPPEN  ==========*/
-    $(document).on('fastClick','.btnLink', function() {
+    $(document).on('click','.btnLink', function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
         $(this).css({
@@ -128,26 +128,27 @@ $(document).ready(function() {
           'border-bottom-right-radius': '0',
           'border-top-right-radius': '0'
         });
+        $(this).find('.linkDiv').fadeIn(300);
         /* SKIFT VÆRDIEN AF LINK-BOKSEN = $(this).find('.linkDiv').val(images[currentImage]['url']).fadeIn(300).focus();*/
       }
     });
     /*==========  PRINT KNAPPEN  ==========*/
-    $(document).on('fastClick','#print', function() {
+    $(document).on('click','#print', function() {
       $('.lhp_miv_content_holder' ).print();
     });
     /*-----  End of TOPBOX LINK TIL HØJRE  ------*/
-    $(document).on('fastClick','.linkDivCont', function(event) {
+    $(document).on('click','.linkDivCont', function(event) {
       event.preventDefault();
       return false;
     });
-    $(document).on('fastClick','.gemDiv', function(event) {
-      event.preventDefault();
-      return false;
+    $(document).on('click','.gemDiv', function(event) {
+/*      event.preventDefault();
+      return false;*/
     });
     /*===============================================
     =            MARKER ALT I LINK-INPUT            =
     ===============================================*/
-        $(document).on('fastClick','.linkDiv', function() {
+        $(document).on('click','.linkDiv', function() {
         $(this).get(0).setSelectionRange(0,9999);
         $(this)
         .one('mouseup', function () {
@@ -210,7 +211,7 @@ $(document).ready(function() {
     /*===============================================
     =            TOPBOX HÅNDTERING AF AKTIVERING            =
     ===============================================*/
-     $(document).on('fastClick','#toggleTop', function() {
+     $(document).on('click','#toggleTop', function() {
       var topControls = $('.topcontrols'), findText = $('.findtext');
       if (topDown) {
         /*==========  VIS TOPPEN ALLEREDE ER NEDE - START ANIMATION / LUK  ==========*/
@@ -242,23 +243,19 @@ $(document).ready(function() {
     ===============================================*/
 
     /*==========  INPUT RESIZE I FORHOLD TIL INDHOLD  ==========*/
-    $('input.pager-input')
-    // event handler
-    .keyup(function() {
-      resizeInput();
-    })
-    // resize on page load
-    .each(resizeInput);
+    $(document).on('keyup','input#pageNumber', function() {
+      resizeInput($(this));
+    });
 
     /*==========  MARKER ALT TEKST VED CLICK  ==========*/
-    $('input.pager-input').on('fastClick', function() {
+    $(document).on('click','input#pageNumber', function() {
       stopCounter = true;
       $(this).get(0).setSelectionRange(0,9999);
       $(this).get(0).select();
     });
 
     /*==========  MARKER ALT TEKST VED FOCUS  ==========*/
-    $('input.pager-input').on('focus', function (e) {
+    $(document).on('focus','input#pageNumber', function (e) {
     $(this)
         .one('mouseup', function () {
             $(this).select();
@@ -283,18 +280,7 @@ $(document).ready(function() {
       }, scroll: function(e) {
 
       }, load: function(e) {
-          var _preText = $(document).find('.preloader-text'), _preloader = $(document).find('#preload'), _preCanvas = $('#preload-animation');
-          TweenMax.to(_preCanvas, 0.3, {autoAlpha:0});
-          $('#page_viewer').show();
-          setSize();
-          TweenMax.to(_preText, 0.5, {'margin-top':'-10px',autoAlpha:0,ease:Power4.easeInOut, onComplete: function() {
-            _preText.hide();
-            $('.controls').show();
-            TweenMax.to(_preloader, 0.4, {autoAlpha:0,ease:Power4.easeInOut, onComplete: function() {
-              _preloader.hide().remove();
-
-            }});
-          }});
+          preloaderHide();
       }
     });
 
@@ -343,19 +329,36 @@ $(document).ready(function() {
     }
 
 
+    /*==========  PREOADER FUNCTION  ==========*/
+    function preloaderHide() {
+                var _preText = $(document).find('.preloader-text'), _preloader = $(document).find('#preload'), _preCanvas = $('#preload-animation');
+          TweenMax.to(_preCanvas, 0.3, {autoAlpha:0});
+          $('#page_viewer').show();
+          setSize();
+          TweenMax.to(_preText, 0.5, {'margin-top':'-10px',autoAlpha:0,ease:Power4.easeInOut, onComplete: function() {
+            _preText.hide();
+            $('.controls').show();
+            TweenMax.to(_preloader, 0.4, {autoAlpha:0,ease:Power4.easeInOut, onComplete: function() {
+              _preloader.hide().remove();
+
+            }});
+          }});
+    }
+
     /*==========  RESIZE INPUT  ==========*/
 
-    function resizeInput() {
-      if ($(this).val()) {
-        $(this).attr('size', $(this).val().length);
+    function resizeInput(elm) {
+      if (elm.val()) {
+        elm.attr('size', elm.val().length);
       } else {
-        $(this).attr('size', 1);
+        elm.attr('size', 1);
       }
     }
 
     /*==========  OPSÆTTER SIZES PÅ ELEMENTER  ==========*/
 
     function setSize() {
+      resizeInput($(document).find('input#pageNumber'));
       $('#page_viewer').css({
         height:$(window).height(),
         width:$(window).width()
@@ -407,9 +410,9 @@ $(document).ready(function() {
         "startX" : 956,
         "startY" : 660,
         "animTime" : 300,
-        "draggInertia" : 0,
+        "draggInertia" : 4,
         "zoomLevel" : 4,
-        "zoomStep" : 0.25,
+        "zoomStep" : 0.15,
         "contentUrl" : imageSrc,
         "intNavEnable" : true,
         "intNavPos" : "BL",
@@ -426,7 +429,7 @@ $(document).ready(function() {
         "mapEnable" : false,
         //"mapThumb" : "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc,
         "mapPos" : "TR",
-        "popupShowAction" : "fastClick",
+        "popupShowAction" : "click",
         "testMode" : false
         };
         if ($('#map').length != 0) {

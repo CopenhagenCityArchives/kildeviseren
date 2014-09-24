@@ -74,7 +74,7 @@
 
                     <div id="videoToggle" class="btn btn-default"><i class="glyphicon glyphicon-play video_play_icon"></i>Inden du begynder</div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
 
                         <div class="qmark"
 
@@ -168,7 +168,63 @@
 
                         <input type="text" class="form-control form_box_input floatlabel" data-placehold="Lorem Ipsum" data-label="Indtast Lorem Ipsum" id="lorem3">
 
+                    </div> -->
+
+                    <div class="form-group">
+
+                      <select
+                        chosen
+                        data-placeholder="Gade"
+                        no-results-text="'Ingen resultater'"
+                        ng-model="metadata.selectedStreet"
+                        ng-options="value as label for (value, label) in metadata.streets"
+                        style="width:300px;">
+                        <option value=""></option>
+                      </select>
+                      <div class="qmark qmarktop"
+                                data-content="Her kan du indtaste den ønskede gade/vej">
+                                    <img src="assets/img/qmark.png">
+                                </div>
+                                <div class="form_box_input_help input_help_top"></div>
                     </div>
+                    <div class="form-group">
+
+                      <select
+                        chosen
+                        disable-search="true"
+                        allow-single-deselect="true"
+                        data-placeholder="År"
+                        no-results-text="'Ingen resultater'"
+                        ng-model="metadata.selectedYear"
+                        ng-options="year.id as year.text for year in metadata.years"
+                        style="width:300px;">
+                        <option value=""></option>
+                      </select>
+                      <div class="qmark qmarktop"
+                                data-content="Her kan du indtaste den ønskede år">
+                                    <img src="assets/img/qmark.png">
+                                </div>
+                                <div class="form_box_input_help input_help_top"></div>
+                    </div>
+                      <div class="form-group">
+
+                        <select
+                        chosen
+                        disable-search="true"
+                        allow-single-deselect="true"
+                        data-placeholder="Måned"
+                        no-results-text="'Ingen resultater'"
+                        ng-model="metadata.selectedMonth"
+                        ng-options="month.id as month.text for month in metadata.months"
+                        style="width:300px;">
+                        <option value=""></option>
+                      </select>
+                      <div class="qmark qmarktop"
+                                data-content="Her kan du indtaste den ønskede måned">
+                                    <img src="assets/img/qmark.png">
+                                </div>
+                                <div class="form_box_input_help input_help_top"></div>
+                      </div>
 
                     <p class="form-text-bottom">Alle felter skal udfyldes</p>
 
