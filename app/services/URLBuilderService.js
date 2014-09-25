@@ -53,14 +53,18 @@ angular.module('KSA_Bladr.services').
         };
 
         //Url of the remote server, base of all requests
-        pubs.remoteServerUrl = "http://www.kbhkilder.dk/api/data/";
-        //pubs.remoteServerUrl = "http://192.168.10.125/api/data/";
+        //pubs.remoteServerUrl = "http://www.kbhkilder.dk/api/data/";
+        pubs.remoteServerUrl = "http://192.168.10.129/api/";
+
+        pubs.collectionsUrl = function(){
+            return pubs.remoteServerUrl + 'collections/' + '?callback=JSON_CALLBACK';
+        };
 
         pubs.collectionInfoUrl = function(collectionId){
             if(!collectionId)
                 return false;
 
-            return pubs.remoteServerUrl + 'getcollectioninfo/' + collectionId + '?callback=JSON_CALLBACK';
+            return pubs.remoteServerUrl + 'collections/' + collectionId + '?callback=JSON_CALLBACK';
         };
 
 
@@ -69,7 +73,7 @@ angular.module('KSA_Bladr.services').
             var url = privates.createUrl(collectionId, metadataLevel, parameters);
 
             if(url)
-                return pubs.remoteServerUrl + "getmetadatalevels" + url;
+                return pubs.remoteServerUrl + "levels" + url;
 
             return false;
         };
@@ -79,7 +83,7 @@ angular.module('KSA_Bladr.services').
             var url = privates.createUrl(collectionId, metadataLevel, parameters);
 
             if(url)
-                return pubs.remoteServerUrl + "getmetadata" + url;
+                return pubs.remoteServerUrl + "metadata" + url;
 
             return false;
         };
@@ -93,7 +97,7 @@ angular.module('KSA_Bladr.services').
             var url = privates.createUrl(collectionId, metadataLevel, parameters);
 
             if(url)
-                return pubs.remoteServerUrl + "getobjects/2?year=1823" + url;
+                return pubs.remoteServerUrl + "data" + url;
 
             return false;
         };
