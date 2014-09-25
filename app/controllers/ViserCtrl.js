@@ -17,6 +17,8 @@ angular.module('KSA_Bladr.controllers').
         $scope.metadata.selectedYear = "";
         $scope.metadata.selectedMonth = "";
         $scope.metadata.selectedStreet = "";
+        $scope.metadata.selectedCollection = "";
+        $scope.collections = [];
 
         $scope.$watch('metadata.selectedMonth', function(newVal, old){
             $scope.changeFilter("month", newVal);
@@ -25,13 +27,19 @@ angular.module('KSA_Bladr.controllers').
             $scope.changeFilter("year", newVal);
         });
         $scope.$watch('metadata.selectedStreet', function(newVal, old){
-            $scope.changeFilter("streetname", newVal);
+            $scope.changeFilter("road_name", newVal);
+        });
+        $scope.$watch('metadata.selectedCollection', function(newVal, old){
+            if(newVal !== ""){
+                MetadataManagerService.config(newVal);
+                $scope.loadCollectionInfo();
+            }
         });
 
         //Gets the streetname from the API. TODO: This should be a generic solution
         $scope.getLocation = function(val) {
            //return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
-           return $http.jsonp('http://www.politietsregisterblade.dk/api/1?type=road&callback=JSON_CALLBACK', {
+           $http.jsonp('http://www.politietsregisterblade.dk/api/1?type=road&callback=JSON_CALLBACK', {
              params: {
                //name: val,
                //limit: 20
@@ -40,43 +48,44 @@ angular.module('KSA_Bladr.controllers').
              var addresses = [];
              var data = res.data.slice(0,res.data.length-1);
              angular.forEach(data, function(item){
-               addresses.push(item.name);
+               addresses.push({'id' : item.id, 'text' : item.name});
              });
              $scope.metadata.streets = addresses;
            });
          };
 
         $scope.init = function(){
-            //Harcoded configuration of the MetadataManagerService
-            MetadataManagerService.config(2);
-$scope.getLocation();
+            MetadataManagerService.getCollections().then(function(data){
+                $scope.collections = data;
+            });
+        };
+        /**
+         * Loads a collection and the metadata values for the corresponding levels
+         * @return void
+         */
+        $scope.loadCollectionInfo = function(){
             //Get collection info, including name, short name, description, link to info an so on
             MetadataManagerService.getCollectionInfo().then(function(){
                 $scope.browse.collectionLoaded = true;
                 $scope.collectionInfo = MetadataManagerService.collectionInfo;
-                $scope.browse.loadContent();
-            });
-
-            MetadataManagerService.getMetadataLevels().then(function(){
+        //        $scope.browse.loadContent();
+        //        //Loading data of the levels
+                MetadataManagerService.getMetadataLevels().then(function(){
                     console.log("should update filter form here, data hardcoded instead");
+                    $scope.getLocation();
                     $scope.metadata.years = MetadataManagerService.levels[0].data;
                     $scope.metadata.months = MetadataManagerService.levels[1].data;
-                }
-            );
-
-            //Get metadata filters for the collection
-            //Note that this is hardcoded until a more generic solution is needed
+                    }
+                );
+            });
         };
 
-$scope.$on('$viewContentLoaded', function() {$window.preloaderHide();});
+        $scope.$on('$viewContentLoaded', function() {$window.preloaderHide();});
 
-$scope.searchObjects = function(){
-    $location.path('2/1');
-}
 
 $scope.goToSearch = function(){
     $location.path('2/');
-}
+};
 
         $scope.changeFilter = function(filterName, value){
             if(value){
@@ -110,10 +119,11 @@ $scope.goToSearch = function(){
             $scope.browse.updateCurrentObject();
         };
 
+        /**
+         * Updates the object being viewed
+         * @return void
+         */
         $scope.browse.updateCurrentObject = function(){
-                console.log("Updating current object");
-
-
                 //Current page and step
                 $scope.browse.currentStep = BrowseService.currentStep;
                 $scope.browse.currentPage = BrowseService.currentPage;
@@ -136,15 +146,26 @@ $scope.goToSearch = function(){
                 }
         };
 
+        /**
+         * Searches for objects based on chosen level values
+         * @return void
+         */
         $scope.browse.loadContent = function(){
-            if(true ||MetadataManagerService.canRetrieveObjects()){
+            if($scope.browse.canLoadObjects){
+                $scope.status = 'Søger';
                 //Loads the objects from server, and sets the content and length
                 MetadataManagerService.getObjects().then(function(value){
-                    BrowseService.setContent(value);
-                    $scope.browse.numberOfObjects = BrowseService.contentLength();
-                    BrowseService.step(0);
-                    $scope.browse.updateCurrentObject();
-                    console.log("Content loaded");
+                    if(value.length < 1){
+                        $scope.status = 'Ingen resultater fundet';
+                    }
+                    else{
+                        BrowseService.setContent(value);
+                        $scope.browse.numberOfObjects = BrowseService.contentLength();
+                        BrowseService.step(0);
+                        $scope.browse.updateCurrentObject();
+                        $location.path('2/1');
+                        console.log("Content loaded");
+                    }
                 });
             }
         };
