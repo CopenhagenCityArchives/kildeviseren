@@ -2,15 +2,15 @@
  * MetadataFilterService
  * This service is responsible for retrieving and handling the metadata levels given in
  * the central configuration object, which this service depends on.
- * 
+ *
  * The main responsibilities are:
  * 1) Receive the levels of metadata from the server
  * 2) Receive the metadata for each level according to the settings
  *    (preset, typeahead, getallbyfilter) and filters given by other levels
  * 3) Report if all required filters is set
  * 4) Load image collections based on the filters set
- * 
- */ 
+ *
+ */
 
 //Getting the main module
 var app = angular.module('KSA_Bladr.services');
@@ -18,27 +18,27 @@ var app = angular.module('KSA_Bladr.services');
 app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     //Private methods and variables goes here
     var privates = {};
-    
+
     //Public methods and variables
     var pubs = {};
-    
+
     //The level is the same as a possible filter. TODO: Change the name
     pubs.levels = [];
     pubs.metadataType = null;
     pubs.collection_id = null;
     pubs.collectionInfo = {};
     pubs._collectionInfoId = 0;
-    
+
     pubs.config = function(collection_id){
         pubs.collection_id = collection_id;
     };
-    
+
     pubs.getCollectionInfo = function(){
         var deferred = $q.defer();
         if(pubs._collectionInfoId !== pubs.collection_id){
             $http.jsonp(URLBuilderService.collectionInfoUrl(pubs.collection_id))
             .success(function(data, status, headers) {
-                pubs.collectionInfo = data;
+                pubs.collectionInfo = data[0];
                 deferred.resolve();
             })
             .error(function(){
@@ -49,9 +49,22 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         else{
             deferred.resolve();
         }
-        return deferred.promise;        
+        return deferred.promise;
     };
-    
+
+    pubs.getCollections = function(){
+        var deferred = $q.defer();
+        $http.jsonp(URLBuilderService.collectionsUrl())
+            .success(function(data, status, headers) {
+                deferred.resolve(data);
+            })
+            .error(function(){
+                deferred.reject();
+                throw "Couldn't load collections";
+            });
+            return deferred.promise;
+    };
+
     //Retrieves metadata levels for the given collection
     pubs.getMetadataLevels = function(){
         var deferred = $q.defer();
@@ -71,10 +84,10 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             console.log("Loaded mock metadatalevels");
             deferred.resolve();
         });
-        
+
         return deferred.promise;
     };
-    
+
     //Retrieves objects with the given filters
     pubs.getObjects = function(){
         var deferred = $q.defer();
@@ -86,18 +99,18 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             deferred.reject();
             throw "Couldn't load objects";
         });
-        
+
         return deferred.promise;
-    };    
-    
-    pubs.loadAndOrderLevels = function(data){
-        pubs.levels = data.levels;
-        
-        pubs.levels.sort(function(a,b){return a.order-b.order});
-        
-        pubs.type = data.type;        
     };
-    
+
+    pubs.loadAndOrderLevels = function(data){
+        pubs.levels = data;
+
+        pubs.levels.sort(function(a,b){return a.order-b.order});
+
+        pubs.type = data.type;
+    };
+
     //Gets metadata for the given level based on the filters
     pubs.getMetadata = function(level){
         var deferred = $q.defer();
@@ -118,27 +131,27 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                 .error(function(){
                     throw "Could not load metadata for " + pubs.level[j].name;
                     deferred.reject();
-                });      
+                });
                 break;
             }
         }
-        
+
         //Two cases:
         //Hierarchy: Delete data in every level below the given, and receiving data for the one level below the given
-        //Flat: No data is loaded as it is supposed that all data is received at once???        
+        //Flat: No data is loaded as it is supposed that all data is received at once???
         if(pubs.metadataType == 'hierarchy'){
             pubs.clearMetadata(currentLevel);
         }
         else{
             pubs.clearMetadata();
         }
-        
+
         if(!shouldGetData)
             deferred.resolve();
-        
+
         return deferred.promise;
     };
-    
+
     pubs.getMetadataString = function(metadata){
         if(metadata){
             var metadataStr = '';
@@ -149,7 +162,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                         var gui = pubs.levels[i].gui_name + ' ';
                         if(pubs.levels[i].hideInMetadataString)
                             gui = "";
-                        
+
                         if(first){
                             first = false;
                         }
@@ -167,31 +180,31 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             return "";
         }
     };
-    
+
     //Checks if the metadata should be updated
     pubs.doRefreshMetadata = function(data, request, latestRequest){
         if(latestRequest !== request)
             return true;
-        
+
         if(data.length == 0)
             return true;
-        
+
         return false;
     };
-    
+
     //Returns filters in format {"name":"station","value":1}
     pubs.getFilters = function(){
         var filters = [];
-        
+
         for(var i = 0; i< pubs.levels.length; i++){
             if(pubs.levels[i].filter_value){
                 filters.push({"name" : pubs.levels[i].name, "value" : pubs.levels[i].filter_value});
             }
         }
-        
+
         return filters;
     };
-    
+
     //Removes metadata for all level on or below the given level
     pubs.clearMetadata = function(inputLevel){
         var level = inputLevel || 0;
@@ -200,20 +213,20 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             if(pubs.levels[k].type == "preset" || pubs.levels[k].type == "getallbyfilter"){
                 pubs.levels[k].data = [];
             }
-        }        
+        }
     };
-    
+
     pubs.changeFilterValue = function(level, value){
         pubs.removeFilter(level);
         pubs.addFilter({"name":level, "value":value});
-        
+
         for(var i; i < pubs.levels.length; i++){
             if(pubs.levels[i].name == level && pubs.levels[i+1] !== undefined){
                 pubs.getMetadata(pubs.levels[i+1].name);
             }
         }
     };
-    
+
     //Removes metadata filter
     pubs.removeFilter = function(filterToRemove){
         for(var i = 0; i < pubs.levels.length; i++){
@@ -221,33 +234,33 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                 pubs.levels[i].filter_value = null;
         }
     };
-    
+
     //Adds metadata filer
     pubs.addFilter = function(newFilter){
         if(newFilter.name === undefined || newFilter.value === undefined)
             throw "New filter requires both name and value";
-        
+
         for(var i = 0; i < pubs.levels.length; i++){
             if(pubs.levels[i].name == newFilter.name)
                 pubs.levels[i].filter_value = newFilter.value;
         }
     };
-    
+
     //Returns true if all required filters is set
     pubs.canRetrieveObjects = function(){
         var allRequiredFiltersSet = false;
         for(var i = 0; i<pubs.levels.length; i++){
             if(pubs.levels[i].required){
-                if(!pubs.levels[i].hasOwnProperty('filter_value') || 
-                    pubs.levels[i].filter_value === null || 
+                if(!pubs.levels[i].hasOwnProperty('filter_value') ||
+                    pubs.levels[i].filter_value === null ||
                     pubs.levels[i].filter_value == ""){
                     return false;
                 }
             }
         }
-        
+
         return true;
-    };    
-    
+    };
+
     return pubs;
 });
