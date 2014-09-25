@@ -35,7 +35,7 @@
                 data-placeholder="Gade"
                 no-results-text="'Ingen resultater'"
                 ng-model="metadata.selectedStreet"
-                ng-options="value as label for (value, label) in metadata.streets"
+                ng-options="street.id as street.text for street in metadata.streets"
                 style="width:300px;">
                 <option value=""></option>
               </select>
