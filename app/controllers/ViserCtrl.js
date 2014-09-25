@@ -33,8 +33,8 @@ angular.module('KSA_Bladr.controllers').
            //return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
            return $http.jsonp('http://www.politietsregisterblade.dk/api/1?type=road&callback=JSON_CALLBACK', {
              params: {
-               name: val,
-               limit: 20
+               //name: val,
+               //limit: 20
              }
            }).then(function(res){
              var addresses = [];
@@ -42,14 +42,14 @@ angular.module('KSA_Bladr.controllers').
              angular.forEach(data, function(item){
                addresses.push(item.name);
              });
-             return addresses;
+             $scope.metadata.streets = addresses;
            });
          };
 
         $scope.init = function(){
             //Harcoded configuration of the MetadataManagerService
             MetadataManagerService.config(2);
-
+$scope.getLocation();
             //Get collection info, including name, short name, description, link to info an so on
             MetadataManagerService.getCollectionInfo().then(function(){
                 $scope.browse.collectionLoaded = true;
