@@ -1,11 +1,13 @@
 //Instantiating namespaces and their dependencies
 angular.module('KSA_Bladr.services',[]);
 angular.module('KSA_Bladr.controllers',[]);
+angular.module('KSA_Bladr.directives',[]);
 angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
 
 var app = angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
   'KSA_Bladr.services',
+  'KSA_Bladr.directives',
   'localytics.directives',
   'ngTouch',
   'ngRoute'
@@ -13,27 +15,30 @@ var app = angular.module('KSA_Bladr', [
 
 // configure our routes
 app.config(function ($routeProvider, $locationProvider) {
-    $routeProvider
+    /*$routeProvider
     /**
     Administration
     **/
     // route for single archiveversion in admin view
-    .when('/:collectionId', {
+ /*   .when('/:collectionId', {
         templateUrl: 'partials-filter.html',
-        controller: 'ViserCtrl'
+        controller: 'ViserCtrl',
+        reloadOnSearch: false
     })
     // route for list of archiveversions in admin view
     .when('/:collectionId/:itemId', {
         templateUrl: 'partials-viewer.html',
-        controller: 'ViserCtrl'
-    })
+        controller: 'ViserCtrl',
+        reloadOnSearch: false
+    })*/
     // route for list of archiveversions in admin view
-    .when('/', {
-        templateUrl: 'partials-filter.html',
-        controller: 'ViserCtrl'
+    /*.when('/', {
+        //templateUrl: 'partials-filter.html',
+        controller: 'ViewerCtrl',
+        reloadOnSearch: false
     });
 
-    $locationProvider.html5Mode(false);
+    $locationProvider.html5Mode(false);*/
 });
 
 /*

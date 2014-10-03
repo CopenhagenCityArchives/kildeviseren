@@ -102,6 +102,13 @@ angular.module('KSA_Bladr.services').
             return false;
         };
 
+        pubs.objectUrl = function(collectionId, itemId){
+            if(!collectionId || !itemId)
+                throw 'Not all parameters given in objectUrl';
+
+            var url = pubs.remoteServerUrl + "data/" + collectionId + '?id=' + itemId + '&callback=JSON_CALLBACK';
+            return url;
+        };
 
         return pubs;
     }

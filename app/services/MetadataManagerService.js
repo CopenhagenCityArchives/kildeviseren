@@ -39,7 +39,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             $http.jsonp(URLBuilderService.collectionInfoUrl(pubs.collection_id))
             .success(function(data, status, headers) {
                 pubs.collectionInfo = data[0];
-                deferred.resolve();
+                deferred.resolve(data[0]);
             })
             .error(function(){
                 deferred.reject();
@@ -72,7 +72,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         .success(function(data, status, headers) {
             pubs.loadAndOrderLevels(data);
             pubs.metadataType = data.type;
-            deferred.resolve();
+            deferred.resolve(pubs.levels);
         })
         .error(function(){
             //deferred.reject();
@@ -103,6 +103,28 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         return deferred.promise;
     };
 
+    //Retrieves object with the given id
+    pubs.getObject = function(id){
+        var deferred = $q.defer();
+        $http.jsonp(URLBuilderService.objectUrl(pubs.collection_id, id))
+        .success(function(data, status, headers) {
+            deferred.resolve(data);
+        })
+        .error(function(data, status, headers, config){
+            deferred.reject();
+            throw "Couldn't load object with id " + id;
+        });
+
+        return deferred.promise;
+    };
+
+    pubs.fillFiltersByItem = function(item){
+        for(var i = 0; i < pubs.levels.length; i++){
+            if(item[pubs.levels[i].name])
+                pubs.levels[i].filter_value = item[pubs.levels[i].name];
+        }
+    };
+
     pubs.loadAndOrderLevels = function(data){
         pubs.levels = data;
 
@@ -114,7 +136,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     //Gets metadata for the given level based on the filters
     pubs.getMetadata = function(level){
         var deferred = $q.defer();
-        var request = URLBuilderService.metadata(pubs.collection_id, level, pubs.getFilters());
+        var request = URLBuilderService.metadataUrl(pubs.collection_id, level, pubs.getFilters());
         var currentLevel = 0;
         var shouldGetData = false;
         for(var j = 0;j<pubs.levels.length;j++){
@@ -124,9 +146,9 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                 currentLevel = j;
                 $http.jsonp(request)
                 .success(function(data){
-                    pubs.levels[j].data = data;
+                    pubs.levels[j].possibleValues = data;
                     pubs.levels[j].latest_request = request;
-                    deferred.resolve();
+                    deferred.resolve({name: pubs.levels[j].name, data: data});
                 })
                 .error(function(){
                     throw "Could not load metadata for " + pubs.level[j].name;
@@ -160,7 +182,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                 for(var i = 0; i < pubs.levels.length; i++){
                     if(metadata[pubs.levels[i].name] !== undefined){
                         var gui = pubs.levels[i].gui_name + ' ';
-                        if(pubs.levels[i].hideInMetadataString)
+                        if(pubs.levels[i].gui_hide)
                             gui = "";
 
                         if(first){
@@ -238,7 +260,8 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     //Adds metadata filer
     pubs.addFilter = function(newFilter){
         if(newFilter.name === undefined || newFilter.value === undefined)
-            throw "New filter requires both name and value";
+            return;
+            //throw "New filter requires both name and value";
 
         for(var i = 0; i < pubs.levels.length; i++){
             if(pubs.levels[i].name == newFilter.name)
