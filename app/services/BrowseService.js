@@ -57,7 +57,7 @@ angular.module('KSA_Bladr.services').
             pubs.goTo(0);
             for(var i = 0; i < privates.content.length; i++){
                 if(privates.content[i].id == id){
-                    pubs.step(i);
+                    pubs.goTo(i+1);
                     return;
                 }
             }
