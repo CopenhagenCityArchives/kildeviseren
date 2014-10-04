@@ -40,6 +40,7 @@ app.service('MetadataHandlerService', function($rootScope, MetadataManagerServic
 
     pubs.getCollection = function(id){
         MetadataManagerService.config(id);
+        pubs.collectionId = id;
         return MetadataManagerService.getCollectionInfo().then(function(value){
             pubs.collection = value;
             $location.search('collection', value.id);
