@@ -4,10 +4,10 @@ angular.module('KSA_Bladr.controllers').
 
     //The controller vars are simply based on the corresponding data in the service
     $scope.metadata = MetadataHandlerService;
-    $scope.view = '';
+    $scope.template = {};
 
     $scope.init = function(){
-        $scope.view = 'filters';
+        $scope.template = {name:'filters', url: 'partials-filters.html'};
         $scope.metadata.getCollections();
         //Check for url inputs here
         $scope.checkUrlInputs();
@@ -24,20 +24,32 @@ angular.module('KSA_Bladr.controllers').
                 $scope.status = "Ingen resultater fundet";
             }
             else{
-               $scope.view = 'viewer';
+               $scope.template = {name:'viewer', url: 'partials-viewer.html'};
             }
         }
     });
 
+    $scope.loadImage = function(){
+        $window.showImage($scope.metadata.item.images[0], null);
+    };
+
     //Displaying frontpage
     $scope.goToFrontPage = function(){
-        $scope.view = 'filters';
+        $scope.template = {name:'filters', url: 'partials-filters.html'};
     };
+
+    $scope.$on('$includeContentLoaded', function(){
+        $window.init();
+        if($scope.template.name == 'viewer'){
+            $scope.loadImage();
+        }
+    });
 
     //When item updates, display it with the showImage function
     $scope.$watch(function(){return $scope.metadata.item;}, function(newVal){
-        if(newVal.images)
-            $window.showImage($scope.metadata.item.images[0], null);
+        if(newVal.images){
+            $scope.loadImage();
+        }
     });
 
     /**
