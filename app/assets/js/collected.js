@@ -405,6 +405,7 @@ $(document).ready(function() {
         showSingleImage(imageSrc);
       }
       else{
+        //console.log('diplaying tiles');
         showTileImage(imageSrc);
       }
       //$('.pager-input').val(currentImage);
@@ -456,10 +457,10 @@ $(document).ready(function() {
     }
 
     function showTileImage(imageSrc){
-        var settings = {
+        /*var settings = {
           'viewportWidth' : '100%',
           'viewportHeight' : '100%',
-          'intNavAutoHide' : false,
+          'intNavAutoHide' : true,
           'fitToViewportShortSide' : false,
           'startScale' : 0,
           'startX' : 956,
@@ -485,13 +486,44 @@ $(document).ready(function() {
           'mapPos' : 'TR',
           'popupShowAction' : 'click',
           'testMode' : false
+        };*/
+
+        var settings = {
+          'viewportWidth' : '100%',
+          'viewportHeight' : '100%',
+          'fitToViewportShortSide' : false,
+          'contentSizeOver100' : false,
+          'startScale' : 0,
+          'startX' : 2500,
+          'startY' : 2500,
+          'animTime' : 500,
+          'draggInertia' : 10,
+          'imgDir' : imageSrc,
+          'mainImgWidth' : 10788,
+          'mainImgHeight' : 8881,
+          'intNavEnable' : true,
+          'intNavPos' : 'B',
+          'intNavAutoHide' : false,
+          'intNavMoveDownBtt' : true,
+          'intNavMoveUpBtt' : true,
+          'intNavMoveRightBtt' : true,
+          'intNavMoveLeftBtt' : true,
+          'intNavZoomBtt' : true,
+          'intNavUnzoomBtt' : true,
+          'intNavFitToViewportBtt' : true,
+          'intNavFullSizeBtt' : true,
+          'intNavBttSizeRation' : 1,
+          'mapEnable' : true,
+          'mapPos' : 'TR',
+          'popupShowAction' : 'click',
+          'testMode' : false
         };
 
-        if ($('#map').length !== 0) {
-          $("#map").lhpGigaImgViewer("destroy");
-          $("#map").lhpMegaImgViewer("destroy");
-          $("#map").lhpGigaImgViewer(settings);
-        }
+      if ($('#map').length !== 0) {
+        $("#map").lhpGigaImgViewer("destroy");
+        $("#map").lhpMegaImgViewer("destroy");
+        $("#map").lhpGigaImgViewer(settings);
+      }
     }
 
     /*==========  INIT FUNKTIONER  ==========*/
