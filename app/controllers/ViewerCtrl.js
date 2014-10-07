@@ -30,7 +30,7 @@ angular.module('KSA_Bladr.controllers').
     });
 
     $scope.loadImage = function(){
-        $window.showImage($scope.metadata.item.images[0], null);
+        $window.showImage($scope.metadata.collection.image_type, $scope.metadata.item.images[0], null);
     };
 
     //Displaying frontpage
@@ -79,6 +79,7 @@ angular.module('KSA_Bladr.controllers').
 
     $scope.$watch(function(){return $scope.metadata.filters;}, function(newVal, oldVal){
       //  console.log('Filters changed, rerunning canSearch', newVal);
+        $scope.status = '';
         $scope.metadata.updateSelectedFilterValues();
         $scope.metadata.checkSearch();
     },true);

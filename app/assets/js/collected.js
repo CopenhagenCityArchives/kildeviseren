@@ -387,7 +387,7 @@ $(document).ready(function() {
 
     /*==========  SHOW IMAGE / VISER BILLEDE I VIEWEREN  ==========*/
 
-    function showImage(imageSrc,condition) {
+    function showImage(imageType, imageSrc,condition) {
       preventControls = true;
       $('.controls').addClass('disabled').css({
         opacity:0.4
@@ -401,6 +401,21 @@ $(document).ready(function() {
      // var navThumb = new Image();
     //  navThumb.src = "http://www.applocker.dk/kk/timthumb.php?w="+conInt+"&q=70&src="+imageSrc;
      // $(navThumb).on('load',function(){
+      if(imageType=='image'){
+        showSingleImage(imageSrc);
+      }
+      else{
+        showTileImage(imageSrc);
+      }
+      //$('.pager-input').val(currentImage);
+      $('.controls').removeClass('disabled').css({
+      opacity:1
+      });
+      preventControls = false;
+    //});
+    }
+
+    function showSingleImage(imageSrc){
         var settings = {
         "viewportWidth" : "100%",
         "viewportHeight" : "100%",
@@ -432,17 +447,51 @@ $(document).ready(function() {
         "popupShowAction" : "click",
         "testMode" : false
         };
-        if ($('#map').length != 0) {
+        if ($('#map').length !== 0) {
+          $("#map").lhpGigaImgViewer("destroy");
           $("#map").lhpMegaImgViewer("destroy");
           $("#map").lhpMegaImgViewer(settings);
         //  $('.pager-input').val(currentImage);
         }
-        //$('.pager-input').val(currentImage);
-        $('.controls').removeClass('disabled').css({
-        opacity:1
-        });
-        preventControls = false;
-      //});
+    }
+
+    function showTileImage(imageSrc){
+        var settings = {
+          'viewportWidth' : '100%',
+          'viewportHeight' : '100%',
+          'intNavAutoHide' : false,
+          'fitToViewportShortSide' : false,
+          'startScale' : 0,
+          'startX' : 956,
+          'startY' : 660,
+          'mainImgWidth' : 10788,
+          'mainImgHeight' : 8881,
+          'animTime' : 300,
+          'draggInertia' : 4,
+          'imgDir' : imageSrc,
+          'intNavEnable' : true,
+          'intNavPos' : 'BL',
+          'contentSizeOver100' : false,
+          'intNavMoveDownBtt' : false,
+          'intNavMoveUpBtt' : false,
+          'intNavMoveRightBtt' : false,
+          'intNavMoveLeftBtt' : false,
+          'intNavZoomBtt' : true,
+          'intNavUnzoomBtt' : true,
+          'intNavFitToViewportBtt' : false,
+          'intNavFullSizeBtt' : false,
+          'intNavBttSizeRation' : 1,
+          'mapEnable' : true,
+          'mapPos' : 'TR',
+          'popupShowAction' : 'click',
+          'testMode' : false
+        };
+
+        if ($('#map').length !== 0) {
+          $("#map").lhpGigaImgViewer("destroy");
+          $("#map").lhpMegaImgViewer("destroy");
+          $("#map").lhpGigaImgViewer(settings);
+        }
     }
 
     /*==========  INIT FUNKTIONER  ==========*/
