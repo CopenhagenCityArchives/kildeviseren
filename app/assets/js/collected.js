@@ -387,7 +387,7 @@ $(document).ready(function() {
 
     /*==========  SHOW IMAGE / VISER BILLEDE I VIEWEREN  ==========*/
 
-    function showImage(imageType, imageSrc,condition) {
+    function showImage(imageType, imageSrc,condition, item) {
       preventControls = true;
       $('.controls').addClass('disabled').css({
         opacity:0.4
@@ -406,7 +406,7 @@ $(document).ready(function() {
       }
       else{
         //console.log('diplaying tiles');
-        showTileImage(imageSrc);
+        showTileImage(imageSrc, item.metadata.height, item.metadata.width);
       }
       //$('.pager-input').val(currentImage);
       $('.controls').removeClass('disabled').css({
@@ -456,7 +456,7 @@ $(document).ready(function() {
         }
     }
 
-    function showTileImage(imageSrc){
+    function showTileImage(imageSrc, height, width){
         /*var settings = {
           'viewportWidth' : '100%',
           'viewportHeight' : '100%',
@@ -497,10 +497,10 @@ $(document).ready(function() {
           'startX' : 2500,
           'startY' : 2500,
           'animTime' : 500,
-          'draggInertia' : 10,
+          'draggInertia' : 0,
           'imgDir' : imageSrc,
-          'mainImgWidth' : 10788,
-          'mainImgHeight' : 8881,
+          'mainImgWidth' : width,
+          'mainImgHeight' : height,
           'intNavEnable' : true,
           'intNavPos' : 'B',
           'intNavAutoHide' : false,

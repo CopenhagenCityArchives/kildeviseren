@@ -30,7 +30,7 @@ angular.module('KSA_Bladr.controllers').
     });
 
     $scope.loadImage = function(){
-        $window.showImage($scope.metadata.collection.image_type, $scope.metadata.item.images[0], null);
+        $window.showImage($scope.metadata.collection.image_type, $scope.metadata.item.images[0], null, $scope.metadata.item);
     };
 
     //Displaying frontpage

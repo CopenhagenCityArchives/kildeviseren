@@ -55,29 +55,31 @@ app.service('MetadataHandlerService', function($rootScope, MetadataManagerServic
             var tempFilters = [];
             var promises = [];
             for(var i = 0; i< levels.length; i++){
-                var curLevel = levels[i];
-                var searchable = false;
-                if(curLevel.gui_type == 'typeahead'){
-                    searchable = true;
-                }
+                if(!levels[i].technical_info){
+                    var curLevel = levels[i];
+                    var searchable = false;
+                    if(curLevel.gui_type == 'typeahead'){
+                        searchable = true;
+                    }
 
-                var possibleValues = curLevel.data || [];
+                    var possibleValues = curLevel.data || [];
 
-                tempFilters.push({
-                    'name' : curLevel.name,
-                    'searchable' : searchable,
-                    'placeholder': curLevel.gui_name,
-                    'noResultsText' : 'Ingen resultater',
-                    'helpText' : curLevel.gui_description,
-                    filter_value: 0,
-                    possibleValues: possibleValues
-                });
-
-                //Load data here?
-                if(curLevel.gui_type == 'typeahead'){
-                    MetadataManagerService.getMetadata(curLevel.name).then(function(nameAndData){
-                        pubs.updatePossibleFilterValues(nameAndData.name, nameAndData.data);
+                    tempFilters.push({
+                        'name' : curLevel.name,
+                        'searchable' : searchable,
+                        'placeholder': curLevel.gui_name,
+                        'noResultsText' : 'Ingen resultater',
+                        'helpText' : curLevel.gui_description,
+                        filter_value: 0,
+                        possibleValues: possibleValues
                     });
+
+                    //Load data here?
+                    if(curLevel.gui_type == 'typeahead'){
+                        MetadataManagerService.getMetadata(curLevel.name).then(function(nameAndData){
+                            pubs.updatePossibleFilterValues(nameAndData.name, nameAndData.data);
+                        });
+                    }
                 }
             }
 

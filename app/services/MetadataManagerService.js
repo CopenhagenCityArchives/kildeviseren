@@ -180,18 +180,20 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
             var first = true;
             //for(var j = 0; j < metadata.length; j++){
                 for(var i = 0; i < pubs.levels.length; i++){
-                    if(metadata[pubs.levels[i].name] !== undefined){
-                        var gui = pubs.levels[i].gui_name + ' ';
-                        if(pubs.levels[i].gui_hide)
-                            gui = "";
+                    if(!pubs.levels[i].technical_info){
+                        if(metadata[pubs.levels[i].name] !== undefined){
+                            var gui = pubs.levels[i].gui_name + ' ';
+                            if(pubs.levels[i].gui_hide)
+                                gui = "";
 
-                        if(first){
-                            first = false;
+                            if(first){
+                                first = false;
+                            }
+                            else{
+                                gui = gui.toLowerCase();
+                            }
+                            metadataStr = metadataStr + gui + metadata[pubs.levels[i].name] + ', ';
                         }
-                        else{
-                            gui = gui.toLowerCase();
-                        }
-                        metadataStr = metadataStr + gui + metadata[pubs.levels[i].name] + ', ';
                     }
                 }
            // }
