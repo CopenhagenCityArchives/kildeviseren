@@ -36,18 +36,25 @@ angular.module('KSA_Bladr.controllers').
     //Displaying frontpage
     $scope.goToFrontPage = function(){
         $scope.template = {name:'filters', url: 'partials-filters.html'};
+        $scope.viewerLoaded = false;
     };
+
+    //Checks if viewer-partial is loaded. Used when displaying images
+    $scope.viewerLoaded = false;
 
     $scope.$on('$includeContentLoaded', function(){
         $window.init();
         if($scope.template.name == 'viewer'){
+            //console.log('load because $includeContentLoaded is fired');
             $scope.loadImage();
+            $scope.viewerLoaded = true;
         }
     });
 
     //When item updates, display it with the showImage function
-    $scope.$watch(function(){return $scope.metadata.item;}, function(newVal){
-        if(newVal.images){
+    $scope.$watch(function(){return $scope.metadata.item;}, function(newVal, oldVal){
+        if(newVal.images && $scope.viewerLoaded){
+            //console.log('load because item has changed');
             $scope.loadImage();
         }
     });
