@@ -6,7 +6,7 @@
 //Getting the main module
 var app = angular.module('KSA_Bladr.services');
 
-app.service('MetadataHandlerService', function($rootScope, MetadataManagerService, BrowseService, $location, $rootScope){
+app.service('MetadataHandlerService', function(MetadataManagerService, BrowseService, $location){
     //Private methods and variables goes here
     var privates = {};
 
@@ -33,7 +33,7 @@ app.service('MetadataHandlerService', function($rootScope, MetadataManagerServic
     pubs.currentPage = BrowseService.currentPage;
 
     pubs.getCollections = function(){
-         MetadataManagerService.getCollections().then(function(value){
+         return MetadataManagerService.getCollections().then(function(value){
             pubs.collections = value;
          });
     };
