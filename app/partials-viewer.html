@@ -61,7 +61,7 @@
     <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
     <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- DARKER CONTROLS -->
-    <div id="darkBackside" class="controls controlArrowDarker rightArrow"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
+    <div id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
     <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><img src="assets/img/controls/questionmark.png" class="maxWidthImage" alt=""></div></div>
   <!-- PAGER -->
     <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()"><span class="page-seperator">/</span><span class="pager-pages">{{metadata.itemsList.length}}</span></div></div>
