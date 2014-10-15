@@ -8,9 +8,10 @@ angular.module('KSA_Bladr.controllers').
 
     $scope.init = function(){
         $scope.template = {name:'filters', url: 'partials-filters.html'};
-        $scope.metadata.getCollections();
-        //Check for url inputs here
-        $scope.checkUrlInputs();
+        $scope.metadata.getCollections().then(function(){
+            //Check for url inputs here
+            $scope.checkUrlInputs();
+        });
     };
 
     //Hides preloader when view is loaded
@@ -35,6 +36,8 @@ angular.module('KSA_Bladr.controllers').
 
     //Displaying frontpage
     $scope.goToFrontPage = function(){
+        $location.search('item', null);
+        $window.toogleTop();
         $scope.template = {name:'filters', url: 'partials-filters.html'};
         $scope.viewerLoaded = false;
     };
@@ -66,8 +69,8 @@ angular.module('KSA_Bladr.controllers').
      * @return void
      */
     $scope.checkUrlInputs = function(){
-        var collection = $location.search().collection || false;
-        var item = $location.search().item || false;
+        var collection = parseInt($location.search().collection) || false;
+        var item = parseInt($location.search().item) || false;
 
         if(collection){
             $scope.metadata.getCollection(collection).then(function(){
@@ -78,8 +81,8 @@ angular.module('KSA_Bladr.controllers').
         }
     };
 
-    $scope.$watch('metadata.collectionId', function(newVal, oldVal){
-        if(newVal){
+    $scope.$watch(function(){return $scope.metadata.collectionId;}, function(newVal, oldVal){
+        if(newVal && newVal !== oldVal){
             $scope.metadata.getCollection(newVal);
         }
     });
