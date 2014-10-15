@@ -211,32 +211,7 @@ $(document).ready(function() {
     /*===============================================
     =            TOPBOX HÅNDTERING AF AKTIVERING            =
     ===============================================*/
-     $(document).on('click','#toggleTop', function() {
-      var topControls = $('.topcontrols'), findText = $('.findtext');
-      if (topDown) {
-        /*==========  VIS TOPPEN ALLEREDE ER NEDE - START ANIMATION / LUK  ==========*/
-        findText.html('- - -');
-        TweenMax.to(topControls, 0.5, {top:-topControls.outerHeight(),ease:Power2.easeInOut, onComplete: function() {
-          topDown = false;
-          preventControls = false;
-          showControls();
-          findText.html('FIND');
-        }});
-      } else {
-      /*==========  VIS TOPPEN IKKE ER NEDE START ANIMATION / ÅBEN ==========*/
-        findText.html('- - -');
-        topControls.css({
-          top: -topControls.outerHeight()
-        });
-        TweenMax.to(topControls, 0.8, {top:0,ease:Power2.easeInOut, onComplete: function() {
-          topDown = true;
-          preventControls = true;
-          $('.controls').not('#toggleTop').fadeOut(400, function() {
-          });
-          findText.html('LUK');
-        }});
-      }
-    });
+     $(document).on('click','#toggleTop', toogleTop);
 
     /*===============================================
     =            BUND NUMNER / INPUTBOKS            =
@@ -449,81 +424,55 @@ $(document).ready(function() {
         "testMode" : false
         };
         if ($('#map').length !== 0) {
-          $("#map").lhpGigaImgViewer("destroy");
-          $("#map").lhpMegaImgViewer("destroy");
+
+          removeViewers();
+
+          singleImageSet = true;
           $("#map").lhpMegaImgViewer(settings);
         //  $('.pager-input').val(currentImage);
         }
     }
+    var tileImageSet, singleImageSet = false;
+    function removeViewers(){
+      //Removes MegaViewer
+      if(singleImageSet)
+        $("#map").lhpMegaImgViewer("destroy");
+
+      //Removes tileViewer
+      if(tileImageSet){
+        var parent = $('#map').parent();
+        $('#map').remove();
+        parent.append("<div id='map'></div");
+      }
+
+      tileImageSet = singleImageSet = false;
+    }
 
     function showTileImage(imageSrc, height, width){
-        /*var settings = {
-          'viewportWidth' : '100%',
-          'viewportHeight' : '100%',
-          'intNavAutoHide' : true,
-          'fitToViewportShortSide' : false,
-          'startScale' : 0,
-          'startX' : 956,
-          'startY' : 660,
-          'mainImgWidth' : 10788,
-          'mainImgHeight' : 8881,
-          'animTime' : 300,
-          'draggInertia' : 4,
-          'imgDir' : imageSrc,
-          'intNavEnable' : true,
-          'intNavPos' : 'BL',
-          'contentSizeOver100' : false,
-          'intNavMoveDownBtt' : false,
-          'intNavMoveUpBtt' : false,
-          'intNavMoveRightBtt' : false,
-          'intNavMoveLeftBtt' : false,
-          'intNavZoomBtt' : true,
-          'intNavUnzoomBtt' : true,
-          'intNavFitToViewportBtt' : false,
-          'intNavFullSizeBtt' : false,
-          'intNavBttSizeRation' : 1,
-          'mapEnable' : true,
-          'mapPos' : 'TR',
-          'popupShowAction' : 'click',
-          'testMode' : false
-        };*/
+        if ($('#map').length !== 0) {
 
-        var settings = {
-          'viewportWidth' : '100%',
-          'viewportHeight' : '100%',
-          'fitToViewportShortSide' : false,
-          'contentSizeOver100' : true,
-          'startScale' : 0,
-          'startX' : width/2,
-          'startY' : height/2,
-          'animTime' : 0,
-          'draggInertia' : 0,
-          'imgDir' : imageSrc,
-          'mainImgWidth' : width,
-          'mainImgHeight' : height,
-          'intNavEnable' : true,
-          'intNavPos' : 'B',
-          'intNavAutoHide' : false,
-          'intNavMoveDownBtt' : false,
-          'intNavMoveUpBtt' : false,
-          'intNavMoveRightBtt' : false,
-          'intNavMoveLeftBtt' : false,
-          'intNavZoomBtt' : true,
-          'intNavUnzoomBtt' : true,
-          'intNavFitToViewportBtt' : true,
-          'intNavFullSizeBtt' : true,
-          'intNavBttSizeRation' : 1,
-          'mapEnable' : true,
-          'mapPos' : 'TR',
-          'popupShowAction' : 'click',
-          'testMode' : false
-        };
+          removeViewers();
 
-      if ($('#map').length !== 0) {
-        $("#map").lhpGigaImgViewer("destroy");
-        $("#map").lhpMegaImgViewer("destroy");
-        $("#map").lhpGigaImgViewer(settings);
-      }
+          tileImageSet = true;
+          var map = L.map('map', { zoomControl:false }).setView(new L.LatLng(0,0), 0);
+          map.addControl( L.control.zoom({position: 'bottomleft'}) );
+          L.tileLayer.deepzoom(imageSrc + '/', {
+              width: width,
+              height: height,
+              tolerance: 0.8,
+              imageFormat: 'jpeg',
+              minZoom: 9
+          }).addTo(map);
+
+          var southWest = map.unproject([0, height], map.getMaxZoom()),
+                  northEast = map.unproject([width, 0], map.getMaxZoom()),
+                  bounds = new L.LatLngBounds(southWest, northEast);
+
+            // Restrict to bounds
+            //map.setMaxBounds(bounds);
+            // Fit bounds
+            map.fitBounds(bounds);
+        }
     }
 
     /*==========  INIT FUNKTIONER  ==========*/
@@ -531,6 +480,33 @@ $(document).ready(function() {
     function init() {
       setSize();
       $("input.numeric").numeric();
+    }
+
+    function toogleTop(){
+      var topControls = $('.topcontrols'), findText = $('.findtext');
+      if (topDown) {
+        /*==========  VIS TOPPEN ALLEREDE ER NEDE - START ANIMATION / LUK  ==========*/
+        findText.html('- - -');
+        TweenMax.to(topControls, 0.5, {top:-topControls.outerHeight(),ease:Power2.easeInOut, onComplete: function() {
+          topDown = false;
+          preventControls = false;
+          showControls();
+          findText.html('FIND');
+        }});
+      } else {
+      /*==========  VIS TOPPEN IKKE ER NEDE START ANIMATION / ÅBEN ==========*/
+        findText.html('- - -');
+        topControls.css({
+          top: -topControls.outerHeight()
+        });
+        TweenMax.to(topControls, 0.8, {top:0,ease:Power2.easeInOut, onComplete: function() {
+          topDown = true;
+          preventControls = true;
+          $('.controls').not('#toggleTop').fadeOut(400, function() {
+          });
+          findText.html('LUK');
+        }});
+      }
     }
 
 
