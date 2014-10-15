@@ -3,29 +3,20 @@
 <html lang="en" ng-app="KSA_Bladr">
 
   <head>
-
     <meta charset="utf-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta name="viewport" content="width=1024, initial-scale=1, maximum-scale=1.0">
-
     <meta name="description" content="">
-
     <meta name="author" content="">
-
     <link rel="shortcut icon" href="assets/favicon.ico">
 
     <title>Kildeviseren</title>
 
     <!-- Bootstrap core CSS -->
-
     <link href="assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-
     <link href="assets/css/style.css" rel="stylesheet">
-
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
@@ -41,8 +32,6 @@
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="assets/css/custom-theme/jquery-ui.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/lhp_miv.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/lhp_giv.css" />
-
     <link rel="stylesheet" type="text/css" href="directives/chosen.css" />
 
 
@@ -53,7 +42,6 @@
     ===============================*/ -->
 
     <script type="text/javascript" src="//use.typekit.net/qna6hyw.js"></script>
-
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
     <!-- /*-----  End of TYPEKIT  ------*/ -->
@@ -93,7 +81,6 @@
   ==========================================*/ -->
 
   <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-
   <script src="assets/js/plugins/bootstrap.js"></script>
 
   <!-- /*-----  End of jQuery & Bootstrap  ------*/
@@ -105,16 +92,11 @@
   ======================================*/ -->
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
-
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/easing/EasePack.min.js"></script>
-
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/jquery.gsap.min.js"></script>
-
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/plugins/ScrollToPlugin.min.js"></script>
-
   <script src="assets/js/plugins/fastclick.js"></script>
-
-  <script src="assets/js/plugins/chosen.jquery.js"></script>
+  <script src="assets/js/chosen.jquery.js"></script>
 
   <!-- /*-----  End of jQuery Plugins  ------*/
 
@@ -138,37 +120,37 @@
   <script type="text/javascript" src="assets/js/plugins/jquery.mousewheel.min.js"></script>
   <script type="text/javascript" src="assets/js/plugins/jquery.hammer-full.min.js"></script>
   <script type="text/javascript" src="assets/js/plugins/jquery.lhpMegaImgViewer.js"></script>
-  <script type="text/javascript" src="assets/js/plugins/jquery.lhpGigaImgViewer.js"></script>
 
-  <!-- /*-----  End of MEGA ZOOM VIEWER  ------*/
+  <!-- /*-----  End of MEGA ZOOM VIEWER  ------*/ -->
 
-  /*===============================
+  <!-- Leaflet, used for tiled images -->
+  <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <script src="assets/js/plugins/leaflet-deepzoom.js"></script>
+
+  <!--/*===============================
 
   =            ANGULAR            =
 
   ===============================*/ -->
 
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
-
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-touch.min.js"></script>
-
   <script src="app.js"></script>
 
-  <!-- Chosen directive for Angular -->
-
+  <!-- Angular - directives, services and controllers -->
   <script src="directives/chosen.js"></script>
   <script src="directives/dynaform.js"></script>
   <script src="controllers/ViewerCtrl.js"></script>
-
   <script src="services/BrowseService.js"></script>
-
   <script src="services/MetadataManagerService.js"></script>
-
   <script src="services/FormBuilderService.js"></script>
-
   <script src="services/URLBuilderService.js"></script>
   <script src="services/MetadataHandlerService.js"></script>
+
+  <!-- Google Analytics -->
+  <script src="services/angulartics.min.js"></script>
+  <script src="services/angulartics-ga.min.js"></script>
 
   <!-- /*-----  End of ANGULAR  ------*/
 
