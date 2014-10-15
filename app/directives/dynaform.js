@@ -26,6 +26,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', function($compile){
                     template = template +
                         '<div class="form-group">' +
                             '<select chosen disable-search="' + !scope.filters[i].searchable +'"' +
+                            'allow_single_deselect="true"' +
                             'data-placeholder="' + scope.filters[i].placeholder + '"' +
                             'no-results-text="\'' + scope.filters[i].noResultsText + '\'"' +
                             'ng-model="filters[' + i + '].filter_value"' +
