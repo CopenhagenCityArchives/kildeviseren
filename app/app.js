@@ -10,36 +10,9 @@ var app = angular.module('KSA_Bladr', [
   'KSA_Bladr.directives',
   'localytics.directives',
   'ngTouch',
-  'ngRoute'
+  'angulartics',
+  'angulartics.google.analytics'
 ]);
-
-// configure our routes
-app.config(function ($routeProvider, $locationProvider) {
-    /*$routeProvider
-    /**
-    Administration
-    **/
-    // route for single archiveversion in admin view
- /*   .when('/:collectionId', {
-        templateUrl: 'partials-filter.html',
-        controller: 'ViserCtrl',
-        reloadOnSearch: false
-    })
-    // route for list of archiveversions in admin view
-    .when('/:collectionId/:itemId', {
-        templateUrl: 'partials-viewer.html',
-        controller: 'ViserCtrl',
-        reloadOnSearch: false
-    })*/
-    // route for list of archiveversions in admin view
-    /*.when('/', {
-        //templateUrl: 'partials-filter.html',
-        controller: 'ViewerCtrl',
-        reloadOnSearch: false
-    });
-
-    $locationProvider.html5Mode(false);*/
-});
 
 /*
 This directive allows us to pass a function in on an enter key to do what we want.
