@@ -25,7 +25,10 @@ angular.module('KSA_Bladr.controllers').
                 $scope.status = "Ingen resultater fundet";
             }
             else{
-               $scope.template = {name:'viewer', url: 'partials-viewer.html'};
+                $scope.template = {name:'viewer', url: 'partials-viewer.html'};
+
+                if($window.topDown)
+                    $window.toogleTop();
             }
         }
     });
