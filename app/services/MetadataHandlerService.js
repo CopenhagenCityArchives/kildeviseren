@@ -120,17 +120,19 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
 
     pubs.search = function(itemId){
         //Loads the objects from server, and sets the content and length
-        MetadataManagerService.getObjects().then(function(value){
-            BrowseService.setContent(value);
-            if(itemId){
-                BrowseService.goToId(itemId);
-            }
-            else{
-                BrowseService.step(0);
-            }
-            pubs.itemsList = BrowseService.getContent();
-            pubs.updateItem();
-        });
+        if(pubs.canSearch){
+            MetadataManagerService.getObjects().then(function(value){
+                BrowseService.setContent(value);
+                if(itemId){
+                    BrowseService.goToId(itemId);
+                }
+                else{
+                    BrowseService.step(0);
+                }
+                pubs.itemsList = BrowseService.getContent();
+                pubs.updateItem();
+            });
+        }
     };
 
     pubs.step = function(steps){
