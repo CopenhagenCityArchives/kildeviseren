@@ -1,4 +1,3 @@
-
   <div id="page_viewer">
   <div id="infoLayer">
   <div class="info-big info-left" style="left:60px">Forrige Side</div>
@@ -6,46 +5,41 @@
   <div class="info-small info-left" style="left:40px">Første side</div>
   <div class="info-small info-right" style="right:40px">Sidste side</div>
   <div class="info-menu">Menu</div>
-  <div class="info-map">Overblik</div>
+<!--   <div class="info-map">Overblik</div> -->
   <div class="info-zoom">Zoom</div>
   <div class="info-sidetal">Sidetal</div>
   <div id="infoClose"><i class="glyphicon glyphicon-remove"></i><span class="closeInfoText">LUK INFO</span></div>
   </div>
     <div id="topfind" class="topcontrols">
-    <div class="container-fluid">
+    <div class="container-fluid container-top-menu">
       <div class="row">
-        <div class="col-xs-6 col-sm-1 col-md-1 col-lg-1 alignLeft">
-          <div class="btn btn-light" ng-click="goToFrontPage()">Forside</div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignLeft">
+          <div class="btn btn-light goToFront" ng-click="goToFrontPage()">Forside</div>
+          <div class="btn btn-light" id="print" data-img="{{metadata.item.imageUrl}}">Print</div>
+          <a href="{{metadata.item.imageUrl}}" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem">Gem</a>
+          <div class="btn btn-light btnLink">Link
+            <div class="linkDivCont"><input type="text" class="linkDiv" value="{{metadata.item.permaLink}}" id="linkInput"></div>
+          </div>
         </div>
-        <div class="col-xs-6 col-sm-11 col-md-11 col-lg-11">
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="form_text">
             <span class="bold">{{metadata.collection.short_name}}</span> {{metadata.collection.info}}
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 topcontrols_form">
-          <form class="form-inline padTheForm" role="form">
-
-            <dynaform filters="metadata.filters"></dynaform>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default btn-submit" ng-show="metadata.canSearch" ng-click="metadata.search()">Find</button>
+      <form class="form-inline padTheForm" role="form">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topcontrols_form">
+            <div dynaform filters="metadata.filters"></div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group align-left">
+                <button type="submit" class="btn btn-default btn-submit" ng-click="metadata.search()">Find</button>
             </div>
-          </form>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 topcontrols_form ">
-        <div class="btn btn-light" id="print">Print</div>
-        <div class="btn btn-light btnGem">Gem
-          <div class="gemDiv">
-            <ul>
-              <li><a target="_blank" href="{{metadata.item.imageUrl}}">Stor</a></li>
-            </ul>
-          </div>
-        </div><br/>
-        <div class="btn btn-light btnLink">Link
-          <div class="linkDivCont"><input type="text" class="linkDiv" value="{{metadata.item.permaLink}}" id="linkInput"></div>
-          </div>
-        </div>
+        </form>
         </div>
         <div class="topcontrols_container">
           <div id="toggleTop" class="topcontrols-button findBtn"><span class="findtext">MENU</span></div>
@@ -58,13 +52,18 @@
     <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
     <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="metadata.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- SMALLER ARROWS -->
-    <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
-    <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
+    <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.goToFirst()"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
+    <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.goToLast()"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- DARKER CONTROLS -->
     <div id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
-    <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><img src="assets/img/controls/questionmark.png" class="maxWidthImage" alt=""></div></div>
+    <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><i class="view-question fa fa-question"></i></div></div>
   <!-- PAGER -->
-    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()"><span class="page-seperator">/</span><span class="pager-pages">{{metadata.itemsList.length}}</span></div></div>
+    <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()" ng-click="onTextClick($event)"><span class="page-seperator">/</span><span class="pager-pages">{{metadata.itemsList.length}}</span></div></div>
     <!-- start megazoom, display:none is added in case that js is disabled! -->
     <div id="map"></div>
+    <div class="printable">
+        <h2>{{metadata.collection.short_name}}</h2>
+        <p class="breakThePage">{{metadata.item.metadataDescription}}</p>
+        <img src="{{metadata.item.imageUrl}}" width="100%" />
+    </div>
 

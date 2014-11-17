@@ -36,6 +36,7 @@
         var chosen, defaultText, disableWithMessage, empty, initOrUpdate, match, options, origRender, removeEmptyMessage, startLoading, stopLoading, valuesExpr, viewWatch;
 
         element.addClass('localytics-chosen');
+        element.addClass('chosen-selector');
         options = scope.$eval(attr.chosen) || {};
         angular.forEach(attr, function(value, key) {
           if (__indexOf.call(CHOSEN_OPTION_WHITELIST, key) >= 0) {

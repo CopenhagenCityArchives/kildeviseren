@@ -106,6 +106,14 @@ angular.module('KSA_Bladr.services').
             pubs.step(-1);
         };
 
+        pubs.goToFirst = function(){
+            pubs.goTo(1);
+        };
+
+        pubs.goToLast = function(){
+            pubs.goTo(pubs.contentLength());
+        };
+
         return pubs;
     }
 );

@@ -29,8 +29,12 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     pubs.collectionId = false;
     //Collection name
     pubs.collectionName = false;
+    //Current status
+    pubs.status = "";
 
     pubs.currentPage = BrowseService.currentPage;
+
+    var lastReceivedCollection = false;
 
     pubs.getCollections = function(){
          return MetadataManagerService.getCollections().then(function(value){
@@ -39,13 +43,16 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     };
 
     pubs.getCollection = function(id){
-        MetadataManagerService.config(id);
-        pubs.collectionId = id;
-        return MetadataManagerService.getCollectionInfo().then(function(value){
-            pubs.collection = value;
-            $location.search('collection', value.id);
-            pubs.getLevelsAndValues(value.id);
-        });
+        if(id !== lastReceivedCollection){
+            MetadataManagerService.config(id);
+            lastReceivedCollection = id;
+            pubs.collectionId = id;
+            return MetadataManagerService.getCollectionInfo().then(function(value){
+                pubs.collection = value;
+                $location.search('collection', value.id);
+                pubs.getLevelsAndValues(value.id);
+            });
+        }
     };
 
     pubs.getLevelsAndValues = function(collectionId){
@@ -62,22 +69,24 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
                 }
 
                 var possibleValues = curLevel.data || [];
-
-                tempFilters.push({
-                    'name' : curLevel.name,
-                    'searchable' : searchable,
-                    'placeholder': curLevel.gui_name,
-                    'noResultsText' : 'Ingen resultater',
-                    'helpText' : curLevel.gui_description,
-                    filter_value: 0,
-                    possibleValues: possibleValues
-                });
-
-                //Load data here?
-                if(curLevel.gui_type == 'typeahead'){
-                    MetadataManagerService.getMetadata(curLevel.name).then(function(nameAndData){
-                        pubs.updatePossibleFilterValues(nameAndData.name, nameAndData.data);
+                if(curLevel.searchable === true){
+                    tempFilters.push({
+                        'name' : curLevel.name,
+                        'searchable' : searchable,
+                        'placeholder': curLevel.gui_name,
+                        'noResultsText' : 'Ingen resultater',
+                        'helpText' : curLevel.gui_description,
+                        filter_value: 0,
+                        possibleValues: possibleValues
                     });
+
+
+                    //Load data here?
+                    if(curLevel.gui_type == 'typeahead' && (i== 0 || (levels[i-1] && levels[i-1].filter_value))){
+                        MetadataManagerService.getMetadata(curLevel.name).then(function(nameAndData){
+                            pubs.updatePossibleFilterValues(nameAndData.name, nameAndData.data);
+                        });
+                    }
                 }
             }
 
@@ -102,7 +111,23 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
 
     pubs.updateSelectedFilterValues = function(){
         for(var i = 0; i < pubs.filters.length; i++){
-            MetadataManagerService.changeFilterValue(pubs.filters[i].name, pubs.filters[i].filter_value);
+            if(pubs.filters[i].filter_value){
+                var promise = MetadataManagerService.changeFilterValue(pubs.filters[i].name, pubs.filters[i].filter_value);
+                if(promise){
+                    promise.then(function(nameAndData){
+                        if(nameAndData){
+                            pubs.updatePossibleFilterValues(nameAndData.name, nameAndData.data);
+                        }
+                    });
+                }
+            }
+            else{
+                //Clear all levels possible values after this level
+                for(var j = i+1; j < pubs.filters.length; j++){
+                    pubs.filters[j].possibleValues = [];
+                    pubs.filters[j].filter_value = undefined;
+                }
+            }
         }
     };
 
@@ -120,23 +145,44 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
 
     pubs.search = function(itemId){
         //Loads the objects from server, and sets the content and length
-        if(pubs.canSearch){
-            MetadataManagerService.getObjects().then(function(value){
-                BrowseService.setContent(value);
-                if(itemId){
-                    BrowseService.goToId(itemId);
-                }
-                else{
-                    BrowseService.step(0);
-                }
-                pubs.itemsList = BrowseService.getContent();
-                pubs.updateItem();
-            });
+        pubs.status = "Søger";
+        //This is ugly! Syncronizing the two (!) filter arrays
+        for(var i = 0; i < pubs.filters.length; i++){
+            if(!pubs.filters[i].searchable || pubs.filters[i].filter_value == null || pubs.filters[i].filter_value == undefined){
+                MetadataManagerService.levels[i].filter_value = null;
+
+            }
+            else{
+                 MetadataManagerService.levels[i].filter_value = pubs.filters[i].filter_value;
+            }
         }
+
+        MetadataManagerService.getObjects().then(function(value){
+            BrowseService.setContent(value);
+            if(itemId){
+                BrowseService.goToId(itemId);
+            }
+            else{
+                BrowseService.step(0);
+            }
+            pubs.itemsList = BrowseService.getContent();
+            pubs.updateItem();
+            pubs.status = "";
+        });
     };
 
     pubs.step = function(steps){
         BrowseService.step(steps);
+        pubs.updateItem();
+    };
+
+    pubs.goToFirst = function(){
+        BrowseService.goToFirst();
+        pubs.updateItem();
+    };
+
+    pubs.goToLast = function(){
+        BrowseService.goToLast();
         pubs.updateItem();
     };
 
@@ -153,13 +199,18 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     pubs.updateItem = function(){
         var newItem = {};
         newItem = BrowseService.getCurrentContent();
-        newItem.imageUrl = BrowseService.getCurrentPage();
-        newItem.permaLink = $location.absUrl();
-        newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
-        pubs.item = newItem;
-        pubs.currentPage = BrowseService.currentPage;
+        if(newItem){
+            newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage() + "/fullimage.jpg";
+            newItem.permaLink = $location.absUrl();
+            newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
+            pubs.item = newItem;
+            pubs.currentPage = BrowseService.currentPage;
 
-        $location.search('item', newItem.id);
+            $location.search('item', newItem.id);
+        }
+        else{
+            console.log("Could not get current content in updateItem()");
+        }
     };
 
     pubs.rebuildByItem = function(itemId){

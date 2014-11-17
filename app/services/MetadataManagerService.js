@@ -71,7 +71,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         $http.jsonp(URLBuilderService.metadataLevelsUrl(pubs.collection_id))
         .success(function(data, status, headers) {
             pubs.loadAndOrderLevels(data);
-            pubs.metadataType = data.type;
+            pubs.metadataType = data.levels_type;
             deferred.resolve(pubs.levels);
         })
         .error(function(){
@@ -162,7 +162,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         //Hierarchy: Delete data in every level below the given, and receiving data for the one level below the given
         //Flat: No data is loaded as it is supposed that all data is received at once???
         if(pubs.metadataType == 'hierarchy'){
-            pubs.clearMetadata(currentLevel);
+            pubs.clearMetadata(pubs.levels[currentLevel].name);
         }
         else{
             pubs.clearMetadata();
@@ -219,7 +219,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         var filters = [];
 
         for(var i = 0; i< pubs.levels.length; i++){
-            if(pubs.levels[i].filter_value){
+            if(pubs.levels[i].filter_value !== null && pubs.levels[i].filter_value !== undefined ){
                 filters.push({"name" : pubs.levels[i].name, "value" : pubs.levels[i].filter_value});
             }
         }
@@ -230,11 +230,21 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
     //Removes metadata for all level on or below the given level
     pubs.clearMetadata = function(inputLevel){
         var level = inputLevel || 0;
+
+        if(level !== 0){
+            for(var i = 0; i < pubs.levels.length; i++){
+                if(pubs.levels[i].name == inputLevel){
+                    level = i;
+                    break;
+                }
+            }
+        }
+
         //Removes data below the given level if data is to be received from backend
         for(var k = level; k < pubs.levels.length; k++){
-            if(pubs.levels[k].type == "preset" || pubs.levels[k].type == "getallbyfilter"){
-                pubs.levels[k].data = [];
-            }
+            //if(pubs.levels[k].type == "preset" || pubs.levels[k].type == "getallbyfilter"){
+                pubs.levels[k].possibleValues = [];
+            //}
         }
     };
 
@@ -242,9 +252,9 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         pubs.removeFilter(level);
         pubs.addFilter({"name":level, "value":value});
 
-        for(var i; i < pubs.levels.length; i++){
+        for(var i = 0; i < pubs.levels.length; i++){
             if(pubs.levels[i].name == level && pubs.levels[i+1] !== undefined){
-                pubs.getMetadata(pubs.levels[i+1].name);
+                return pubs.getMetadata(pubs.levels[i+1].name);
             }
         }
     };
