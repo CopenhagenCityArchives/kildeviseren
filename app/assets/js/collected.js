@@ -524,8 +524,8 @@
 
             // create the slippy map
             var map = L.map('map', {
-                minZoom: 9,
-                maxZoom: 16,
+                //minZoom: 9,
+                //maxZoom: 16,
                 //zoom: 1,
                 zoomControl: false,
                 imageFormat: 'jpeg',
@@ -552,6 +552,12 @@
             map.fitBounds(bounds);
 
             //map.zoomIn(1);
+            //map.panTo(map.getCenter());
+            // Calculate the offset
+            //var offset = map.getSize().x*0.15;
+            // Then move the map
+           // map.panBy(new L.Point(0, 0), {animate: false});
+
             //map.zoomOut(1);
 
         }
