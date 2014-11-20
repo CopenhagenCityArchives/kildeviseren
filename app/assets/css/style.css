@@ -5,6 +5,7 @@
 box-sizing: border-box;
 outline:none !important;
 }
+
 .printable {
   display:none;
 }
@@ -314,7 +315,7 @@ padding:10px 0;
   top:0;
   left:0;
   display:none;
-  z-index:1090;
+  z-index:999999;
 }
 .video_screen {
   width:600px;
@@ -358,14 +359,14 @@ margin:30px auto 10px auto;
 
 .page {
 z-index:0;
-display:none;
+
 }
 .secondpage {
-  display:none;
+
 }
 .first {
 z-index:1;
-display:block;
+
 }
 #page_viewer {
   background-color:#000;
@@ -376,7 +377,7 @@ display:block;
   overflow:hidden;
 }
 #redirector {
-  background-color:#000;
+
   height:100%;
   width:100%;
   text-align: center;
@@ -425,13 +426,12 @@ display:block;
   border-bottom-left-radius: 10px;
   height:50px;
   position:absolute;
-  bottom:-50px;
 }
 .findBtn {
   border-bottom:3px solid #354a5b;
   background-color:#4c769c;
   width:auto;
-  left:80px;
+  left:465px;
   min-width:100px;
   display:table;
 }
@@ -449,18 +449,21 @@ display:block;
 }
 .sourceText {
   text-transform: uppercase;
-  background-color:#fff;
-  color:#4c769c;
-  width:auto;
-  left:190px;
-  display:table;
+  background-color: #fff;
+  color: #4c769c;
+  width: auto;
+  left: 0;
+  max-width: 460px;
+  padding: 0;
+  display: table;
+  text-align: left;
 }
 .sourceText > div.sourcetext {
   display:table-cell;
   vertical-align: middle;
   font-size: 1.2em;
 
-  padding: 0 15px;
+  padding: 10px 15px;
 }
 
 
@@ -501,7 +504,16 @@ height: 50px;
 width: 140px;
 position: fixed;
 top: 50px;
-left: 50px;
+left: 455px;
+}
+.info-error {
+  font-size: 2em;
+font-weight: 400;
+height: 50px;
+width: 140px;
+position: fixed;
+top: 5px;
+right: 65px;
 }
 .info-map {
 font-size: 2em;
@@ -518,7 +530,7 @@ font-weight: 400;
 height: 50px;
 width: 140px;
 position: fixed;
-bottom: 85px;
+bottom: 35px;
 left: 20px;
 }
 .info-sidetal {
@@ -527,8 +539,8 @@ font-weight: 400;
 height: 50px;
 width: 140px;
 position: fixed;
-bottom: 85px;
-right: 100px;
+bottom: 135px;
+right: 60px;
 }
 #infoClose {
   position:fixed;
@@ -606,6 +618,52 @@ display: block;
   display:table;
 }
 .controlArrowZoom:hover {
+  color: #fff;
+  background-color: #1F2B34;
+  border-color: #12181D;
+  cursor:pointer;
+}
+.modal {
+  z-index:99999999;
+  color:#000;
+text-align: left;
+
+}
+  .modal-dialog {
+    width: 420px;
+    margin: 30px auto;
+  }
+.modal-header .close {
+font-size: 4em;
+line-height: 1;
+margin-top: -20px;
+}
+.modal-body {
+text-align: left;
+font-size: 1.4em;
+}
+.modal-body p {
+font-size: 1em;
+line-height: 1.1;
+}
+.modal-title {
+  font-size:2em;
+  text-align: center;
+}
+.controlReport {
+  border-bottom:3px solid #1c262c;
+  height:50px;
+  background-color:#36495b;
+  width:50px;
+  font-size: .7em;
+  position:fixed;
+  top:0;
+  display:table;
+  right: 15px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.controlReport:hover {
   color: #fff;
   background-color: #1F2B34;
   border-color: #12181D;
@@ -694,6 +752,9 @@ color:#fff;
 .leaflet-control-attribution > a {
   display:none;
 }
+.leaflet-bottom {
+  bottom:60px !important;
+}
 #map {
   position:relative;
   background:#000 url('../images/loading.gif') no-repeat center center;
@@ -728,7 +789,7 @@ color:#fff;
   bottom: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
 }
 
@@ -780,4 +841,86 @@ color:#fff;
 }
 @media print {
    /*  .breakThePage {page-break-after: always;} */
-}
+}
+
+/*====================================
+=            RADIO BUTTON            =
+====================================*/
+
+.clearfix:before, .clearfix:after {
+  content: "";
+  display: table
+}
+.clearfix:after {
+  clear: both
+}
+.clearfix {
+  *zoom: 1
+}
+.prettycheckbox, .prettyradio {
+  display: inline-block;
+  padding: 0;
+margin: 0 15px 0 20px;
+}
+.prettycheckbox>a, .prettyradio>a {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+    vertical-align: middle;
+  cursor: pointer;
+  margin: 0;
+  background: url('../img/sprites.png')
+}
+.prettycheckbox>a:focus, .prettyradio>a:focus {
+  outline: 0 none
+}
+.prettycheckbox label, .prettyradio label {
+  display: inline-block;
+  height: 30px;
+
+  line-height: 30px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.prettycheckbox a.disabled, .prettycheckbox label.disabled, .prettyradio a.disabled, .prettyradio label.disabled {
+  cursor: not-allowed
+}
+.prettycheckbox>a {
+  background-position: 0 0
+}
+.prettycheckbox>a:focus {
+  background-position: -30px 0
+}
+.prettycheckbox>a.checked {
+  background-position: -60px 0
+}
+.prettycheckbox>a.checked:focus {
+  background-position: -90px 0
+}
+.prettycheckbox>a.checked.disabled {
+  background-position: -150px 0
+}
+.prettycheckbox>a.disabled {
+  background-position: -120px 0
+}
+.prettyradio>a {
+  background-position: -180px 0
+}
+.prettyradio>a:focus {
+  background-position: -210px 0
+}
+.prettyradio>a.checked {
+  background-position: -240px 0
+}
+.prettyradio>a.checked:focus {
+  background-position: -270px 0
+}
+.prettyradio>a.checked.disabled {
+  background-position: -330px 0
+}
+.prettyradio>a.disabled {
+  background-position: -300px 0
+}
+
+/*-----  End of RADIO BUTTON  ------*/
+
