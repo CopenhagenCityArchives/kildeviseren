@@ -110,6 +110,10 @@ angular.module('KSA_Bladr.services').
             return url;
         };
 
+        pubs.errorReportUrl = function(collectionId, itemId, errorId){
+            return pubs.remoteServerUrl + "error/" + collectionId + "/" + itemId + "/" + errorId + '/?callback=JSON_CALLBACK';
+        };
+
         return pubs;
     }
 );

@@ -253,7 +253,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         pubs.addFilter({"name":level, "value":value});
 
         for(var i = 0; i < pubs.levels.length; i++){
-            if(pubs.levels[i].name == level && pubs.levels[i+1] !== undefined){
+            if(pubs.levels[i].name == level && pubs.levels[i+1] !== undefined && pubs.levels[i+1].searchable == true){
                 return pubs.getMetadata(pubs.levels[i+1].name);
             }
         }
@@ -293,6 +293,22 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         }
 
         return true;
+    };
+
+    pubs.reportError = function(collectionId, itemId, errorId){
+        var deferred = $q.defer();
+        var request = URLBuilderService.errorReportUrl(pubs.collection_id, itemId, errorId);
+
+        $http.jsonp(request)
+        .success(function(){
+            deferred.resolve();
+        })
+        .error(function(){
+            deferred.reject();
+            throw "Could not complete error reporting";
+        });
+
+        return deferred;
     };
 
     return pubs;

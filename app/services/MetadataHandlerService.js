@@ -223,6 +223,10 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         });
     };
 
+    pubs.reportError = function(error){
+        return MetadataManagerService.reportError(pubs.collection_id, pubs.item.id, error);
+    };
+
 
     return pubs;
 });
