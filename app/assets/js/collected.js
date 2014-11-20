@@ -79,6 +79,8 @@
         /*-----  End of IFO VIDEO LAG  ------*/
 
 
+
+
         /*==========  LUKKER INFOLAG / KRYDS I MIDTEN  ==========*/
         $(document).on('click', '#infoClose', function() {
             var _frontV = $('#infoLayer');
@@ -338,12 +340,14 @@
             autoAlpha: 0,
             ease: Power4.easeInOut,
             onComplete: function() {
+                setSize();
                 _preText.hide();
                 $('.controls').show();
                 TweenMax.to(_preloader, 0.4, {
                     autoAlpha: 0,
                     ease: Power4.easeInOut,
                     onComplete: function() {
+                        setSize();
                         _preloader.hide().remove();
                     }
                 });
@@ -369,6 +373,9 @@
             height: $(window).height(),
             width: $(window).width()
         })
+        $('.topcontrols-button').css({
+            top: $('.topcontrols').outerHeight()
+        });
         if (!topDown) {
             setTimeout(function() {
                 $('.topcontrols').css({
@@ -593,6 +600,16 @@
     function init() {
         setSize();
         $("input.numeric").numeric();
+        /*=====================================
+        =            RADIO BUTTONS            =
+        =====================================*/
+        $.each($('.radios'), function(index, val) {
+           $(this).prettyCheckable();
+        });
+        /*-----  End of RADIO BUTTONS  ------*/
+        setTimeout(function() {
+            setSize();
+        }, 400);
     }
 
 
@@ -609,7 +626,7 @@
                     topDown = false;
                     preventControls = false;
                     showControls();
-                    findText.html('FIND');
+                    findText.html('MENU');
                     fixTop();
                 }
             });
