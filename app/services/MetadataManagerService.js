@@ -297,18 +297,9 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
 
     pubs.reportError = function(collectionId, itemId, errorId){
         var deferred = $q.defer();
-        var request = URLBuilderService.errorReportUrl(pubs.collection_id, itemId, errorId);
+        var request = URLBuilderService.errorReportUrl(collectionId, itemId, errorId);
 
-        $http.jsonp(request)
-        .success(function(){
-            deferred.resolve();
-        })
-        .error(function(){
-            deferred.reject();
-            throw "Could not complete error reporting";
-        });
-
-        return deferred;
+        return $http.jsonp(request);
     };
 
     return pubs;

@@ -29,6 +29,10 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     pubs.collectionId = false;
     //Collection name
     pubs.collectionName = false;
+    //Selected error report (id)
+    pubs.selectedErrorReport = -1;
+    //Error report message
+    pubs.errorReportingStatus= "";
     //Current status
     pubs.status = "";
 
@@ -199,6 +203,7 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     pubs.updateItem = function(){
         var newItem = {};
         newItem = BrowseService.getCurrentContent();
+        pubs.errorReportingStatus = "";
         if(newItem){
             newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage() + "/fullimage.jpg";
             newItem.permaLink = $location.absUrl();
@@ -223,8 +228,16 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         });
     };
 
-    pubs.reportError = function(error){
-        return MetadataManagerService.reportError(pubs.collection_id, pubs.item.id, error);
+    pubs.reportError = function(){
+        if(pubs.selectedErrorReport != -1){
+            MetadataManagerService.reportError(pubs.collectionId, pubs.item.id, pubs.selectedErrorReport).then(
+            function(data){
+                pubs.errorReportingStatus = pubs.collection.error_confirm;
+            },
+            function(data){
+                pubs.errorReportingStatus = "Kunne ikke sende fejlrapporten";
+            });
+        }
     };
 
 
