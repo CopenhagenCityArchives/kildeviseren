@@ -61,7 +61,7 @@
         });
 
         /*=====================================
-        =            IFO VIDEO LAG            =
+        =            INFO VIDEO LAG            =
         =====================================*/
 
           $(document).on('click','#videoToggle', function() {
@@ -76,7 +76,31 @@
               }});
             });
 
-        /*-----  End of IFO VIDEO LAG  ------*/
+        /*-----  End of INFO VIDEO LAG  ------*/
+
+/*====================================
+=            SELECT RADIO            =
+====================================*/
+
+$(document).on('click','.labelforradio', function() {
+    if ($(this).hasClass('label-selected')) {
+        $(this).removeClass('label-selected');
+
+        if( $(this).parent().find('.radios').is(':checked') ) {
+            $(this).parent().find('.radios').prop('checked', false);
+        } else {
+
+        }
+        $('.labelforradio').not(this).removeClass('label-selected');
+    } else {
+
+        $('.labelforradio').not(this).removeClass('label-selected');
+        $(this).addClass('label-selected');
+    }
+
+});
+
+/*-----  End of SELECT RADIO  ------*/
 
 
 
@@ -232,7 +256,6 @@
         /*===============================================
 
     =            TOPBOX HÅNDTERING AF AKTIVERING            =
-
     ===============================================*/
         $(document).on('click', '#toggleTop', toogleTop);
         /*===============================================
@@ -603,8 +626,11 @@
         /*=====================================
         =            RADIO BUTTONS            =
         =====================================*/
-        $.each($('.radios'), function(index, val) {
+
+
+        $.each($(document).find('input.radios'), function(index, val) {
            $(this).prettyCheckable();
+           console.log(index);
         });
         /*-----  End of RADIO BUTTONS  ------*/
         setTimeout(function() {

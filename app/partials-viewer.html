@@ -50,7 +50,7 @@
     </div>
 
   <!-- BIG ARROWS -->
-    <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
+    <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)" analytics-on="click" analytics-event="back"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
     <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="metadata.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- SMALLER ARROWS -->
     <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
@@ -79,14 +79,12 @@
 
                 <div>
                 <!-- Dynamic, trying to combine Angular and jQuery.check -->
-                <label ng-repeat="model in metadata.collection.error_reports">
-                  <input type="radio" ng-model="metadata.selectedErrorReport" value="{{model.id}}">
-                  {{model.name}}
-                </label>
+                <div ng-repeat="model in metadata.collection.error_reports">
+                  <input id="errortype{{model.id}}" type="radio" name="errortype" class="radios" data-color="#4c769c" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport" value="{{model.id}}">
+                  <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
+                </div>
 
                 <!-- Hardcoded, using jQuery.check -->
-                <input type="radio" name="errortype" id="errortype1" value="1" class="radios" data-color="#4c769c" data-label="Gade, årstal eller måned er forkert">
-                <input type="radio" name="errortype" id="errortype2" value="2" class="radios" data-color="#4c769c" data-label="Billedet er ikke et mandtal">
               </div>
 
           <div class="modal-footer">

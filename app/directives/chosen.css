@@ -176,6 +176,8 @@ width:auto;
   height:44px;
   line-height: 44px;
   font-size:1.4em;
+  overflow:hidden;
+  white-space: nowrap;
 }
 .chosen-container .chosen-results li.active-result {
   display: list-item;

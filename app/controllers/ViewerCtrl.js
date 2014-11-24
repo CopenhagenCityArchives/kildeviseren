@@ -2,7 +2,7 @@
 
 angular.module('KSA_Bladr.controllers').
 
-    controller('ViewerCtrl', function($scope, $location, $window, MetadataHandlerService){
+    controller('ViewerCtrl', function($scope, $location, $window, MetadataHandlerService, $analytics){
 
     //The controller vars are simply based on the corresponding data in the service
     $scope.metadata = MetadataHandlerService;
@@ -96,6 +96,7 @@ angular.module('KSA_Bladr.controllers').
 
         if(newVal.images && $scope.viewerLoaded){
             //console.log('load because item has changed');
+            $analytics.pageTrack($location.url());
             $scope.loadImage();
         }
     });
