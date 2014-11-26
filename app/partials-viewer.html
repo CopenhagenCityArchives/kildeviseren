@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="form_text">
-            <span class="bold">{{metadata.collection.short_name}}</span> {{metadata.collection.info}}
+            <span class="bold">{{metadata.collection.short_name}}</span> <span ng-bind-html="metadata.collection.info"></span>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@
         </form>
         </div>
         <div class="topcontrols_container">
-          <div class="topcontrols-button sourceText"><div class="sourcetext">{{metadata.collection.short_name}} <span class="bold">{{metadata.item.metadataDescription}}</span></div></div>
+          <div class="topcontrols-button sourceText"><div class="sourcetext">{{metadata.collection.short_name}} <span class="bold">{{metadata.item.metadataDescription}}</span> <span ng-show="metadata.item.starbasRef" ng-bind-html="metadata.item.starbasRef"></span></div></div>
           <div id="toggleTop" class="topcontrols-button findBtn"><span class="findtext">MENU</span></div>
         </div>
       </div>
