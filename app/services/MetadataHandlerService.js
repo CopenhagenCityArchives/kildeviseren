@@ -208,6 +208,7 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
             newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage() + "/fullimage.jpg";
             newItem.permaLink = $location.absUrl();
             newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
+            newItem.starbasRef = MetadataManagerService.getStarbasRef(newItem.metadata, pubs.collection.starbas_field_name);
             pubs.item = newItem;
             pubs.currentPage = BrowseService.currentPage;
 
