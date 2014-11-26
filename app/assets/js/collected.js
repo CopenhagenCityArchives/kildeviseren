@@ -569,27 +569,15 @@ $(document).on('click','.labelforradio', function() {
             var southWest = map.unproject([0, height], 12);
             var northEast = map.unproject([width, 0], 12);
 
-            //Setting the bounds of the map. Note: This is hardcoded. For dynamic results use southWest and northEast
+            //Setting the bounds of the map.
             var bounds = new L.LatLngBounds(northEast,southWest);
 
             //Add the image overlay,
             //so that it covers the entire map
             L.imageOverlay(imageSrc, bounds).addTo(map);
 
-            // tell leaflet that the map is exactly as big as the image
-            //map.setMaxBounds(bounds);
-            //{paddingTopLeft: [0,100]}
-            map.fitBounds(bounds);
-
-            //map.zoomIn(1);
-            //map.panTo(map.getCenter());
-            // Calculate the offset
-            //var offset = map.getSize().x*0.15;
-            // Then move the map
-           // map.panBy(new L.Point(0, 0), {animate: false});
-
-            //map.zoomOut(1);
-
+            //Centers view at width center, 3/8 of the height, zoom level 10
+            map.setView(map.unproject([width/2,(height/8)*3],12),10);
         }
     }
 
