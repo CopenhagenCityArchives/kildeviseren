@@ -182,7 +182,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                 for(var i = 0; i < pubs.levels.length; i++){
                     if(metadata[pubs.levels[i].name] !== undefined){
                         var gui = pubs.levels[i].gui_name + ' ';
-                        if(pubs.levels[i].gui_hide)
+                        if(pubs.levels[i].gui_hide_name)
                             gui = "";
 
                         if(first){
@@ -191,7 +191,9 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
                         else{
                             gui = gui.toLowerCase();
                         }
-                        metadataStr = metadataStr + gui + metadata[pubs.levels[i].name] + ', ';
+                        if(!pubs.levels[i].gui_hide_value){
+                            metadataStr = metadataStr + gui + metadata[pubs.levels[i].name] + ', ';
+                        }
                     }
                 }
            // }
@@ -201,6 +203,13 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         else{
             return "";
         }
+    };
+
+    pubs.getStarbasRef = function(metadata, starbas_field_name){
+        if(starbas_field_name){
+            return '<a href="http://www.starbas.net/avmateriale.php?eks_id=' + metadata[starbas_field_name] + '" target="_blank">' + 'se i Starbas' + '</a>';
+        }
+        return false;
     };
 
     //Checks if the metadata should be updated
