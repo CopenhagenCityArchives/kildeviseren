@@ -11,7 +11,8 @@ var app = angular.module('KSA_Bladr', [
   'localytics.directives',
   'ngTouch',
   'angulartics',
-  'angulartics.google.analytics'
+  'angulartics.google.analytics',
+  'ngSanitize'
 ]);
 
 /*
