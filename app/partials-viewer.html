@@ -16,9 +16,9 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignLeft">
           <div class="btn btn-light goToFront" ng-click="goToFrontPage()">Forside</div>
-          <div class="btn btn-light" id="print" data-img="{{metadata.item.imageUrl}}">Print</div>
-          <a href="{{metadata.item.imageUrl}}" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem">Gem</a>
-          <div class="btn btn-light btnLink">Link
+          <div class="btn btn-light" id="print" data-img="{{metadata.item.imageUrl}}" analytics-on="click" analytics-category="topmenu" analytics-event="Print">Print</div>
+          <a href="{{metadata.item.imageUrl}}" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem" analytics-on="click" analytics-category="topmenu" analytics-event="Gem">Gem</a>
+          <div class="btn btn-light btnLink" analytics-on="click" analytics-category="topmenu" analytics-event="Link">Link
             <div class="linkDivCont"><input type="text" class="linkDiv" value="{{metadata.item.permaLink}}" id="linkInput"></div>
           </div>
         </div>
@@ -50,7 +50,7 @@
     </div>
 
   <!-- BIG ARROWS -->
-    <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)" analytics-on="click" analytics-event="back"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
+    <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
     <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="metadata.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- SMALLER ARROWS -->
     <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.goToFirst()"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
@@ -75,21 +75,17 @@
           <p>
             {{metadata.collection.error_intro}}
           </p>
-
-
                 <div>
                 <!-- Dynamic, trying to combine Angular and jQuery.check -->
                 <div ng-repeat="model in metadata.collection.error_reports">
                   <input id="errortype{{model.id}}" type="radio" name="errortype" class="radios" data-color="#4c769c" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport" value="{{model.id}}">
                   <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
                 </div>
-
-                <!-- Hardcoded, using jQuery.check -->
               </div>
 
           <div class="modal-footer">
             <p class="text-left">{{metadata.errorReportingStatus}}</p>
-            <button type="button" class="btn btn-primary" ng-hide="metadata.errorReportingStatus != ''" ng-click="metadata.reportError()">Send</button>
+            <button type="button" class="btn btn-primary" ng-hide="metadata.errorReportingStatus != ''" ng-click="metadata.reportError()" analytics-on="click" analytics-category="fejlrapportering" analytics-event="send">Send</button>
           </div>
       </div>
     </div>
