@@ -53,8 +53,8 @@
     <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)" analytics-on="click" analytics-event="back"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
     <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="metadata.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- SMALLER ARROWS -->
-    <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
-    <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(5)"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
+    <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.goToFirst()"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
+    <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.goToLast()"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- DARKER CONTROLS -->
     <div id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
     <div id="darkReport" ng-show="metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report"><div class="arrow_container"><i class="view-question fa fa-exclamation"></i></div></div>
