@@ -308,7 +308,11 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         var deferred = $q.defer();
         var request = URLBuilderService.errorReportUrl(collectionId, itemId, errorId);
 
-        return $http.jsonp(request);
+        $http.jsonp(request)
+            .success(function(){deferred.resolve();})
+            .error(function(){deferred.reject();});
+
+        return deferred.promise;
     };
 
     return pubs;
