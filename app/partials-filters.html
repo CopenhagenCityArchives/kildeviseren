@@ -1,4 +1,4 @@
-  <div id="frontvideo">
+  <div id="frontvideo" ng-show="metadata.collection.video_link">
 
       <div class="close-frontvideo"><i class="glyphicon glyphicon-remove closeVideo"></i>
 
@@ -10,7 +10,7 @@
 
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                  <div class="video_screen"></div>
+                  <div class="video_screen"><div youtube-video video-id="metadata.collection.video_link" player-heigt="'400px'" player-width="'600px'"></div></div>
 
               </div>
 

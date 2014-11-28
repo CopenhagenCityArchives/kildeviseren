@@ -12,7 +12,8 @@ var app = angular.module('KSA_Bladr', [
   'ngTouch',
   'angulartics',
   'angulartics.google.analytics',
-  'ngSanitize'
+  'ngSanitize',
+  'youtube-embed'
 ]);
 
 /*
