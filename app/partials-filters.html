@@ -1,4 +1,4 @@
-  <div id="frontvideo" ng-show="metadata.collection.video_link">
+  <div id="frontvideo">
 
       <div class="close-frontvideo"><i class="glyphicon glyphicon-remove closeVideo"></i>
 
@@ -54,7 +54,7 @@
 
               <div class="form_box">
 
-                  <div id="videoToggle" class="btn btn-default"><i class="glyphicon glyphicon-play video_play_icon"> </i>Inden du begynder</div>
+                  <div id="videoToggle" ng-show="metadata.collection.video_link" class="btn btn-default"><i class="glyphicon glyphicon-play video_play_icon"> </i>Inden du begynder</div>
 
                   <div class="form-group" ng-show='showCollectionsList'>
 
