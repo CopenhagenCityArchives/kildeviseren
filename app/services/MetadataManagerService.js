@@ -207,7 +207,7 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
 
     pubs.getStarbasRef = function(metadata, starbas_field_name){
         if(starbas_field_name){
-            return '<a href="http://www.starbas.net/avmateriale.php?eks_id=' + metadata[starbas_field_name] + '" target="_blank">' + 'se i Starbas' + '</a>';
+            return '<a href="http://www.starbas.net/avmateriale.php?av_stam_id=' + metadata[starbas_field_name] + '" target="_blank">' + 'se i Starbas' + '</a>';
         }
         return false;
     };
