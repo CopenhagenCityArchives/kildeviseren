@@ -43,6 +43,12 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     pubs.getCollections = function(){
          return MetadataManagerService.getCollections().then(function(value){
             pubs.collections = value;
+            //Removes collections under test
+            for(var i = 0; i< pubs.collections.length; i++){
+                if(pubs.collections[i].test == true){
+                    pubs.collections[i] = null;
+                }
+            }
          });
     };
 
@@ -205,7 +211,8 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         newItem = BrowseService.getCurrentContent();
         pubs.errorReportingStatus = "";
         if(newItem){
-            newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage() + "/fullimage.jpg";
+            newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", ".jpg");
+
             newItem.permaLink = $location.absUrl();
             newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
             newItem.starbasRef = MetadataManagerService.getStarbasRef(newItem.metadata, pubs.collection.starbas_field_name);
