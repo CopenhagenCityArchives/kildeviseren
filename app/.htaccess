@@ -1,3 +1,15 @@
 Options +FollowSymLinks
 RewriteEngine On
+
 DirectoryIndex index.html
+
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/$ [NC]
+RewriteRule ^ crawl.php? [NC,L]
+
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.+)$ [NC]
+RewriteRule ^ crawl.php%1? [NC,L]
+
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.+)$ [NC]
+RewriteRule /test\.html [L]
+
+

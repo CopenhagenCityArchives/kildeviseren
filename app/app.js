@@ -16,6 +16,14 @@ var app = angular.module('KSA_Bladr', [
   'youtube-embed'
 ]);
 
+app.config(['$locationProvider', function ($locationProvider) {
+
+    // enable html5Mode for pushstate ('#'-less URLs)
+    //$locationProvider.html5Mode(true);
+    //$locationProvider.hashPrefix('!');
+
+}]);
+
 /*
 This directive allows us to pass a function in on an enter key to do what we want.
  */
