@@ -81,7 +81,7 @@ angular.module('KSA_Bladr.controllers').
             $scope.loadImage();
             $scope.viewerLoaded = true;
         }
-        if($scope.template.name == 'filters' && $window.innerWidth >= 1280){
+        if($scope.template.name == 'filters' && $window.innerWidth >= 1280 && parseInt($location.search().collection) == 2){
             $window.formShower.toggleFeedback(true);
         }
         else{
