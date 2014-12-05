@@ -298,6 +298,7 @@ $(document).on('click','.labelforradio', function() {
         },
         scroll: function(e) {},
         load: function(e) {
+            redirect();
             preloaderHide();
         }
     });
@@ -687,5 +688,12 @@ $(document).on('click','.labelforradio', function() {
         $('#map').remove();
         parent.append("<div id='map'></div");
         tileImageSet = singleImageSet = false;
+    }
+    //Redirect from #-URL to #!-URL
+    function redirect() {
+        if(window.location.href.search("/#") != -1 && window.location.href.search("/#!") == -1){
+            window.location = (window.location.href.replace("/#", "/#!"));
+            window.location.reload();
+        }
     }
     /*-----  End of FUNCTIONS  ------*/

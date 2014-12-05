@@ -1,3 +1,8 @@
 Options +FollowSymLinks
 RewriteEngine On
+
 DirectoryIndex index.html
+
+RewriteRule ^(_escaped_fragment_)$ crawl.php?$1 [QSA]
+
+
