@@ -3,6 +3,16 @@ RewriteEngine On
 
 DirectoryIndex index.html
 
-RewriteRule ^(_escaped_fragment_)$ crawl.php?$1 [QSA]
+Redirect /kildeviser/mandtal /kildeviser/#!?collection=2
+Redirect /kildeviser/kort /kildeviser/#!?collection=3
 
+#For test server 1
+Redirect /mandtal /#!?collection=2
+Redirect /kort /#!?collection=3
+#For test server 2
+Redirect /kildeviser/version4/mandtal /kildeviser/version4/#!?collection=2
+Redirect /kildeviser/version4/kort /kildeviser/version4/#!?collection=3
 
+#Escaped fragment, used for Google and Bing bots crawling pages with AJAX content
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=(.*)$
+RewriteRule ^(.*)$ crawl.php?%1 [NC,L]

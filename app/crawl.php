@@ -16,7 +16,8 @@
         public $Output;
 
         public function KildeViserSEO(){
-            //error_reporting(E_ALL);
+            error_reporting(E_ALL);
+
             if(isset($_GET['collection']) && isset($_GET['item'])){
                 $this->collectionId = $_GET['collection'];
                 $this->itemId = $_GET['item'];
