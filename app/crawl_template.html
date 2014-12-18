@@ -4,6 +4,13 @@
     <title>Kildeviseren - Københavns Stadsarkiv</title>
     <meta name="description" content="Kildeviseren – Københavns Stadsarkiv">
     <meta name="author" content="Københavns Stadsarkiv">
+    <meta property="og:url" content="<?php echo $this->SiteURL; ?>" />
+    <meta property="og:title" content="Kildeviseren – Københavns Stadsarkiv" />
+    <meta property="og:site_name" content="Kildeviseren – Københavns Stadsarkiv" />
+    <meta property="og:description" content="<?php echo $this->MetadataString; ?>" />
+    <meta property="og:image" content="<?php echo $this->Data['images'][0]; ?>" />
+    <link rel="canonical" href="<?php echo $this->SiteURL; ?>" />
+
     <meta charset="utf-8">
 </head>
 <body>
@@ -17,7 +24,7 @@
     <img src="<?php echo $this->Data['images'][0]; ?>">
 
     <?php if ($this->Collection['starbas_field_name']){ ?>
-        <p>Se i <a href="<?php echo $this->Data[$this->Collection['starbas_field_name']]; ?>">Starbas</a></p>
+        <p>Se i <a href="http://www.starbas.net/avmateriale.php?av_stam_id=<?php echo $this->Data['metadata'][$this->Collection['starbas_field_name']]; ?>">Starbas</a></p>
     <?php } ?>
 
     <?php if ($this->Collection['link']){ ?>
