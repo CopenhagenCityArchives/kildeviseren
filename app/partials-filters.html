@@ -42,7 +42,15 @@
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-              <div class="header_text" ng-bind-html="metadata.collection.info"></div>
+              <div class="header_text" ng-bind-html="metadata.collection.info">
+
+              </div>
+              <div class="header_text" ng-hide="metadata.collection.info">
+                <b>Arkivmateriale fra Københavns Stadsarkiv</b>
+                <p>I Kildeviseren kan du finde kilder til slægtsforskning i dine københavnske aner. Du kan også se kort og tegninger.</p>
+                <p>Der bliver løbende lagt nye kilder op.</p>
+                <a href="http://www.kbharkiv.dk" target="_blank">Læs mere på Stadsarkivets hjemmeside</a>
+              </div>
 
           </div>
 
