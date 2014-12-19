@@ -67,7 +67,7 @@
 
             //Special treatment of tiled images
             if($this->Collection['image_type'] != 'image' ){
-                $this->Data['images'][0] = str_replace('_files/', '.jpg', $this->Data['images'][0]);
+                $this->Data['images'][0] = str_replace('_files/', '_thumb.jpg', $this->Data['images'][0]);
             }
         }
 
