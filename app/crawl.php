@@ -13,6 +13,7 @@
         public $Collection;
         public $Levels;
         public $Data;
+        public $Items;
         public $Output;
         public $MetadataString;
         public $SiteURL;
@@ -31,7 +32,9 @@
                 $this->_fetchJSONData();
                 $this->_buildOutput();
                 $this->_createMetadataString();
+                $this->_createItemURLs();
                 $this->_createSiteURL();
+                $this->_buildSearchURL();
                 $this->_createTemplate();
             }
         }
@@ -59,6 +62,8 @@
             $this->Levels = $this->_getData($this->levelsUrl, $this->Levels);
             $this->Data = $this->_getData($this->dataUrl, $this->Data);
             $this->Data = $this->Data[0];
+
+            $this->Items = $this->_getData($this->_buildSearchURL(), $this->Items);
 
             //Special treatment of tiled images
             if($this->Collection['image_type'] != 'image' ){
@@ -106,6 +111,12 @@
             $this->SiteURL = $url;
         }
 
+        private function _createItemURLs(){
+            foreach($this->Items as $key => $item){
+                $this->Items[$key]['url'] = "http://$_SERVER[HTTP_HOST]/kildeviser/#!?collection=" . $this->collectionId . '&item=' . $item['id'];
+            }
+        }
+
         private function _getData($url, $data){
             //Get JSON data from server
             $json = file_get_contents($url);
@@ -118,6 +129,18 @@
 
             //Returning data
             return $data;
+        }
+
+        //Building a search for similar items based on already loaded filters and data
+        private function _buildSearchURL(){
+            $searchUrl = 'http://www.kbhkilder.dk/api/data/' . $this->collectionId . '/?';
+            $parameters = '';
+            foreach($this->Levels as $level){
+                if($level['searchable'] && isset($this->Data['metadata'][$level['name']])){
+                    $parameters = $parameters . $level['name'] . '=' . urlencode($this->Data['metadata'][$level['name']]) . '&';
+                }
+            }
+            return $searchUrl . $parameters;
         }
 
         private function _createTemplate(){

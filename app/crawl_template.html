@@ -15,13 +15,18 @@
 </head>
 <body>
     <h1><?php echo $this->Collection['long_name']; ?></h1>
-    <h3><?php echo $this->Collection['info']; ?></h3>
-
+    <h2>
     <?php foreach($this->Output as $output){ ?>
-        <p><?php echo $output['name'] ? $output['name'] . ':' : null; ?><?php echo $output['value']; ?></p>
+        <?php echo $output['name'] ? $output['name'] . ':' : null; ?><?php echo $output['value']; ?>
     <?php } ?>
+    </h2>
+    <h4><?php echo $this->Collection['info']; ?></h4>
 
     <img src="<?php echo $this->Data['images'][0]; ?>">
+    <h2>Relaterede elementer:</h2>
+    <?php foreach($this->Items as $key => $item){ ?>
+        <a href="<?php echo $item['url']; ?>"><?php echo $item['id'] ?></a>
+    <?php } ?>
 
     <?php if ($this->Collection['starbas_field_name']){ ?>
         <p>Se i <a href="http://www.starbas.net/avmateriale.php?av_stam_id=<?php echo $this->Data['metadata'][$this->Collection['starbas_field_name']]; ?>">Starbas</a></p>
