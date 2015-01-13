@@ -80,13 +80,13 @@ angular.module('KSA_Bladr.controllers').
             //console.log('load because $includeContentLoaded is fired');
             $scope.loadImage();
             $scope.viewerLoaded = true;
-        }
+        }/*
         if($scope.template.name == 'filters' && $window.innerWidth >= 1280 && parseInt($location.search().collection) == 2){
             $window.formShower.toggleFeedback(true);
         }
         else{
             $window.formShower.toggleFeedback(false);
-        }
+        }*/
     });
 
 
