@@ -212,7 +212,7 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         pubs.errorReportingStatus = "";
         if(newItem){
             newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", ".jpg");
-
+            newItem.imageUrlPrint = newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", "_thumb.jpg");
             newItem.permaLink = $location.absUrl();
             newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
             newItem.starbasRef = MetadataManagerService.getStarbasRef(newItem.metadata, pubs.collection.starbas_field_name);
