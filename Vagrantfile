@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Connect to IP
   # --------------------
-  config.vm.network :public_network, ip: "192.168.10.130"
+  config.vm.network :public_network, bridge: 'vmxnet3 Ethernet Adapter #2', ip: "192.168.10.130"
 
   # Forward to Port
   # --------------------
