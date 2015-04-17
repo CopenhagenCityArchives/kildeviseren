@@ -2,18 +2,18 @@
 angular.module('KSA_Bladr.services',[]);
 angular.module('KSA_Bladr.controllers',[]);
 angular.module('KSA_Bladr.directives',[]);
-angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
+//angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
 
 var app = angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
   'KSA_Bladr.services',
   'KSA_Bladr.directives',
-  'localytics.directives',
   'ngTouch',
   'angulartics',
   'angulartics.google.analytics',
   'ngSanitize',
-  'youtube-embed'
+ /* 'youtube-embed',*/
+  'localytics.directives'
 ]);
 
 app.config(['$locationProvider', function ($locationProvider) {
