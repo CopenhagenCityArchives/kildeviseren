@@ -1,4 +1,4 @@
-angular.module('KSA_Bladr.directives').directive('dynaform', function($compile){
+angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', function($compile){
 
     return{
 
@@ -105,7 +105,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', function($compile){
 
     };
 
-});
+}]);
 
 
 

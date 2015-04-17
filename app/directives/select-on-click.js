@@ -1,4 +1,4 @@
-module.directive('selectOnClick', function () {
+angular.module('KSA_Bladr.directives').directive('selectOnClick', function () {
     return {
         restrict: 'A',
         link: function (scope, element) {
@@ -14,4 +14,4 @@ module.directive('selectOnClick', function () {
             });
         }
     };
-})
+});

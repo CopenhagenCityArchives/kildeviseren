@@ -2,7 +2,7 @@
 
 angular.module('KSA_Bladr.controllers').
 
-    controller('ViewerCtrl', function($scope, $location, $window, MetadataHandlerService, $analytics){
+    controller('ViewerCtrl', ['$scope', '$location', '$window', 'MetadataHandlerService', '$analytics', function($scope, $location, $window, MetadataHandlerService, $analytics){
 
     //The controller vars are simply based on the corresponding data in the service
     $scope.metadata = MetadataHandlerService;
@@ -160,5 +160,5 @@ angular.module('KSA_Bladr.controllers').
     },true);
 
     $scope.init();
-});
+}]);
 
