@@ -56,14 +56,13 @@ display: block;
 overflow: visible;
 width: 100%;
 min-width: 300px;
-max-width:680px;
+max-width:545px;
 margin: 0 0 5px 0;
 background: #4c769c;
 border: none;
 color: #f6f6f6;
 text-align: left;
-font-weight: 700;
-text-transform: uppercase;
+font-weight: 300;
 height: auto;
 min-height: 44px;
 line-height: 44px;
@@ -449,4 +448,4 @@ font-weight: 400;
     color:#888;
   }
 }
-/* @end */
+/* @end */
