@@ -55,6 +55,20 @@ angular.module('KSA_Bladr.controllers').
         $window.showImage($scope.metadata.collection.image_type, $scope.metadata.item.images[0], null, $scope.metadata.item);
     };
 
+    $scope.keydown = function($event){
+        if($scope.metadata.itemsList === 0)
+            return;
+
+        switch($event.keyCode){
+            case 37:
+                $scope.metadata.step(-1);
+            break;
+            case 39:
+                $scope.metadata.step(1);
+            break;
+        }
+    };
+
 
 
     //Displaying frontpage

@@ -1,163 +1,326 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="KSA_Bladr">
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=1024, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Kildeviseren – Københavns Stadsarkiv">
-    <meta name="author" content="Københavns Stadsarkiv">
-
-    <meta property="og:title" content="Kildeviseren – Københavns Stadsarkiv" />
-    <meta property="og:site_name" content="Kildeviseren – Københavns Stadsarkiv" />
-    <meta property="og:description" content="Kildeviseren – Københavns Stadsarkiv" />
-    <meta property="og:image" content="http://www.kbharkiv.dk/kildeviser/assets/images/facebooklogo.jpg" />
-
-    <link rel="shortcut icon" href="assets/favicon.ico">
-
-    <title>Kildeviseren</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-
-
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <link rel="stylesheet" type="text/css" href="assets/css/custom-theme/jquery-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="directives/chosen.css" />
-
-    <!-- /*===============================
-    =            TYPEKIT            =
-    ===============================*/ -->
-    <!-- <script type="text/javascript" src="//use.typekit.net/qna6hyw.js"></script> -->
-    <script type="text/javascript">
-    try {
-        // Typekit.load();
-    } catch (e) {}
-    </script>
-    <!-- /*-----  End of TYPEKIT  ------*/ -->
-
-    <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-57049855-1', 'auto');
-      //ga('send', 'pageview');
-
-    </script>
-</head>
-
-
-
-<body ng-controller="ViewerCtrl">
-
-    <!-- BACKGROUND IMAGE -->
-    <div id="bgimgwrapper">
-        <img alt="" src="assets/img/bg.jpg" id="bgimg" style="width: 100%; height:100%;" />
-    </div>
-
-    <!-- /*=====================================
-  =            MAIN VIEW DIV            =
-  =====================================*/ -->
-
-    <div id="preload">
-        <div id="preload-animation"></div>
-        <p class="preloader-text">ÅBNER STADSARKIVETS KILDEVISER</p>
-    </div>
-
-    <div>
-        <div class="slide-animate" ng-include="template.url"></div>
-    </div>
-    </div>
-    <!-- /*-----  End of MAIN VIEW DIV  ------*/
-
-  /*==========================================
-  =            jQuery & Bootstrap            =
-  ==========================================*/ -->
-    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="assets/js/plugins/bootstrap.js"></script>
-    <!-- /*-----  End of jQuery & Bootstrap  ------*/
-
-
-
-  /*======================================
-  =            jQuery Plugins            =
-  ======================================*/ -->
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/easing/EasePack.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/jquery.gsap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/plugins/ScrollToPlugin.min.js"></script>
-    <script src="assets/js/plugins/jquery.caret.js"></script>
-    <script src="assets/js/plugins/jquery.check.js"></script>
-    <script src="assets/js/plugins/fastclick.js"></script>
-    <script src="assets/js/plugins/print.js"></script>
-    <script src="assets/js/chosen.jquery.js"></script>
-
-    <!-- /*-----  End of jQuery Plugins  ------*/
-
-
-
-  /*=================================
-  =            PRELOADER            =
-  =================================*/ -->
-    <script src="assets/js/plugins/canvasLoader.js"></script>
-    <!-- /*-----  End of PRELOADER  ------*/
-
-    <!-- Leaflet, used for tiled images -->
-    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
-    <link rel="stylesheet" href="assets/css/leaflet.css" />
-    <script src="assets/js/plugins/leaflet-deepzoom.js"></script>
-
-
-    <!--/*===============================
-  =            ANGULAR            =
-  ===============================*/ -->
-
-
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-touch.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js"></script>
-    <script src="app.js"></script>
-
-
-
-    <!-- Angular - directives, services and controllers -->
-
-    <script src="directives/chosen.js"></script>
-    <script src="directives/dynaform.js"></script>
-    <script src="directives/angular-youtube-embed.js"></script>
-    <script src="controllers/ViewerCtrl.js"></script>
-    <script src="services/BrowseService.js"></script>
-    <script src="services/MetadataManagerService.js"></script>
-    <script src="services/URLBuilderService.js"></script>
-    <script src="services/MetadataHandlerService.js"></script>
-
-    <!-- Google Analytics -->
-    <script src="services/angulartics.min.js"></script>
-    <script src="services/angulartics-ga.min.js"></script>
-
-
-    <!-- /*-----  End of ANGULAR  ------*/
-/*======================================
-=            CUSTOM SCRIPTS            =
-======================================*/ -->
-    <script src="assets/js/collected.js"></script>
-    <!-- Feedback form -->
-    <script src="assets/js/form-shower.js"></script>
-    <!-- /*-----  End of CUSTOM SCRIPTS  ------*/ -->
-</body>
-
-</html>
+<!DOCTYPE html>
+
+<html lang="en" ng-app="KSA_Bladr">
+
+<head>
+
+
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=1024, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="description" content="Kildeviseren – Københavns Stadsarkiv">
+
+    <meta name="author" content="Københavns Stadsarkiv">
+
+
+
+    <meta property="og:title" content="Kildeviseren – Københavns Stadsarkiv" />
+
+    <meta property="og:site_name" content="Kildeviseren – Københavns Stadsarkiv" />
+
+    <meta property="og:description" content="Kildeviseren – Københavns Stadsarkiv" />
+
+    <meta property="og:image" content="http://www.kbharkiv.dk/kildeviser/assets/images/facebooklogo.jpg" />
+
+
+
+    <link rel="shortcut icon" href="assets/favicon.ico">
+
+
+
+    <title>Kildeviseren</title>
+
+
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+
+
+
+
+    <!-- Custom styles for this template -->
+
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+
+
+    <link rel="stylesheet" type="text/css" href="assets/css/custom-theme/jquery-ui.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="directives/chosen.css" />
+
+
+
+    <!-- /*===============================
+
+    =            TYPEKIT            =
+
+    ===============================*/ -->
+
+    <!-- <script type="text/javascript" src="//use.typekit.net/qna6hyw.js"></script> -->
+
+    <script type="text/javascript">
+
+    try {
+
+        // Typekit.load();
+
+    } catch (e) {}
+
+    </script>
+
+    <!-- /*-----  End of TYPEKIT  ------*/ -->
+
+
+
+    <!-- Google Analytics -->
+
+    <script>
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+
+
+      ga('create', 'UA-57049855-1', 'auto');
+
+      //ga('send', 'pageview');
+
+
+
+    </script>
+
+</head>
+
+
+
+
+
+
+
+<body ng-controller="ViewerCtrl" ng-keydown="keydown($event)">
+
+
+
+    <!-- BACKGROUND IMAGE -->
+
+    <div id="bgimgwrapper">
+
+        <img alt="" src="assets/img/bg.jpg" id="bgimg" style="width: 100%; height:100%;" />
+
+    </div>
+
+
+
+    <!-- /*=====================================
+
+  =            MAIN VIEW DIV            =
+
+  =====================================*/ -->
+
+
+
+    <div id="preload">
+
+        <div id="preload-animation"></div>
+
+        <p class="preloader-text">ÅBNER STADSARKIVETS KILDEVISER</p>
+
+    </div>
+
+
+
+    <div>
+
+        <div class="slide-animate" ng-include="template.url"></div>
+
+    </div>
+
+    </div>
+
+    <!-- /*-----  End of MAIN VIEW DIV  ------*/
+
+
+
+  /*==========================================
+
+  =            jQuery & Bootstrap            =
+
+  ==========================================*/ -->
+
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+
+    <script src="assets/js/plugins/bootstrap.js"></script>
+
+    <!-- /*-----  End of jQuery & Bootstrap  ------*/
+
+
+
+
+
+
+
+  /*======================================
+
+  =            jQuery Plugins            =
+
+  ======================================*/ -->
+
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/easing/EasePack.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/jquery.gsap.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/plugins/ScrollToPlugin.min.js"></script>
+
+    <script src="assets/js/plugins/jquery.caret.js"></script>
+
+    <script src="assets/js/plugins/jquery.check.js"></script>
+
+    <script src="assets/js/plugins/fastclick.js"></script>
+
+    <script src="assets/js/plugins/print.js"></script>
+
+    <script src="assets/js/chosen.jquery.js"></script>
+
+
+
+    <!-- /*-----  End of jQuery Plugins  ------*/
+
+
+
+
+
+
+
+  /*=================================
+
+  =            PRELOADER            =
+
+  =================================*/ -->
+
+    <script src="assets/js/plugins/canvasLoader.js"></script>
+
+    <!-- /*-----  End of PRELOADER  ------*/
+
+
+
+    <!-- Leaflet, used for tiled images -->
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+
+    <link rel="stylesheet" href="assets/css/leaflet.css" />
+
+    <script src="assets/js/plugins/leaflet-deepzoom.js"></script>
+
+
+
+
+
+    <!--/*===============================
+
+  =            ANGULAR            =
+
+  ===============================*/ -->
+
+
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-touch.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js"></script>
+
+    <script src="app.js"></script>
+
+
+
+
+
+
+
+    <!-- Angular - directives, services and controllers -->
+
+
+
+    <script src="directives/chosen.js"></script>
+
+    <script src="directives/dynaform.js"></script>
+
+    <script src="directives/angular-youtube-embed.js"></script>
+
+    <script src="controllers/ViewerCtrl.js"></script>
+
+    <script src="services/BrowseService.js"></script>
+
+    <script src="services/MetadataManagerService.js"></script>
+
+    <script src="services/URLBuilderService.js"></script>
+
+    <script src="services/MetadataHandlerService.js"></script>
+
+
+
+    <!-- Google Analytics -->
+
+    <script src="services/angulartics.min.js"></script>
+
+    <script src="services/angulartics-ga.min.js"></script>
+
+
+
+
+
+    <!-- /*-----  End of ANGULAR  ------*/
+
+/*======================================
+
+=            CUSTOM SCRIPTS            =
+
+======================================*/ -->
+
+    <script src="assets/js/collected.js"></script>
+
+    <!-- Feedback form -->
+
+    <script src="assets/js/form-shower.js"></script>
+
+    <!-- /*-----  End of CUSTOM SCRIPTS  ------*/ -->
+
+</body>
+
+
+
+</html>
+
