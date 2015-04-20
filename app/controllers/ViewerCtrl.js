@@ -129,6 +129,27 @@ angular.module('KSA_Bladr.controllers').
         var collection = parseInt($location.search().collection) || false;
         var item = parseInt($location.search().item) || false;
 
+        //If only collection is given, redirect
+        if(collection && !item){
+            var location = "http://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
+            switch(collection){
+                case 2:
+                    location = location + '/politiets-mandtaller';
+                break;
+
+                case 3:
+                    location = location + '/kort-og-tegninger';
+                break;
+
+                default:
+                    return;
+                    break;
+            }
+
+            $window.location = location;
+        }
+
+        //If collection and item: Show item
         if(collection){
             $scope.showCollectionsList = false;
             $scope.metadata.getCollection(collection).then(function(){
