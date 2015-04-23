@@ -130,7 +130,7 @@ angular.module('KSA_Bladr.controllers').
         var item = parseInt($location.search().item) || false;
 
         //If only collection is given, redirect
-        if(collection && !item){
+        if(!item){
             var location = "http://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
             switch(collection){
                 case 2:
@@ -142,7 +142,7 @@ angular.module('KSA_Bladr.controllers').
                 break;
 
                 default:
-                    return;
+                    //return;
                     break;
             }
 
