@@ -213,13 +213,14 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         if(newItem){
             newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", ".jpg");
             newItem.imageUrlPrint = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", "_thumb.jpg");
-            newItem.permaLink = $location.absUrl();
+
             newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
             newItem.starbasRef = MetadataManagerService.getStarbasRef(newItem.metadata, pubs.collection.starbas_field_name);
             pubs.item = newItem;
             pubs.currentPage = BrowseService.currentPage;
 
             $location.search('item', newItem.id);
+            newItem.permaLink = $location.absUrl();
         }
         else{
             console.log("Could not get current content in updateItem()");
