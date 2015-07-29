@@ -25,7 +25,7 @@
     <img src="<?php echo $this->Data['images'][0]; ?>">
     <h2>Relaterede elementer:</h2>
     <?php foreach($this->Items as $key => $item){ ?>
-        <a href="<?php echo $item['url']; ?>"><?php echo $item['id'] ?></a>
+        <a href="<?php echo $item['url']; ?>"><?php echo $item['id']; ?></a>
     <?php } ?>
 
     <?php if ($this->Collection['starbas_field_name']){ ?>
@@ -33,7 +33,7 @@
     <?php } ?>
 
     <?php if ($this->Collection['link']){ ?>
-        <a href="<?php $this->Collection['link']; ?>">Læs mere på Stadarkivets Wiki</a>
+        <a href="<?php echo $this->Collection['link']; ?>">Læs mere på Stadarkivets Wiki</a>
     <?php } ?>
     <p>Kildeviseren er lavet af <a href="http://www.kbharkiv.dk">Københavns Stadsarkiv</a></p>
 </body>

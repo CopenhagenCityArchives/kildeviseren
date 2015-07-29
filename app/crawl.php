@@ -41,19 +41,21 @@
 
         private function getURLParameters(){
             //The only input should be the url string. The loop will only iterate through one entry
-            foreach($_GET as $key => $value){
+          //  foreach($_GET as $key => $value){
+                $key = $_SERVER['QUERY_STRING'];
                 //Expected input: ?collection=3&item=2232
                 $queryString = rawurldecode($key);
                 $inputs = explode('&', $queryString);
                 $inputs[0] = str_replace('?', '', $inputs[0]);
                 $info = array();
+
                 foreach($inputs as $cur){
                     $parts = explode('=', $cur);
                     $info[$parts[0]] = $parts[1];
                 }
 
                 return $info;
-            }
+          //  }
         }
 
         private function _fetchJSONData(){
