@@ -1107,58 +1107,62 @@ $(document).on('click','.labelforradio', function() {
 
             // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
 
+            //Test: Lets get the image size (and counting on the browser's cache for not getting the image twice!)
+            var img = new Image();
+            img.onload = function(){
+                //alert( this.width+' '+ this.height );
+                // create the slippy map
+
+                var map = L.map('map', {
+
+                    //minZoom: 9,
+
+                    //maxZoom: 16,
+
+                    //zoom: 1,
+
+                    zoomControl: false,
+
+                    imageFormat: 'jpeg',
+
+                    crs: L.CRS.Simple,
+
+                }).setView([0, 0], 0);
+
+                map.addControl(L.control.zoom({
+
+                    position: 'bottomleft'
+
+                }));
 
 
-            // create the slippy map
 
-            var map = L.map('map', {
+                // calculate the edges of the image, in coordinate space
+                var southWest = map.unproject([0, this.height], 12);
+                var northEast = map.unproject([this.width, 0], 12);
 
-                //minZoom: 9,
+                //Setting the bounds of the map.
+                var bounds = new L.LatLngBounds(northEast,southWest);
 
-                //maxZoom: 16,
+                //Add the image overlay,
+                //so that it covers the entire map
+                L.imageOverlay(imageSrc, bounds).addTo(map);
 
-                //zoom: 1,
+                if(savedBounds){
+                    map.fitBounds(savedBounds);
+                }
+                else{
+                    //Centers view at width center, 3/8 of the height, zoom level 10
+                    map.setView(map.unproject([this.width/2,(this.height/8)*3],12),10);
+                }
 
-                zoomControl: false,
+                map.on('zoomend moveend dragend', function(e) {
+                    savedBounds = e.target.getBounds();
+                  //  console.log("savedBounds2: ", savedBounds);
+                });
 
-                imageFormat: 'jpeg',
-
-                crs: L.CRS.Simple,
-
-            }).setView([0, 0], 0);
-
-            map.addControl(L.control.zoom({
-
-                position: 'bottomleft'
-
-            }));
-
-
-
-            // calculate the edges of the image, in coordinate space
-            var southWest = map.unproject([0, height], 12);
-            var northEast = map.unproject([width, 0], 12);
-
-            //Setting the bounds of the map.
-            var bounds = new L.LatLngBounds(northEast,southWest);
-
-            //Add the image overlay,
-            //so that it covers the entire map
-            L.imageOverlay(imageSrc, bounds).addTo(map);
-
-            if(savedBounds){
-                map.fitBounds(savedBounds);
-            }
-            else{
-                //Centers view at width center, 3/8 of the height, zoom level 10
-                map.setView(map.unproject([width/2,(height/8)*3],12),10);
-            }
-
-            map.on('zoomend moveend dragend', function(e) {
-                savedBounds = e.target.getBounds();
-              //  console.log("savedBounds2: ", savedBounds);
-            });
-
+            };
+            img.src = imageSrc;
         }
 
     }
