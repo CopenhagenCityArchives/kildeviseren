@@ -1189,7 +1189,7 @@ $(document).on('click','.labelforradio', function() {
 
             }));
 
-            L.tileLayer.deepzoom(imageSrc + '/', {
+            L.tileLayer.deepzoom(imageSrc, {
 
                 width: width,
 
