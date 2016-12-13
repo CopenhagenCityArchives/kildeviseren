@@ -110,7 +110,7 @@ angular.module('KSA_Bladr.controllers').
 
         if(newVal.images && $scope.viewerLoaded){
             //console.log('load because item has changed');
-            $analytics.pageTrack($location.url());
+            $analytics.pageTrack('/kildeviser/' + $location.url());
             $scope.loadImage();
         }
     });
