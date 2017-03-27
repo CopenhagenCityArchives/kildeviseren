@@ -118,6 +118,21 @@ app.service('MetadataManagerService', function($http, $q, URLBuilderService){
         return deferred.promise;
     };
 
+    //Retrieves object with the given id
+    pubs.getObjectsByUnit = function(unit_id){
+        var deferred = $q.defer();
+        $http.jsonp(URLBuilderService.objectByUnitUrl(pubs.collection_id, unit_id))
+        .success(function(data, status, headers) {
+            deferred.resolve(data);
+        })
+        .error(function(data, status, headers, config){
+            deferred.reject();
+            throw "Couldn't load objects for unit_id " + unit_id;
+        });
+
+        return deferred.promise;
+    };    
+
     pubs.fillFiltersByItem = function(item){
         for(var i = 0; i < pubs.levels.length; i++){
             if(item[pubs.levels[i].name])

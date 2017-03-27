@@ -237,6 +237,12 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         });
     };
 
+    pubs.rebuildByUnit = function(unitId){
+        MetadataManagerService.getObjectsByUnit(unitId).then(function(data){
+            pubs.rebuildByItem(data[0].id);
+        });
+    };
+
     pubs.reportError = function(){
         if(pubs.selectedErrorReport != -1){
             MetadataManagerService.reportError(pubs.collectionId, pubs.item.id, pubs.selectedErrorReport).then(

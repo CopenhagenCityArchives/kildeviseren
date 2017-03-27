@@ -110,6 +110,14 @@ angular.module('KSA_Bladr.services').
             return url;
         };
 
+        pubs.objectByUnitUrl = function(collectionId, unitId){
+            if(!collectionId || !unitId)
+                throw 'Not all parameters given in objectUrl';
+
+            var url = pubs.remoteServerUrl + "data/" + collectionId + '?unit_id=' + unitId + '&callback=JSON_CALLBACK';
+            return url;
+        };
+
         pubs.errorReportUrl = function(collectionId, itemId, errorId){
             return pubs.remoteServerUrl + "error/" + collectionId + "/" + itemId + "/" + errorId + '/?callback=JSON_CALLBACK';
         };

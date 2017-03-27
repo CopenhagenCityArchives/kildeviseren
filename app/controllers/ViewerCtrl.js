@@ -128,34 +128,28 @@ angular.module('KSA_Bladr.controllers').
 
         var collection = parseInt($location.search().collection) || false;
         var item = parseInt($location.search().item) || false;
+        var unit = parseInt($location.search().unit) || false;
 
         //If only collection is given, redirect
-        if(!item){
+        if(!item && !unit){
             var location = "http://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
-            switch(collection){
-                case 2:
-                    location = location + '/politiets-mandtaller';
-                break;
-
-                case 3:
-                    location = location + '/kort-og-tegninger';
-                break;
-
-                default:
-                    //return;
-                    break;
-            }
 
             $window.location = location;
         }
 
         //If collection and item: Show item
-        if(collection){
+        if(collection && item){
             $scope.showCollectionsList = false;
             $scope.metadata.getCollection(collection).then(function(){
-                if(item){
-                    $scope.metadata.rebuildByItem(item);
-                }
+                $scope.metadata.rebuildByItem(item);
+            });
+        }
+
+        //if collection and unit: Show unit
+        if(collection && unit){
+            $scope.showCollectionsList = false;
+            $scope.metadata.getCollection(collection).then(function(){
+                $scope.metadata.rebuildByUnit(unit);
             });
         }
     };
