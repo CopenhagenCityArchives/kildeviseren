@@ -14,7 +14,7 @@ angular.module('KSA_Bladr.controllers').
 
     $scope.init = function(){
 
-        $scope.template = {name:'filters', url: 'partials-filters.html'};
+        //$scope.template = {name:'filters', url: 'partials-filters.html'};
 
         $scope.metadata.getCollections().then(function(){
             //Check for url inputs here
@@ -176,4 +176,3 @@ angular.module('KSA_Bladr.controllers').
 
     $scope.init();
 }]);
-
