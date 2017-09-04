@@ -132,7 +132,7 @@ angular.module('KSA_Bladr.controllers').
 
         //If only collection is given, redirect
         if(!item && !unit){
-            var location = "http://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
+            var location = "https://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
 
             $window.location = location;
         }

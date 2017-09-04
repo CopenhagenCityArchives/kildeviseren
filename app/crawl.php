@@ -24,9 +24,9 @@ class KildeViserSEO {
 			$this->collectionId = $input['collection'];
 			$this->itemId = $input['item'];
 
-			$this->collectionUrl = "http://www.kbhkilder.dk/api/collections/" . $this->collectionId;
-			$this->levelsUrl = "http://www.kbhkilder.dk/api/levels/" . $this->collectionId;
-			$this->dataUrl = "http://www.kbhkilder.dk/api/data/" . $this->collectionId . "?id=" . $this->itemId;
+			$this->collectionUrl = "https://www.kbhkilder.dk/api/collections/" . $this->collectionId;
+			$this->levelsUrl = "https://www.kbhkilder.dk/api/levels/" . $this->collectionId;
+			$this->dataUrl = "https://www.kbhkilder.dk/api/data/" . $this->collectionId . "?id=" . $this->itemId;
 
 			$this->_fetchJSONData();
 			$this->_buildOutput();
@@ -103,7 +103,7 @@ class KildeViserSEO {
 	}
 
 	private function _createSiteURL() {
-		$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 		$url = rawurldecode($url);
 		$url = str_replace('?_escaped_fragment_=', '#!', $url);
@@ -113,7 +113,7 @@ class KildeViserSEO {
 
 	private function _createItemURLs() {
 		foreach ($this->Items as $key => $item) {
-			$this->Items[$key]['url'] = "http://$_SERVER[HTTP_HOST]/kildeviser/#!?collection=" . $this->collectionId . '&item=' . $item['id'];
+			$this->Items[$key]['url'] = "https://$_SERVER[HTTP_HOST]/kildeviser/#!?collection=" . $this->collectionId . '&item=' . $item['id'];
 		}
 	}
 
@@ -144,7 +144,7 @@ class KildeViserSEO {
 
 	//Building a search for similar items based on already loaded filters and data
 	private function _buildSearchURL() {
-		$searchUrl = 'http://www.kbhkilder.dk/api/data/' . $this->collectionId . '/?';
+		$searchUrl = 'https://www.kbhkilder.dk/api/data/' . $this->collectionId . '/?';
 		$parameters = '';
 		foreach ($this->Levels as $level) {
 			if ($level['searchable'] && isset($this->Data['metadata'][$level['name']])) {

@@ -53,7 +53,7 @@ angular.module('KSA_Bladr.services').
         };
 
         //Url of the remote server, base of all requests
-        pubs.remoteServerUrl = "http://www.kbhkilder.dk/1508/stable/api/";
+        pubs.remoteServerUrl = "https://www.kbhkilder.dk/1508/stable/api/";
         //pubs.remoteServerUrl = "http://localhost:8000/api/";
 
         pubs.collectionsUrl = function(){

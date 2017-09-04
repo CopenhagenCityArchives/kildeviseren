@@ -23,7 +23,7 @@ angular.module('youtube-embed', ['ng'])
                 // have the real query string URI encoded behind a ';'.
                 // at this point, `id is 'pxa6goHqzaA;u=%2Fwatch%3Fv%3DdPdgx30w9sU%26feature%3Dshare'
                 var uriComponent = decodeURIComponent(id.split(';')[1]);
-                id = ('http://youtube.com' + uriComponent)
+                id = ('https://youtube.com' + uriComponent)
                         .replace(youtubeRegexp, '$1');
             } else {
                 // https://www.youtube.com/watch?v=VbNF9X1waSc&amp;feature=youtu.be
