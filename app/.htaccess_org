@@ -1,0 +1,19 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+DirectoryIndex index.html
+
+Redirect /kildeviser/mandtal https://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet/politiets-mandtaller
+Redirect /kildeviser/kort https://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet/kort-og-tegninger
+
+#For test server 1
+Redirect /mandtal /#!?collection=2
+Redirect /kort /#!?collection=3
+Redirect / http://www.google.com
+#For test server 2
+Redirect /kildeviser/version4/mandtal /kildeviser/version4/#!?collection=2
+Redirect /kildeviser/version4/kort /kildeviser/version4/#!?collection=3
+
+#Escaped fragment, used for Google and Bing bots crawling pages with AJAX content
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=(.*)$
+RewriteRule ^(.*)$ crawl.php?%1 [NC,L]
