@@ -49,7 +49,7 @@ angular.module('KSA_Bladr.services').
                 url = url + "?callback=JSON_CALLBACK";
             }
 
-            return url;
+            return encodeURI(url);
         };
 
         //Url of the remote server, base of all requests

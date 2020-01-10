@@ -117,57 +117,7 @@ app.service('MetadataFilterService', function($http, URLBuilderService){
         return true;
     };
     
-    /**
-     *  Returns an array ready to be used to create a dform
-     */ 
-     pubs.getFormData = function(){
-        var formArr = {};
-        formArr.type = 'GET';
-        formArr.action = '#';
-        formArr.html = [];
         
-        for(var i = 0; i < pubs.levels.length; i++){
-            var lvl = pubs.levels[i];
-            var selectConfig = {};
-            
-            selectConfig = {
-                    "name" : lvl.name,
-                    "caption" : lvl.name,
-                    "placeholder" : lvl.name,
-                    "type" : "text",
-                    "eventListener" : 'ng-change="myModule.filterChanged(' + lvl.name + ')"'                   
-            };
-            
-            switch(lvl.type){
-                case 'preset':
-                    selectConfig.type = "select";
-                    selectConfig.options = lvl.data;
-                break;
-                
-                case 'typeahead':
-                    selectConfig.type = "autocomplete";
-                    selectConfig.source = lvl.data_sql;
-                    selectConfig.minLength = 3;
-                break;
-                    
-                case 'getallbyfilter':
-                    selectConfig.type = "select";
-                    selectConfig.options = [];
-                break;
-            }
-            
-            formArr.html.push(selectConfig);
-        }
-        
-        formArr.html.push({
-                    "type" : "submit",
-                    "value" : "Vis kilder"
-                });
-        
-        
-        return formArr;
-     };
-    
     /**
      * Gets images collections and the related metadata, based on the given filters
      * An image collection consists of an array of images (for example front and back)

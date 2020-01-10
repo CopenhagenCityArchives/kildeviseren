@@ -5,7 +5,7 @@ describe("Testing BrowseService", function(){
   
     beforeEach(function(){
         //Retrieving the services namespace
-        module('KSA_Bladr.services');
+        angular.mock.module('KSA_Bladr.services');
         
         //Injecting the injector, which is used to extract the registred service
         //from the module 'mainModule'
@@ -172,7 +172,7 @@ describe("Testing BrowseService", function(){
         it("should go to specific step when number is given", function(){
             Browser.currentStep = 0;
             Browser.goTo(6);
-            expect(Browser.currentStep).toBe(6);
+            expect(Browser.currentStep).toBe(5);
             
             /*Browser.currentStep = 0;
             Browser.goToId(2);

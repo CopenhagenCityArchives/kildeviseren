@@ -5,7 +5,7 @@ describe("Testing MetadataFilterService", function(){
   
     beforeEach(function(){
         //Retrieving services namespace
-        module('KSA_Bladr.services');
+        angular.mock.module('KSA_Bladr.services');
         
         //Injecting the injector, which is used to extract the registred service
         //from the module 'mainModule'
@@ -132,14 +132,18 @@ describe("Testing MetadataFilterService", function(){
             expect(MetadataFilter.type).toEqual("hierarchy");
         });
         
-        it("should retrive and set metadata", function(){
+        xit("should retrive and set metadata", function(){
            $httpBackend.when('GET', 'collection=1&station=1&level=roll').respond(metadataDataResponse);
            
            MetadataFilter.addFilter({"name":"collection", "value":"1"});
            MetadataFilter.addFilter({"name": "station", "value": "1"});
+           console.log(MetadataFilter.levels[2]);
            MetadataFilter.getMetadata("roll"); 
            $httpBackend.expectGET('collection=1&station=1&level=roll');
+           
            $httpBackend.flush();
+        console.log(MetadataFilter.levels[2]);
+           expect(MetadataFilter.levels[1]).toEqual({"order":2, "name":"Filmrulle", "api_name":"roll", "data":[]});
         });
         
         it("should not retrieve metadata if the latest request matches the current, otherwise the data should be refreshed", function(){
@@ -221,27 +225,6 @@ describe("Testing MetadataFilterService", function(){
             //Removing a required filter
             MetadataFilter.removeFilter({"name":"station", "value":"1"});
             expect(MetadataFilter.getImageCollectionRequestURL()).toBe(false);            
-        });
-    });
-    
-    describe("creating dynamic forms", function(){
-        var metadataLevels = {"type":"hierarchy","levels":[{"order":1, "name":"Station", "api_name":"station", "data":[], "filter_required": true},{"order":2, "name":"Filmrulle", "api_name":"roll", "data":[], "filter_required" : true}]};
-        
-        xit("should return an array ready for use by jQuery dform", function(){
-            MetadataFilter.levels = metadataLevels.levels;
-            expect(MetadataFilter.getFormData()).not.toEqual([]);
-        });
-        
-        xit("should create select boxes for preset and getallbyid types of levels", function(){
-            expect(MetadataFilter.getFormData()).toEqual(false);
-        });
-        
-        it("should update select boxes and autocompletes when new data is given", function(){
-            
-        });
-        
-        it("should add validation for required fields (notEmpty)", function(){
-            
         });
     });
 });

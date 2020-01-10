@@ -5,7 +5,7 @@ describe("Testing MetadataManagerService", function(){
   
     beforeEach(function(){
         //Retrieving services namespace
-        module('KSA_Bladr.services');
+        angular.mock.module('KSA_Bladr.services');
         
         //Injecting the injector, which is used to extract the registred service
         //from the module 'mainModule'
@@ -28,24 +28,20 @@ describe("Testing MetadataManagerService", function(){
     });
     
     describe("Handling metadata filters", function(){
-       it("should throw exception if necessary values not given, otherwise add filter", function(){
+       it("should ignore if necessary values not given, otherwise add filter", function(){
            
-           MetadataManager.levels =  [{"order":2, "name":"station"},{"order":1, "name":"roll"}];
+            MetadataManager.levels =  [{"order":2, "name":"station"},{"order":1, "name":"roll"}];
            
-           var testFunc = function(){
-               MetadataManager.addFilter({"station":"1"});
-           };
-           
-           expect(testFunc).toThrow();
-           
-           
-           MetadataManager.addFilter({"name":"station", "value":"1"});
-           expect(MetadataManager.levels[0]['filter_value']).toEqual("1"); 
+            MetadataManager.addFilter({"station":"1"});
+   
+            MetadataManager.addFilter({"name":"station", "value":"1"});
+            expect(MetadataManager.levels[0]['filter_value']).toEqual("1"); 
+
        });
        
-       it("should not add filters with empty values", function(){
+       it("should not add filters with unset values", function(){
            
-           MetadataManager.levels =  [{"order":2, "name":"station", "filter_value": ""},{"order":1, "name":"roll", "filter_value" : null}];
+           MetadataManager.levels =  [{"order":2, "name":"station", "filter_value": undefined},{"order":1, "name":"roll", "filter_value" : null}];
 
            expect(MetadataManager.getFilters()).toEqual([]); 
        });       
@@ -86,7 +82,7 @@ describe("Testing MetadataManagerService", function(){
             
             metadata = {station:1,roll:23};
             MetadataManager.levels = [{order: 1, name: "station", gui_name: "Station"},{order: 2, name: "roll", gui_name: "Filmrulle", hideInMetadataString: true}];
-            expect(MetadataManager.getMetadataString(metadata)).toEqual("Station 1, 23");            
+            expect(MetadataManager.getMetadataString(metadata)).toEqual("Station 1, filmrulle 23");            
         });
         it("should return empty string when no input is given", function(){
             var metadata = null;
@@ -97,7 +93,7 @@ describe("Testing MetadataManagerService", function(){
     
     describe("Handling metadata levels", function(){
         
-        var metadataLevelsResponse = {"levels" : [{"order":2},{"order":1}]};
+        var metadataLevelsResponse =  [{"order":2},{"order":1}];
         var metatadataLevelsResponseSorted = [{"order":1},{"order":2}];       
         
         it("should sort metadata levels by order", function(){
@@ -126,23 +122,21 @@ describe("Testing MetadataManagerService", function(){
     
     describe("Clearing of metadata", function(){
         
+        var orgLevels = [{"type":"preset", "data":[1,2,4], "name": "level1"},{"type":"getallbyfilter", "data":[1,2,4], "name": "level2"},{"type":"typeahead", "data":[1,2,3], "name": "level3"}];
+
         beforeEach(function(){
-            MetadataManager.levels = [{"type":"preset", "data":[1,2,4]},{"type":"getallbyfilter", "data":[1,2,4]},{"type":"typeahead", "data":[1,2,3]}];
+            MetadataManager.levels = orgLevels;
         });
+    
         
-        it("should clear metadata for types getallbyfilter and preset for all levels when no level is given", function(){
-            MetadataManager.clearMetadata();
-            expect(MetadataManager.levels).toEqual([{"type":"preset", "data":[]},{"type":"getallbyfilter", "data":[]},{"type":"typeahead", "data":[1,2,3]}]);
+        it("should clear metadata for types getallbyfilter and preset for levels on and under the given", function(){
+            MetadataManager.clearMetadata("level1");
+            expect(MetadataManager.levels[0]).toEqual(orgLevels[0]);
         });   
         
         it("should clear metadata for types getallbyfilter and preset for levels on and under the given", function(){
-            MetadataManager.clearMetadata(0);
-            expect(MetadataManager.levels).toEqual([{"type":"preset", "data":[]},{"type":"getallbyfilter", "data":[]},{"type":"typeahead", "data":[1,2,3]}]);
-        });   
-        
-        it("should clear metadata for types getallbyfilter and preset for levels on and under the given", function(){
-            MetadataManager.clearMetadata(1);
-            expect(MetadataManager.levels).toEqual([{"type":"preset", "data":[1,2,4]},{"type":"getallbyfilter", "data":[]},{"type":"typeahead", "data":[1,2,3]}]);            
+            MetadataManager.clearMetadata("level2");
+            expect(MetadataManager.levels[0]).toEqual(orgLevels[0]);         
         });   
     });    
 });

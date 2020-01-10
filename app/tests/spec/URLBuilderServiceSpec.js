@@ -5,7 +5,7 @@ describe("Testing URLBuilderService", function(){
   
     beforeEach(function(){
         //Retrieving the services namespace
-        module('KSA_Bladr.services');
+        angular.mock.module('KSA_Bladr.services');
         
         //Injecting the injector, which is used to extract the registred service
         //from the module 'mainModule'
@@ -29,7 +29,7 @@ describe("Testing URLBuilderService", function(){
             
             var collectionId = 1;
             
-            var expectedUrl = URLBuilder.remoteServerUrl + "getcollectioninfo/1?callback=JSON_CALLBACK";
+            var expectedUrl = URLBuilder.remoteServerUrl + "collections/1?callback=JSON_CALLBACK";
             expect(URLBuilder.collectionInfoUrl(collectionId)).toBe(expectedUrl);           
         });
     });       
@@ -44,10 +44,10 @@ describe("Testing URLBuilderService", function(){
             var collectionId = 1;
             var metadataLevelName = "station";
             
-            var expectedUrl = URLBuilder.remoteServerUrl + "getmetadatalevels/1?callback=JSON_CALLBACK";
+            var expectedUrl = URLBuilder.remoteServerUrl + "levels/1?callback=JSON_CALLBACK";
             expect(URLBuilder.metadataLevelsUrl(collectionId)).toBe(expectedUrl);
             
-            expectedUrl = URLBuilder.remoteServerUrl + "getmetadatalevels/1/station?callback=JSON_CALLBACK";
+            expectedUrl = URLBuilder.remoteServerUrl + "levels/1/station?callback=JSON_CALLBACK";
             expect(URLBuilder.metadataLevelsUrl(collectionId, metadataLevelName)).toBe(expectedUrl);
         });
     });
@@ -63,10 +63,10 @@ describe("Testing URLBuilderService", function(){
             var metadataLevel = "station";
             var parameters = [{"name":"station", "value":"3"},{"name":"roll", "value":"0049"}];
             
-            var expectedUrl = URLBuilder.remoteServerUrl + "getmetadata/1?station=3&roll=0049&callback=JSON_CALLBACK";
+            var expectedUrl = URLBuilder.remoteServerUrl + "metadata/1?station=3&roll=0049&callback=JSON_CALLBACK";
             expect(URLBuilder.metadataUrl(collectionId, false, parameters)).toBe(expectedUrl);
             
-            var expectedUrl = URLBuilder.remoteServerUrl + "getmetadata/1/station?station=3&roll=0049&callback=JSON_CALLBACK";
+            var expectedUrl = URLBuilder.remoteServerUrl + "metadata/1/station?station=3&roll=0049&callback=JSON_CALLBACK";
             expect(URLBuilder.metadataUrl(collectionId, metadataLevel, parameters)).toBe(expectedUrl);            
         });
     });    
@@ -83,11 +83,24 @@ describe("Testing URLBuilderService", function(){
             var metadataLevel = "station";
             var parameters = [{"name":"station", "value":"3"},{"name":"roll", "value":"0049"}];
             
-            var expectedUrl = URLBuilder.remoteServerUrl + "getobjects/1?station=3&roll=0049&callback=JSON_CALLBACK";
+            var expectedUrl = URLBuilder.remoteServerUrl + "data/1?station=3&roll=0049&callback=JSON_CALLBACK";
             expect(URLBuilder.objectsUrl(collectionId, false, parameters)).toBe(expectedUrl);
             
-            var expectedUrl = URLBuilder.remoteServerUrl + "getobjects/1/station?station=3&roll=0049&callback=JSON_CALLBACK";
+            var expectedUrl = URLBuilder.remoteServerUrl + "data/1/station?station=3&roll=0049&callback=JSON_CALLBACK";
             expect(URLBuilder.objectsUrl(collectionId, metadataLevel, parameters)).toBe(expectedUrl);            
         });
-    });      
+    });   
+
+    describe("urlSpecialCharacters", function(){
+        
+        it("should keep special characters in filter values", function(){
+            
+            var collectionId = 1;
+            var metadataLevel = "station";
+            var parameters = [{"name":"station", "value":"April\r\n"}];
+            
+            var expectedUrl = encodeURI(URLBuilder.remoteServerUrl + "data/1/station?station=April\r\n&callback=JSON_CALLBACK");
+            expect(URLBuilder.objectsUrl(collectionId, metadataLevel, parameters)).toBe(expectedUrl);            
+        });
+    });     
 });
