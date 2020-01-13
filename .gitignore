@@ -1,11 +1,2 @@
-.AppleDouble
-.DS_Store
-._*
-.project
-.settings
-.vagrant*
-www/vendor*
-nbproject
-app/test/node_modules*
-app/node_modules*
+node_modules*
 app/concat.js
