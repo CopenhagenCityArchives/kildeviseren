@@ -15,28 +15,48 @@ var opt = {};
 
 // All js files except test files are concatenated
 opt.appSrc = [
-   // "src/client/assets/js/plugins/leaflet.js", 
+    "src/client/assets/js/plugins/leaflet.js", 
     "src/client/assets/js/**/*.js",
     "src/client/directives/*.js",
     "src/client/controllers/*.js",
     "src/client/services/*.js",
     '!src/client/services/mocks.js'
 ];
-opt.appFileName = "concat.js";
+opt.appDest = "concat.js";
 
-// All css files are concatenated
-opt.cssSrc = ["src/client/assets/*.css"];
-opt.cssFileName = "all.css";
+opt.appFileSrc = "src/client/app.js";
 
 // All assets are copied
-opt.assetsSrc = "src/client/assets/**/*.*";
+opt.assetsSrc = [
+    "!src/client/assets/**/*.css",
+    "src/client/assets/**/*.*"
+];
 
-// All server files are put in server folder
-opt.serverSrc = "src/server/**/*.*";
-opt.serverDest = "dist";
+// Assets for directives are copied
+opt.directiveAssets = [
+    "src/client/directives/*.png",
+    "src/client/directives/*.css",
+]
+opt.directiveDest = 'dist/assets';
+
+opt.cssSrc = [
+    "src/client/assets/css/bootstrap.css",
+    "src/client/assets/css/style.css",
+    "src/client/assets/css/custom-theme/jquery-ui.min.css", 
+    "src/client/assets/css/leaflet.css",
+    "src/client/assets/css/extras.css"
+];
+opt.cssFileName = "style.css";
+
+opt.fontSrc = "src/client/assets/fonts/*.*";
+opt.fontDest = "dist/fonts/"
 
 // Views are copied
 opt.viewsSrc = "src/client/views/*.html";
+
+// All server files are put in server folder
+opt.serverSrc = ["src/server/**", "src/server/.htaccess"];
+
 
 //Dependencies:
 
@@ -52,6 +72,8 @@ var watchify = require('gulp-watchify');
 var concat = require('gulp-concat');
 //Remove files and folders
 var clean = require('gulp-clean');
+// Upload with ftp
+var ftp = require( 'vinyl-ftp' );
 
 //Tasks:
 
@@ -63,38 +85,73 @@ gulp.task('clearDist', function () {
 });
 
 //Concat js files and copy assets to dist
-gulp.task('build', ['clearDist', 'connomini'], function(){
+gulp.task('build', ['clearDist'], function(){
     
+    console.log('Concating ', opt.appSrc);
+    gulp.src(opt.appSrc)
+    .pipe(concat(opt.appDest))
+    .pipe(gulp.dest('dist'));
+
+
+    console.log('Copying ', opt.appFileSrc);
+    gulp.src(opt.appFileSrc)
+    .pipe(gulp.dest('dist'));    
+
+
+    console.log('Concating ', opt.cssSrc);
+    gulp.src(opt.cssSrc)
+    .pipe(concat(opt.cssFileName))
+    .pipe(gulp.dest(('dist/assets')));
+
+
     console.log('Copying assets ', opt.assetsSrc);
-    
     gulp.src(opt.assetsSrc)
     .pipe(gulp.dest('./dist/assets'));
 
-    console.log('Copying server files ', opt.serverSrc);
+
+    console.log('Copying directive assets ', opt.directiveAssets);
+    gulp.src(opt.directiveAssets)
+    .pipe(gulp.dest(opt.directiveDest));
+
     
-    gulp.src(opt.serverSrc)
-    .pipe(gulp.dest('./dist/'));    
+    console.log('Copying font files ', opt.fontSrc);
+    gulp.src(opt.fontSrc)
+    .pipe(gulp.dest(opt.fontDest));
+    
 
     console.log('Copying server files ', opt.serverSrc);
-    
     gulp.src(opt.serverSrc)
-    .pipe(gulp.dest('./dist/'));   
+    .pipe(gulp.dest('./dist'));   
+
 
     console.log('Copying view files ', opt.viewsSrc);
-    
     gulp.src(opt.viewsSrc)
-    .pipe(gulp.dest('./dist/'));   
+    .pipe(gulp.dest('./dist'));   
 });
 
-//Concat, no minify (for debugging)
-gulp.task('connomini', ['clearDist'], function(){
-    
-    console.log('Concating and minifying ', opt.appSrc);
-
-    gulp.src(opt.appSrc)
-    .pipe(concat(opt.appFileName))
-    .pipe(gulp.dest('dist'));
-});
+gulp.task('deploy', function () {
+ 
+    var conn = ftp.create( {
+        host:     '***REMOVED***',
+        user:     '***REMOVED***',
+        password: '***REMOVED***',
+        parallel: 10
+    } );
+ 
+    var globs = [
+        'dist/**',
+        'dist/.htaccess'
+    ];
+ 
+    // using base = '.' will transfer everything to /public_html correctly
+    // turn off buffering in gulp.src for best performance
+    return conn.rmdir( '/public_html/kildeviser-development', function(){
+        gulp.src( globs, { base: './dist', buffer: false } )
+        //  .pipe( conn.newer( '/public_html' ) ) // only upload newer files
+            .pipe(conn.dest('/public_html/kildeviser-development'));
+    });
+     
+} );
 
 //Minifies Javascript files
 gulp.task('minify', watchify(function(){
