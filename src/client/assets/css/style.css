@@ -1,4 +1,5 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700);
+
 /* GENERELT */
 * {
   -webkit-box-sizing: border-box;
@@ -6,21 +7,27 @@
   box-sizing: border-box;
   outline: none !important;
 }
+
 .btn {
   font-weight: 300 !important;
 }
+
 .printable {
   display: none;
 }
+
 .format-print {
   width: 100%;
 }
+
 .format-print img {
   max-width: 100%;
 }
+
 *:focus {
   outline: none !important;
 }
+
 .opensans {
   font-family: 'Open Sans', sans-serif;
 }
@@ -30,23 +37,28 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
+
 body {
   background: #000;
   background-size: 100% 100%;
   font-family: 'Open Sans', sans-serif;
   color: #fff;
 }
+
 .btn {
   padding: 0 20px;
   min-height: 60px;
   line-height: 60px;
 }
+
 .bold {
   font-weight: 700;
 }
+
 .container-top-menu {
   max-width: 650px;
 }
+
 /* PRELOADER */
 #preload {
   position: fixed;
@@ -66,6 +78,7 @@ body {
   right: 30px;
   top: 30px;
 }
+
 .preloader-text {
   position: absolute;
   width: 100%;
@@ -78,6 +91,7 @@ body {
   color: #333;
   text-align: center;
 }
+
 /* PLACEHOLDER FIX */
 .placeholder {
   color: #f6f6f6;
@@ -89,17 +103,21 @@ body {
 ::-webkit-input-placeholder {
   color: #f6f6f6;
 }
+
 ::-moz-placeholder {
   color: #f6f6f6;
 }
+
 /* firefox 19+ */
 :-ms-input-placeholder {
   color: #f6f6f6;
 }
+
 /* ie */
 input:-moz-placeholder {
   color: #f6f6f6;
 }
+
 .indput-label {
   color: #fff !important;
   text-transform: uppercase;
@@ -108,10 +126,10 @@ input:-moz-placeholder {
   width: 100%;
   padding: 8px 0;
 }
+
 label input {
   display: block;
 }
-
 
 /* HEADER */
 .header {
@@ -120,9 +138,11 @@ label input {
   margin-top: 100px;
   position: relative;
 }
+
 .header_logo {
   max-width: 100%;
 }
+
 .header_text {
   text-align: center;
   color: #fff;
@@ -131,11 +151,13 @@ label input {
   font-size: 1.4em;
   line-height: 1.4em;
 }
+
 .header_text a {
   color: #f8f8f8;
   font-weight: 700;
   text-decoration: underline;
 }
+
 .header_text a:hover,
 .header_text a:active {
   color: #fff;
@@ -146,9 +168,11 @@ label input {
 .btnGem {
   position: relative;
 }
+
 .btnLink {
   position: relative;
 }
+
 .gemDiv {
   height: 41px;
   position: absolute;
@@ -161,12 +185,15 @@ label input {
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
 }
+
 .gemDiv a {
   color: #fff;
 }
+
 .gemDiv a:hover {
   color: #f8f8f8;
 }
+
 .linkDivCont {
   position: absolute;
   left: 70px;
@@ -174,10 +201,10 @@ label input {
   border-bottom: 4px solid #2D3F4D;
   border-bottom-right-radius: 5px;
 }
+
 .linkDiv {
   height: 44px;
   position: relative;
-
   width: 260px;
   display: none;
   background: #2D3F4D;
@@ -197,6 +224,7 @@ label input {
   height: 40px;
   width: auto;
 }
+
 .gemDiv>ul>li {
   list-style: none;
   display: inline;
@@ -204,9 +232,11 @@ label input {
   width: auto;
   padding: 0 0 0 15px;
 }
+
 .gemDiv>ul>li:last-child {
   padding: 0 10px 0 10px;
 }
+
 /* FORMBOX */
 .form_box {
   margin: 40px auto 0 auto;
@@ -214,24 +244,29 @@ label input {
   max-width: 300px;
   position: relative;
 }
+
 .form_box>.btn-default {
   font-weight: 700;
   margin: 0 auto 20px auto;
   min-width: 300px;
   font-size: 1.5em;
 }
+
 .btn-submit {
   font-size: 1.5em;
 }
+
 .video_play_icon {
   margin-right: 15px;
 }
+
 .form_box_input_help {
   display: none;
   font-size: 1.2em;
   margin: 5px auto 5px auto;
   color: #fff;
 }
+
 .input_help_top {
   display: none;
   color: #f8f8f8;
@@ -240,6 +275,7 @@ label input {
   top: 6px;
   right: 150px;
 }
+
 .form_box_input {
   width: 100%;
   min-width: 300px;
@@ -256,15 +292,18 @@ label input {
   border-radius: 10px;
   line-height: 42px;
 }
+
 .form-text-bottom {
   font-style: italic;
   font-weight: 400;
   font-size: 1.2em;
   margin: 0 auto 20px auto;
 }
+
 .btnLink {
   margin-top: 4px;
 }
+
 .top_box_input {
   width: 100%;
   min-width: 300px;
@@ -280,21 +319,26 @@ label input {
   font-size: 1.5em;
   border-radius: 10px;
 }
+
 .top_box_select {
   text-indent: 5px;
 }
+
 .view-question {
   font-size: 2.8em !important;
   color: #fff;
 }
+
 .qmark {
   position: absolute;
   right: -25px;
   top: 0;
 }
+
 .qmark img {
   max-width: 50%;
 }
+
 .qmarktop {
   right: 85px;
   top: 0;
@@ -306,10 +350,12 @@ label input {
   padding: 9px 16px;
   border-radius: 5px;
 }
+
 .qmark.isActive {
   color: #638DB4;
   background-color: #426788;
 }
+
 .form_text {
   font-size: 1.2em;
   line-height: 1.5em;
@@ -324,6 +370,7 @@ label input {
   right: 30px;
   max-width: 19px;
 }
+
 /* VIDEO FRONT */
 #frontvideo {
   width: 100%;
@@ -337,6 +384,7 @@ label input {
   display: none;
   z-index: 999999;
 }
+
 .video_screen {
   width: 600px;
   height: 400px;
@@ -344,6 +392,7 @@ label input {
   border:2px solid #333;*/
   margin: 100px auto 20px auto;
 }
+
 .close-frontvideo {
   position: fixed;
   top: 20px;
@@ -356,8 +405,8 @@ label input {
   background-color: #fff;
   background-color: rgba(255, 255, 255, .1);
   text-align: center;
-
 }
+
 .closeVideo {
   font-size: 3em;
   width: 60px;
@@ -372,6 +421,7 @@ label input {
   width: 100%;
   text-align: center;
 }
+
 .cc_footer>img {
   max-width: 15%;
   margin: 30px auto 10px auto;
@@ -379,13 +429,14 @@ label input {
 
 .page {
   z-index: 0;
-
 }
+
 .secondpage {}
+
 .first {
   z-index: 1;
-
 }
+
 #page_viewer {
   background-color: #000;
   height: 100%;
@@ -394,8 +445,8 @@ label input {
   position: relative;
   overflow: hidden;
 }
-#redirector {
 
+#redirector {
   height: 100%;
   width: 100%;
   text-align: center;
@@ -407,9 +458,11 @@ label input {
 .megazoomPlayList {
   z-index: 0;
 }
+
 .alignLeft {
   text-align: left;
 }
+
 /* TOP BAR */
 .topcontrols {
   height: auto;
@@ -424,6 +477,7 @@ label input {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+
 .topcontrols_container {
   position: absolute;
   height: 100%;
@@ -431,6 +485,7 @@ label input {
   z-index: -1;
   top: 0;
 }
+
 .topcontrols_form {
   height: 100%;
   z-index: 1;
@@ -438,12 +493,14 @@ label input {
   margin-top: 10px;
   margin-bottom: 15px;
 }
+
 .topcontrols-button {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   height: 50px;
   position: absolute;
 }
+
 .findBtn {
   border-bottom: 3px solid #354a5b;
   background-color: #4c769c;
@@ -452,12 +509,14 @@ label input {
   min-width: 100px;
   display: table;
 }
+
 .findBtn:hover {
   color: #fff;
   background-color: #3F6281;
   border-color: #283846;
   cursor: pointer;
 }
+
 .findBtn>span.findtext {
   display: table-cell;
   vertical-align: middle;
@@ -476,15 +535,13 @@ label input {
   display: table;
   text-align: left;
 }
+
 .sourceText>div.sourcetext {
   display: table-cell;
   vertical-align: middle;
   font-size: 1.2em;
-
   padding: 10px 15px;
 }
-
-
 
 /* INFO LAYER */
 #infoLayer {
@@ -496,6 +553,7 @@ label input {
   width: 100%;
   display: none;
 }
+
 .info-big {
   height: 85.5px;
   line-height: 85.5px;
@@ -506,6 +564,7 @@ label input {
   font-size: 2em;
   font-weight: 400;
 }
+
 .info-small {
   font-size: 2em;
   font-weight: 400;
@@ -515,6 +574,7 @@ label input {
   top: 50%;
   margin-top: -35px;
 }
+
 .info-menu {
   font-size: 2em;
   font-weight: 400;
@@ -524,6 +584,7 @@ label input {
   top: 50px;
   left: 455px;
 }
+
 .info-error {
   font-size: 2em;
   font-weight: 400;
@@ -533,6 +594,7 @@ label input {
   top: 5px;
   right: 65px;
 }
+
 .info-map {
   font-size: 2em;
   font-weight: 400;
@@ -542,6 +604,7 @@ label input {
   top: 50px;
   right: 50px;
 }
+
 .info-zoom {
   font-size: 2em;
   font-weight: 400;
@@ -551,6 +614,7 @@ label input {
   bottom: 95px;
   left: 20px;
 }
+
 .info-sidetal {
   font-size: 2em;
   font-weight: 400;
@@ -560,6 +624,7 @@ label input {
   bottom: 135px;
   right: 60px;
 }
+
 #infoClose {
   position: fixed;
   width: 100px;
@@ -570,25 +635,30 @@ label input {
   font-size: 4em;
   color: #fff;
 }
+
 #infoClose:hover {
   color: #f8f8f8;
   cursor: pointer;
 }
+
 .closeInfoText {
   font-size: 0.6em;
   line-height: 0.9em;
   display: block;
 }
+
 /* PAGE CONTROLS */
 .controls {
   z-index: 9998;
   display: none;
 }
+
 .leftArrow {
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
   left: 0;
 }
+
 .rightArrow {
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
@@ -605,12 +675,14 @@ label input {
   margin-top: -130px;
   display: table;
 }
+
 .controlArrowBig:hover {
   color: #fff;
   background-color: #3F6281;
   border-color: #283846;
   cursor: pointer;
 }
+
 .controlArrowSmall {
   border-bottom: 3px solid #354a5b;
   height: 50px;
@@ -621,12 +693,14 @@ label input {
   display: table;
   margin-top: -35px;
 }
+
 .controlArrowSmall:hover {
   color: #fff;
   background-color: #3F6281;
   border-color: #283846;
   cursor: pointer;
 }
+
 .controlArrowZoom {
   border-bottom: 3px solid #1c262c;
   height: 50px;
@@ -635,39 +709,46 @@ label input {
   position: fixed;
   display: table;
 }
+
 .controlArrowZoom:hover {
   color: #fff;
   background-color: #1F2B34;
   border-color: #12181D;
   cursor: pointer;
 }
+
 .modal {
   z-index: 99999999;
   color: #000;
   text-align: left;
-
 }
+
 .modal-dialog {
   width: 420px;
   margin: 30px auto;
 }
+
 .modal-header .close {
   font-size: 4em;
   line-height: 1;
   margin-top: -20px;
 }
+
 .modal-body {
   text-align: left;
   font-size: 1.4em;
 }
+
 .modal-body p {
   font-size: 1em;
   line-height: 1.1;
 }
+
 .modal-title {
   font-size: 2em;
   text-align: center;
 }
+
 .controlReport {
   border-bottom: 3px solid #1c262c;
   height: 50px;
@@ -681,6 +762,7 @@ label input {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+
 .controlReport:hover {
   color: #fff;
   background-color: #1F2B34;
@@ -698,6 +780,7 @@ label input {
   display: table;
   margin-top: 80px;
 }
+
 .controlArrowDarker:hover {
   color: #fff;
   background-color: #1F2B34;
@@ -714,17 +797,18 @@ label input {
   bottom: 160px;
   display: table;
 }
+
 .controlQuestionmark img {
   max-width: 100%;
   max-height: 50%;
 }
+
 .controlQuestionmark:hover {
   color: #fff;
   background-color: #1F2B34;
   border-color: #12181D;
   cursor: pointer;
 }
-
 
 .controlPager {
   border-bottom: 1.5px solid #1c262c;
@@ -748,14 +832,17 @@ label input {
   border-radius: 10px;
   margin-right: 10px;
 }
+
 .pager-pages {
   font-size: 3em;
   color: #fff;
 }
+
 .page-seperator {
   font-size: 3em;
   color: #fff;
 }
+
 .arrow_container {
   display: table-cell;
   vertical-align: middle;
@@ -770,22 +857,25 @@ label input {
 .leaflet-control-attribution>a {
   display: none;
 }
+
 .leaflet-bottom {
   bottom: 60px !important;
 }
+
 #map {
   position: relative;
   background: #000 url('../img/loading.gif') no-repeat center center;
   height: 100%;
   width: 100%;
-
 }
+
 .zoomslider {
   width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
 }
+
 .display {
   position: fixed;
   top: 50%;
@@ -798,7 +888,6 @@ label input {
   color: #000;
   display: none;
 }
-
 
 #bgimgwrapper {
   position: fixed;
@@ -815,30 +904,74 @@ label input {
   -ms-interpolation-mode: bicubic;
   display: block;
 }
+
 .btn {
   text-decoration: none;
 }
+
 /* MEDIA STUFF */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .form_box_input {
     min-height: 45px;
   }
+
   .top_box_input {
     min-height: 40px;
   }
+
   .header_logo {
     max-width: 400px;
   }
+
   .maxWidthImage {
-    max-width: 50%;
+    max-width: 20%;
   }
+
   .btn {
     padding: 0 20px;
     min-height: 44px;
     line-height: 44px;
     font-size: 1.4em;
   }
+}
 
+@media (max-width: 768px) {
+  .controlArrowBig {
+    width: 30px;
+  }
+
+  .controlQuestionmark {
+    display: none;
+  }
+
+  .controlPager {
+    border-bottom: 1.5px solid #1c262c;
+    background-color: #36495b;
+    width: auto;
+    position: fixed;
+    bottom: 60px;
+    display: table;
+    padding: 0 10px;
+  }
+
+  .pager-input {
+    border: none;
+    background: #f8f8f8;
+    padding: 0 10px;
+    font-weight: 700;
+    color: #36495b;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  .pager-pages {
+    color: #fff;
+  }
+
+  .page-seperator {
+    color: #fff;
+  }
 }
 
 @media (min-width: 992px) {}
@@ -850,11 +983,13 @@ label input {
     height: 53px !important;
   }
 }
+
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) {
   .findBtn {
     height: 53px !important;
   }
 }
+
 @media print {
   /*  .breakThePage {page-break-after: always;} */
 }
@@ -865,6 +1000,7 @@ label input {
 .radios {
   display: none !important;
 }
+
 .labelforradio {
   padding: 0 10px;
   width: 100%;
@@ -874,11 +1010,13 @@ label input {
   height: 44px;
   line-height: 44px;
 }
+
 .labelforradio:hover {
   cursor: pointer;
   background: #E1E1E1;
   border: 1px dashed #ddd;
 }
+
 .label-selected {
   background-color: #428bca !important;
   border-color: #357ebd !important;
@@ -891,18 +1029,22 @@ label input {
   content: "";
   display: table
 }
+
 .clearfix:after {
   clear: both
 }
+
 .clearfix {
   *zoom: 1
 }
+
 .prettycheckbox,
 .prettyradio {
   display: inline-block;
   padding: 0;
   margin: 0 15px 0 20px;
 }
+
 .prettycheckbox>a,
 .prettyradio>a {
   height: 30px;
@@ -913,58 +1055,72 @@ label input {
   margin: 0;
   background: url('../img/sprites.png')
 }
+
 .prettycheckbox>a:focus,
 .prettyradio>a:focus {
   outline: 0 none
 }
+
 .prettycheckbox label,
 .prettyradio label {
   display: inline-block;
   height: 30px;
-
   line-height: 30px;
   margin: 0 5px;
   cursor: pointer;
 }
+
 .prettycheckbox a.disabled,
 .prettycheckbox label.disabled,
 .prettyradio a.disabled,
 .prettyradio label.disabled {
   cursor: not-allowed
 }
+
 .prettycheckbox>a {
   background-position: 0 0
 }
+
 .prettycheckbox>a:focus {
   background-position: -30px 0
 }
+
 .prettycheckbox>a.checked {
   background-position: -60px 0
 }
+
 .prettycheckbox>a.checked:focus {
   background-position: -90px 0
 }
+
 .prettycheckbox>a.checked.disabled {
   background-position: -150px 0
 }
+
 .prettycheckbox>a.disabled {
   background-position: -120px 0
 }
+
 .prettyradio>a {
   background-position: -180px 0
 }
+
 .prettyradio>a:focus {
   background-position: -210px 0
 }
+
 .prettyradio>a.checked {
   background-position: -240px 0
 }
+
 .prettyradio>a.checked:focus {
   background-position: -270px 0
 }
+
 .prettyradio>a.checked.disabled {
   background-position: -330px 0
 }
+
 .prettyradio>a.disabled {
   background-position: -300px 0
 }
