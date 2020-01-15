@@ -1,3 +1,2 @@
-node_modules*
-app/concat.js
+node_modules
 dist
