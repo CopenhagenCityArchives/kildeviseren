@@ -1,202 +1,102 @@
   <div id="page_viewer">
-
   <div id="infoLayer">
-
   <div class="info-big info-left" style="left:60px">Forrige Side</div>
-
   <div class="info-big info-right" style="right:60px">Næste Side</div>
-
   <div class="info-small info-left" style="left:40px">10 sider tilbage</div>
-
   <div class="info-small info-right" style="right:40px">10 sider frem</div>
-
   <div class="info-menu">Menu</div>
-
   <div class="info-error">Rapporter fejl</div>
-
 <!--   <div class="info-map">Overblik</div> -->
-
   <div class="info-zoom">Zoom</div>
-
   <div class="info-sidetal">Sidetal</div>
-
   <div id="infoClose"><i class="glyphicon glyphicon-remove"></i><span class="closeInfoText">Luk info</span></div>
-
   </div>
-
     <div id="topfind" class="topcontrols">
-
     <div class="container-fluid container-top-menu">
-
       <div class="row">
-
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignLeft">
-
           <!-- <div class="btn btn-light goToFront" ng-click="goToFrontPage()">Forside</div> -->
-
         </div>
-
       </div>
-
       <div class="row">
-
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
           <div class="form_text">
-
             <span class="bold">{{metadata.collection.short_name}}</span>
             <span ng-bind-html="metadata.collection.info"></span>
             <span>Læs mere på <a ng-href="{{metadata.collection.link}}">kbharkiv.dk</a></span>
-
           </div>
-
         </div>
-
       </div>
-
       <div class="row">
-
       <form class="form-inline padTheForm" role="form">
-
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topcontrols_form">
-
             <div dynaform filters="metadata.filters"></div>
-
         </div>
-
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
         <div class="form-group float-left">
-
         <div class="btn btn-light" id="print" data-img="{{metadata.item.imageUrl}}" analytics-on="click" analytics-category="topmenu" analytics-event="print">Print</div>
-
           <a href="{{metadata.item.imageUrl}}" target="_blank" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem" analytics-on="click" analytics-category="topmenu" analytics-event="gem">Gem</a>
-
           <div class="btn btn-light btnLink" analytics-on="click" analytics-category="topmenu" analytics-event="link">Link
-
             <div class="linkDivCont"><input type="text" class="linkDiv" value="{{metadata.item.permaLink}}" id="linkInput"></div>
-
           </div>
-
         </div>
-
           <div class="form-group float-right">
-
                 <button type="submit" class="btn btn-default btn-submit" ng-show="metadata.canSearch" ng-click="metadata.search()">Find</button>
-
             </div>
-
         </div>
-
         </form>
-
         </div>
-
         <div class="topcontrols_container">
-
           <div class="topcontrols-button sourceText"><div class="sourcetext">{{metadata.collection.short_name}} <span class="bold">{{metadata.item.metadataDescription}}</span> <span ng-show="metadata.item.starbasRef" ng-bind-html="metadata.item.starbasRef"></span></div></div>
-
           <div id="toggleTop" class="topcontrols-button findBtn"><span class="findtext">Menu</span></div>
-
         </div>
-
       </div>
-
     </div>
-
-
 
   <!-- BIG ARROWS -->
-
     <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
-
     <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="metadata.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
-
   <!-- SMALLER ARROWS -->
-
     <div id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-10)"><div class="arrow_container"><img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt=""></div></div>
-
     <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(10)"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
-
   <!-- DARKER CONTROLS -->
-
     <div id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
-
     <div id="darkReport" ng-show="metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report"><div class="arrow_container"><i class="view-question fa fa-exclamation"></i></div></div>
-
     <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><i class="view-question fa fa-question"></i></div></div>
-
   <!-- PAGER -->
-
     <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()" ng-click="onTextClick($event)"><span class="page-seperator">/</span><span class="pager-pages">{{metadata.itemsList.length}}</span></div></div>
-
     <!-- start megazoom, display:none is added in case that js is disabled! -->
-
     <div id="map"></div>
-
     <!-- Modal -->
-
     <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="ReportKK" aria-hidden="true">
-
       <div class="modal-dialog">
-
         <div class="modal-content">
-
           <div class="modal-header">
-
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
             <h4 class="modal-title" id="myModalLabel">Rapporter fejl</h4>
-
           </div>
-
           <div class="modal-body">
-
           <p>
-
             {{metadata.collection.error_intro}}
-
           </p>
-
                 <div>
-
                 <!-- Dynamic, trying to combine Angular and jQuery.check -->
-
                 <div ng-repeat="model in metadata.collection.error_reports">
-
                   <input id="errortype{{model.id}}" type="radio" name="errortype" class="radios" data-color="#4c769c" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport" value="{{model.id}}">
-
                   <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
-
                 </div>
-
               </div>
 
-
-
           <div class="modal-footer">
-
             <p class="text-left">{{metadata.errorReportingStatus}}</p>
-
             <button type="button" class="btn btn-primary" ng-hide="metadata.errorReportingStatus != ''" ng-click="metadata.reportError()" analytics-on="click" analytics-category="fejlrapportering" analytics-event="send">Send</button>
-
           </div>
-
       </div>
-
     </div>
-
     <div class="printable">
-
         <h2>{{metadata.collection.short_name}}</h2>
-
         <p class="breakThePage">{{metadata.item.metadataDescription}}</p>
-
         <img src="{{metadata.item.imageUrlPrint}}" width="100%" />
-
     </div>
-
-
-
 
 
