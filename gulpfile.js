@@ -28,8 +28,11 @@ opt.appFileSrc = "src/client/app.js";
 
 // All assets are copied
 opt.assetsSrc = [
-    "!src/client/assets/**/*.css",
-    "src/client/assets/**/*.*"
+    "src/client/assets/fonts/**/*.*",
+    "src/client/assets/img/**/*.*",
+    "src/client/assets/js/**/*.*",
+    "src/client/assets/ui_images/**/*.*",
+    "src/client/assets/favicon.ico"
 ];
 
 // Assets for directives are copied
@@ -40,13 +43,14 @@ opt.directiveAssets = [
 opt.directiveDest = 'dist/assets';
 
 opt.cssSrc = [
-    "src/client/assets/css/bootstrap.css",
-    "src/client/assets/css/style.css",
     "src/client/assets/css/custom-theme/jquery-ui.min.css", 
     "src/client/assets/css/leaflet.css",
-    "src/client/assets/css/extras.css"
+    "src/client/assets/css/bootstrap.min.css",
+    "src/client/directives/chosen.css",
+    "src/client/assets/css/extras.css",
+    "src/client/assets/css/style.css"
 ];
-opt.cssFileName = "style.css";
+opt.cssFileName = "concat.css";
 
 opt.fontSrc = "src/client/assets/fonts/*.*";
 opt.fontDest = "dist/fonts/"
@@ -101,12 +105,12 @@ gulp.task('build', ['clearDist'], function(){
     console.log('Concating ', opt.cssSrc);
     gulp.src(opt.cssSrc)
     .pipe(concat(opt.cssFileName))
-    .pipe(gulp.dest(('dist/assets')));
+    .pipe(gulp.dest(('dist/assets/css')));
 
 
     console.log('Copying assets ', opt.assetsSrc);
-    gulp.src(opt.assetsSrc)
-    .pipe(gulp.dest('./dist/assets'));
+    gulp.src(opt.assetsSrc, {base: './src/client'})
+    .pipe(gulp.dest('./dist/'));
 
 
     console.log('Copying directive assets ', opt.directiveAssets);
@@ -152,6 +156,9 @@ gulp.task('deploy', function () {
     });
      
 } );
+
+//Watchify is based on browserify and enable-watch-mode
+gulp.task('watch', ['enable-watch-mode', 'build', 'deploy']);
 
 //Minifies Javascript files
 gulp.task('minify', watchify(function(){
