@@ -31,7 +31,7 @@ opt.assetsSrc = [
     "src/client/assets/fonts/**/*.*",
     "src/client/assets/img/**/*.*",
     "src/client/assets/js/**/*.*",
-    "src/client/assets/ui_images/**/*.*",
+    //"src/client/assets/ui_images/**/*.*",
     "src/client/assets/favicon.ico"
 ];
 
@@ -66,12 +66,6 @@ opt.serverSrc = ["src/server/**", "src/server/.htaccess"];
 
 //Gulp!!!
 var gulp = require('gulp');
-//Only handles changed files
-var changed = require('gulp-changed');
-//Minifies html, css and Javascript
-var minifier = require('gulp-minifier');
-//Watch for changes
-var watchify = require('gulp-watchify');
 //Put files together in a single file
 var concat = require('gulp-concat');
 //Remove files and folders
@@ -156,82 +150,3 @@ gulp.task('deploy', function () {
     });
      
 } );
-
-//Watchify is based on browserify and enable-watch-mode
-gulp.task('watch', ['enable-watch-mode', 'build', 'deploy']);
-
-//Minifies Javascript files
-gulp.task('minify', watchify(function(){
-    gulp.src(opt.src)
-    //.pipe(changed(dest))
-    .pipe(minifier({
-        minify: true,
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        minifyJS: true,
-        minifyCSS: true
-    }))
-    .pipe(concat(opt.minifyFileName))
-    .pipe(gulp.dest(opt.dest));
-}));
-
-//Concat all .js files
-gulp.task('con', function(){
-    gulp.src(opt.src)
-    .pipe(minifier({
-        minify: true,
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        minifyJS: true,
-        minifyCSS: true
-    }))
-    .pipe(concat(opt.concatFileName))
-    .pipe(gulp.dest(opt.dest));
-});
-
-
-
-
-
-//Concats all CSS files
-gulp.task('minifycss', watchify(function(){
-    gulp.src(opt.srcCSS)
-    //.pipe(changed(dest))
-    .pipe(minifier({
-        minify: true,
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        minifyJS: true,
-        minifyCSS: true
-    }))
-    .pipe(concat(opt.minifyCSSFileName))
-    .pipe(gulp.dest(opt.dest));
-}));
-
-
-gulp.task('default',function(){
-    console.log('watching ' + opt.src);
-    gulp.watch([opt.src], ['connomini']);
-});
-
-// Hack to enable configurable watchify watching
-var watching = false;
-gulp.task('enable-watch-mode', function() { watching = true; });
-
-//Browserify and copy js files
-gulp.task('browserify', watchify(function(watchify) {
-    return gulp.src(opt.src)
-        .pipe(watchify({
-            watch:watching
-        }))
-        .pipe(gulp.dest(opt.dest));
-}));
-
-//Move destination files to another folder, defined with "prod"
-gulp.task('toprod', function(){
-    gulp.src(opt.dest + '/**/*.js')
-    .pipe(gulp.dest(opt.prod));
-});
-
-//Watchify is based on browserify and enable-watch-mode
-gulp.task('watchify', ['enable-watch-mode', 'browserify']);
