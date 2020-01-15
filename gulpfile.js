@@ -40,7 +40,7 @@ opt.directiveAssets = [
     "src/client/directives/*.png",
     "src/client/directives/*.css",
 ]
-opt.directiveDest = 'dist/assets';
+opt.directiveDest = 'dist/assets/css';
 
 opt.cssSrc = [
     "src/client/assets/css/custom-theme/jquery-ui.min.css", 
