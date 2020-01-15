@@ -52,7 +52,6 @@
         </div>
       </div>
     </div>
-
   <!-- BIG ARROWS -->
     <div id="bigLeft" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt=""></div></div>
     <div id="bigRight" class="controls controlArrowBig rightArrow" ng-click="metadata.step(1)"><div class="arrow_container"><img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt=""></div></div>
@@ -86,7 +85,6 @@
                   <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
                 </div>
               </div>
-
           <div class="modal-footer">
             <p class="text-left">{{metadata.errorReportingStatus}}</p>
             <button type="button" class="btn btn-primary" ng-hide="metadata.errorReportingStatus != ''" ng-click="metadata.reportError()" analytics-on="click" analytics-category="fejlrapportering" analytics-event="send">Send</button>
@@ -98,5 +96,4 @@
         <p class="breakThePage">{{metadata.item.metadataDescription}}</p>
         <img src="{{metadata.item.imageUrlPrint}}" width="100%" />
     </div>
-
 
