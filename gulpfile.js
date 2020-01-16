@@ -9,6 +9,11 @@
  *
  */
 const { src, dest, series, parallel, watch } = require('gulp');
+
+var sass = require('gulp-sass');
+ 
+sass.compiler = require('node-sass');
+
 //Options
 var opt = {};
 
@@ -48,7 +53,7 @@ opt.cssSrc = [
     "src/client/assets/css/bootstrap.min.css",
     "src/client/directives/chosen.css",
     "src/client/assets/css/extras.css",
-    "src/client/assets/css/style.css"
+    "tmp/style.css",
 ];
 opt.cssFileName = "concat.css";
 
@@ -81,7 +86,13 @@ var connect = require( 'gulp-connect');
 //gulp.task('clearDist', function () {
 function clearDist() {
     //console.log('Clearing dist dir');
-    return src('dist', {read: false, allowEmpty: true})
+    return src(['dist'], {read: false, allowEmpty: true})
+        .pipe(clean({force: true}));
+};
+
+function clearTmp() {
+    //console.log('Clearing dist dir');
+    return src(['tmp'], {read: false, allowEmpty: true})
         .pipe(clean({force: true}));
 };
 
@@ -96,6 +107,12 @@ function copyAppFile(){
     //console.log('Copying ', opt.appFileSrc);
     return src(opt.appFileSrc)
         .pipe(dest('dist'));  
+}
+
+function buildScss(){
+    return src("./src/client/assets/scss/**/*.scss")
+        .pipe(sass())
+        .pipe(dest('./tmp', {allowEmpty:true}));
 }
 
 function concatCssFile(){
@@ -178,7 +195,7 @@ function reloadWebserver(){
         .pipe(connect.reload());
 }
 
-var build = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles), reloadWebserver);
+var build = series(clearDist, buildScss, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles),reloadWebserver, clearTmp);
 var deploy = series(removeFTPFiles, deploy);
 
 exports.build = build;
