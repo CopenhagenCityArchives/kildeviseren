@@ -72,6 +72,8 @@ var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 // Upload with ftp
 var ftp = require( 'vinyl-ftp' );
+// Webserver with LiveReload
+var connect = require( 'gulp-connect');
 
 //Tasks:
 
@@ -140,11 +142,6 @@ var conn = ftp.create( {
     parallel: 10
 } );
 
-//gulp.task('deploy', function () {
-function removeFTPFiles(cb){
-    conn.rmdir( '/public_html/kildeviser-development', cb);
-}
-
 function deploy(){
     var globs = [
         'dist/**',
@@ -157,12 +154,33 @@ function deploy(){
         .pipe(conn.dest('/public_html/kildeviser-development'));
 };
 
-function watcher(){
-    watch('src/client/**', { delay: 500 }, build);
+function removeFTPFiles(cb){
+    conn.rmdir( '/public_html/kildeviser-development', cb);
 }
 
-var build = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles));
+function watcher(){
+    return watch('src/client/**/*.*', { delay: 500 }, build);
+}
+
+function startWebserver(cb){
+    
+    connect.server({
+        root: './dist',
+        livereload: true,
+        fallback: 'index.html#!?collection=2&item=3809251'
+      });
+
+      cb();
+}
+
+function reloadWebserver(){
+    return src('./dist')
+        .pipe(connect.reload());
+}
+
+var build = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles), reloadWebserver);
 var deploy = series(removeFTPFiles, deploy);
 
 exports.build = build;
-exports.watch = watcher;
+exports.watch = series(startWebserver, watcher);
+exports.webserver = startWebserver;
