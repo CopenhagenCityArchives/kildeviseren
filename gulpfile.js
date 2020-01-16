@@ -8,7 +8,7 @@
  * 4) toprod: Kopiere filer til en produktionsmappe
  *
  */
-
+const { src, dest, series, parallel, watch } = require('gulp');
 //Options
 var opt = {};
 
@@ -76,77 +76,93 @@ var ftp = require( 'vinyl-ftp' );
 //Tasks:
 
 // Clear dist dir
-gulp.task('clearDist', function () {
-    console.log('Clearing dist dir');
-    return gulp.src('dist', {read: false})
+//gulp.task('clearDist', function () {
+function clearDist() {
+    //console.log('Clearing dist dir');
+    return src('dist', {read: false, allowEmpty: true})
         .pipe(clean({force: true}));
-});
+};
 
-//Concat js files and copy assets to dist
-gulp.task('build', ['clearDist'], function(){
-    
-    console.log('Concating ', opt.appSrc);
-    gulp.src(opt.appSrc)
-    .pipe(concat(opt.appDest))
-    .pipe(gulp.dest('dist'));
+function concatAngularApp(){
+    //console.log('Concating ', opt.appSrc);
+    return src(opt.appSrc)
+        .pipe(concat(opt.appDest))
+        .pipe(dest('dist'));
+}
 
+function copyAppFile(){
+    //console.log('Copying ', opt.appFileSrc);
+    return src(opt.appFileSrc)
+        .pipe(dest('dist'));  
+}
 
-    console.log('Copying ', opt.appFileSrc);
-    gulp.src(opt.appFileSrc)
-    .pipe(gulp.dest('dist'));    
+function concatCssFile(){
+    //console.log('Concating ', opt.cssSrc);
+    return src(opt.cssSrc)
+        .pipe(concat(opt.cssFileName))
+        .pipe(dest(('dist/assets/css')));
+}
 
+function copyAssets(){
+    //console.log('Copying assets ', opt.assetsSrc);
+    return src(opt.assetsSrc, {base: './src/client'})
+        .pipe(dest('./dist/'));
+}
 
-    console.log('Concating ', opt.cssSrc);
-    gulp.src(opt.cssSrc)
-    .pipe(concat(opt.cssFileName))
-    .pipe(gulp.dest(('dist/assets/css')));
+function copyDirectiveAssets(){
+    //console.log('Copying directive assets ', opt.directiveAssets);
+    return src(opt.directiveAssets)
+        .pipe(dest(opt.directiveDest));
+}
 
+function copyFontFiles(){
+    //console.log('Copying font files ', opt.fontSrc);
+    return src(opt.fontSrc)
+        .pipe(dest(opt.fontDest));
+}
 
-    console.log('Copying assets ', opt.assetsSrc);
-    gulp.src(opt.assetsSrc, {base: './src/client'})
-    .pipe(gulp.dest('./dist/'));
+function copyServerFiles(){
+    //console.log('Copying server files ', opt.serverSrc);
+    return src(opt.serverSrc)
+        .pipe(dest('./dist')); 
+}
 
+function copyViewFiles(){
+    //console.log('Copying view files ', opt.viewsSrc);
+    return src(opt.viewsSrc)
+        .pipe(dest('./dist'));   
+}
 
-    console.log('Copying directive assets ', opt.directiveAssets);
-    gulp.src(opt.directiveAssets)
-    .pipe(gulp.dest(opt.directiveDest));
+var conn = ftp.create( {
+    host:     '***REMOVED***',
+    user:     '***REMOVED***',
+    password: '***REMOVED***',
+    parallel: 10
+} );
 
-    
-    console.log('Copying font files ', opt.fontSrc);
-    gulp.src(opt.fontSrc)
-    .pipe(gulp.dest(opt.fontDest));
-    
+//gulp.task('deploy', function () {
+function removeFTPFiles(cb){
+    conn.rmdir( '/public_html/kildeviser-development', cb);
+}
 
-    console.log('Copying server files ', opt.serverSrc);
-    gulp.src(opt.serverSrc)
-    .pipe(gulp.dest('./dist'));   
-
-
-    console.log('Copying view files ', opt.viewsSrc);
-    gulp.src(opt.viewsSrc)
-    .pipe(gulp.dest('./dist'));   
-});
-
-gulp.task('deploy', function () {
- 
-    var conn = ftp.create( {
-        host:     '***REMOVED***',
-        user:     '***REMOVED***',
-        password: '***REMOVED***',
-        parallel: 10
-    } );
- 
+function deploy(){
     var globs = [
         'dist/**',
         'dist/.htaccess'
     ];
- 
+
     // using base = '.' will transfer everything to /public_html correctly
     // turn off buffering in gulp.src for best performance
-    return conn.rmdir( '/public_html/kildeviser-development', function(){
-        gulp.src( globs, { base: './dist', buffer: false } )
-        //  .pipe( conn.newer( '/public_html' ) ) // only upload newer files
-            .pipe(conn.dest('/public_html/kildeviser-development'));
-    });
-     
-} );
+    return src(globs, {base: './dist', buffer: false})
+        .pipe(conn.dest('/public_html/kildeviser-development'));
+};
+
+function watcher(){
+    watch('src/client/**', build);
+}
+
+var build = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles));
+var deploy = series(removeFTPFiles, deploy);
+
+exports.build = build;
+exports.watch = watcher;
