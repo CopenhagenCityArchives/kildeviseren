@@ -141,6 +141,10 @@ label input {
 
 .header_logo {
   max-width: 100%;
+
+  @media (max-width: 768px) {
+    max-width: 400px;
+  }
 }
 
 .header_text {
@@ -291,6 +295,10 @@ label input {
   font-size: 1.5em;
   border-radius: 10px;
   line-height: 42px;
+
+  @media (max-width: 768px) {
+    min-height: 45px;
+  }
 }
 
 .form-text-bottom {
@@ -318,6 +326,10 @@ label input {
   min-height: 30px;
   font-size: 1.5em;
   border-radius: 10px;
+
+  @media (max-width: 768px) {
+    min-height: 40px;
+  }
 }
 
 .top_box_select {
@@ -549,7 +561,7 @@ label input {
   z-index: 99999;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
-  height: 100%;
+  height: 100%; 
   width: 100%;
   display: none;
 }
@@ -674,6 +686,13 @@ label input {
   top: 50%;
   margin-top: -130px;
   display: table;
+
+  @media (max-width: 768px) {
+    width: 30px;
+  }
+  @media (max-height: 768px) {
+    height: 45px;
+  }
 }
 
 .controlArrowBig:hover {
@@ -692,6 +711,12 @@ label input {
   top: 50%;
   display: table;
   margin-top: -35px;
+
+  @media (max-height: 450px) {
+    .controlArrowSmall {
+      display: none
+    }
+  }
 }
 
 .controlArrowSmall:hover {
@@ -761,6 +786,10 @@ label input {
   right: 15px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+
+  @media (max-height: 450px){
+    display:none;
+  }
 }
 
 .controlReport:hover {
@@ -796,6 +825,14 @@ label input {
   position: fixed;
   bottom: 160px;
   display: table;
+
+  @media (max-height: 450px) {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .controlQuestionmark img {
@@ -819,6 +856,27 @@ label input {
   bottom: 60px;
   display: table;
   padding: 0 10px;
+
+  @media (max-height: 450px) {
+    border-bottom: 1.5px solid #1c262c;
+    height: 40px;
+    background-color: #36495b;
+    width: auto;
+    position: fixed;
+    bottom: 45px;
+    display: table;
+    padding: 0 5px;
+  }
+
+  @media (max-width: 768px) {
+    border-bottom: 1.5px solid #1c262c;
+    background-color: #36495b;
+    width: auto;
+    position: fixed;
+    bottom: 60px;
+    display: table;
+    padding: 0 10px;
+  }
 }
 
 .pager-input {
@@ -831,16 +889,56 @@ label input {
   text-align: center;
   border-radius: 10px;
   margin-right: 10px;
+
+  @media (max-height: 450px) {
+    border: none;
+    background: #f8f8f8;
+    padding: 0 5px;
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  @media (max-width: 768px) {
+    border: none;
+    background: #f8f8f8;
+    padding: 0 10px;
+    font-weight: 700;
+    color: #36495b;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
 }
 
 .pager-pages {
   font-size: 3em;
   color: #fff;
+
+  @media (max-width: 768px) {
+    color: #fff;
+  }
+
+  @media (max-height: 450px) {
+    font-size: 1.5em;
+    color: #fff;
+  }
 }
 
 .page-seperator {
   font-size: 3em;
   color: #fff;
+
+  @media (max-width: 768px) {
+    color: #fff;
+  }
+
+  @media (max-height: 450px) {
+    font-size: 1.5em;
+    color: #fff;
+  }
 }
 
 .arrow_container {
@@ -852,6 +950,10 @@ label input {
 
 .maxWidthImage {
   max-width: 50%;
+
+  @media (max-width: 768px) {
+    max-width: 20%;
+  }
 }
 
 .leaflet-control-attribution>a {
@@ -907,27 +1009,9 @@ label input {
 
 .btn {
   text-decoration: none;
-}
 
-/* MEDIA STUFF */
-@media (max-width: 768px) {
-  .form_box_input {
-    min-height: 45px;
-  }
+  @media (max-width: 768px) {
 
-  .top_box_input {
-    min-height: 40px;
-  }
-
-  .header_logo {
-    max-width: 400px;
-  }
-
-  .maxWidthImage {
-    max-width: 20%;
-  }
-
-  .btn {
     padding: 0 20px;
     min-height: 44px;
     line-height: 44px;
@@ -935,44 +1019,10 @@ label input {
   }
 }
 
-@media (max-width: 768px) {
-  .controlArrowBig {
-    width: 30px;
-  }
+/* MEDIA STUFF */
 
-  .controlQuestionmark {
-    display: none;
-  }
 
-  .controlPager {
-    border-bottom: 1.5px solid #1c262c;
-    background-color: #36495b;
-    width: auto;
-    position: fixed;
-    bottom: 60px;
-    display: table;
-    padding: 0 10px;
-  }
 
-  .pager-input {
-    border: none;
-    background: #f8f8f8;
-    padding: 0 10px;
-    font-weight: 700;
-    color: #36495b;
-    text-align: center;
-    border-radius: 10px;
-    margin-right: 10px;
-  }
-
-  .pager-pages {
-    color: #fff;
-  }
-
-  .page-seperator {
-    color: #fff;
-  }
-}
 
 @media (min-width: 992px) {}
 
