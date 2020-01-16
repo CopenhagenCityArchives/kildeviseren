@@ -327,8 +327,8 @@ $(document).on('click','.labelforradio', function() {
     function setSize() {
         resizeInput($(document).find('input#pageNumber'));
         $('#page_viewer').css({
-            height: $(window).height(),
-            width: $(window).width()
+            height: '100%',//$(window).height(),
+            width: '100%'//$(window).width()
         })
         $('#map').css({
             height: $(window).height(),
