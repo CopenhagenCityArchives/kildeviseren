@@ -1,15 +1,12 @@
 {
-  "name": "copenhagencityarchives/kildeviseren",
+  "name": "kildeviseren",
   "version": "0.0.1",
   "description": "",
-  "main": "",
-  "script": "gulp build",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-clean": "^0.3.2",
+    "gulp-clean": "^0.4.0",
     "jasmine": "^2.0.1",
     "vinyl-ftp": "^0.6.1"
   },
