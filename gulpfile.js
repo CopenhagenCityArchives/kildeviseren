@@ -159,7 +159,7 @@ function removeFTPFiles(cb){
 }
 
 function watcher(){
-    return watch('src/client/**/*.*', { delay: 500 }, build);
+    return watch(['src/client/**/*.*','src/server/**/*.*'], { delay: 500 }, build);
 }
 
 function startWebserver(cb){
