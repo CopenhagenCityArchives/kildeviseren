@@ -465,8 +465,8 @@ $(document).on('click','.labelforradio', function() {
                 // calculate the edges of the image, in coordinate space
                 var southWest = map.unproject([0, this.height], 12);
                 var northEast = map.unproject([this.width, 0], 12);
-                console.log(southWest);
-                console.log(northEast);
+                //console.log(southWest);
+                //console.log(northEast);
                 //Setting the bounds of the map.
                 var bounds = new L.LatLngBounds(northEast,southWest);
                 //Add the image overlay,
@@ -476,21 +476,21 @@ $(document).on('click','.labelforradio', function() {
                     map.fitBounds(savedBounds);
                 }
                 else{
-                    console.log(this);
+                    /*console.log(this);
                     console.log("Testing");
                     console.log(screen);
                     console.log("Bounds");
-                    console.log(bounds);
+                    console.log(bounds);*/
                     var screenNE = map.unproject([0,screen.width], 12);
                     var screenSW = map.unproject([screen.height, 0], 12);
                     var screenBounds = new L.LatLngBounds(screenNE, screenSW);
                     var boundsCenter = bounds.getCenter();
-                    console.log(boundsCenter);
-                    console.log((screen.width/this.width) *100)
+                    /*console.log(boundsCenter);
+                    console.log((screen.width/this.width) *100)*/
                     //Centers view at width center, 3/8 of the height, zoom level 10
                     //map.setView(map.unproject([device .width/2,(screen.height/8)*3],12),10);
-                    map.setView(boundsCenter,12*((screen.width/this.width)),10);
-                    //map.fit
+                    map.setView(boundsCenter,12,10);
+                    //map.fitBounds();
                 }
                 map.on('zoomend moveend dragend', function(e) {
                     savedBounds = e.target.getBounds();
