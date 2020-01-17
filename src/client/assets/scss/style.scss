@@ -296,7 +296,7 @@ label input {
   border-radius: 10px;
   line-height: 42px;
 
-  @media (max-width: 768px) {
+  @media (max-height: 320px) {
     min-height: 45px;
   }
 }
@@ -327,7 +327,7 @@ label input {
   font-size: 1.5em;
   border-radius: 10px;
 
-  @media (max-width: 768px) {
+  @media (max-height: 320px) {
     min-height: 40px;
   }
 }
@@ -520,6 +520,9 @@ label input {
   left: 470px;
   min-width: 100px;
   display: table;
+  @media (max-height:320px){
+    display: none;
+  }
 }
 
 .findBtn:hover {
@@ -683,15 +686,14 @@ label input {
   background-color: #4c769c;
   width: 70px;
   position: fixed;
-  top: 50%;
+  top: 25%;
   margin-top: -130px;
   display: table;
 
-  @media (max-width: 768px) {
+  @media (min-width: 568px) and (min-height: 320px){
     width: 30px;
-  }
-  @media (max-height: 768px) {
     height: 45px;
+    top: 50%;
   }
 }
 
@@ -703,17 +705,18 @@ label input {
 }
 
 .controlArrowSmall {
+  display: none;
   border-bottom: 3px solid #354a5b;
   height: 50px;
   background-color: #4c769c;
   width: 50px;
   position: fixed;
   top: 50%;
-  display: table;
   margin-top: -35px;
 
-  @media (max-height: 450px) {
-      display: none
+  @media (min-height: 320px) {
+    display: table;
+    top: 40%;
   }
 }
 
@@ -964,9 +967,23 @@ label input {
 
 #map {
   position: relative;
-  background: #000 url('../img/loading.gif') no-repeat center center;
   height: 100%;
   width: 100%;
+  background: #000;
+}
+
+#mapHolder{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.mapLoading{
+  background:  #000 url('../img/loading.gif') no-repeat center center;
+}
+
+.mapLoaded{
+  background: #000;
 }
 
 .zoomslider {
