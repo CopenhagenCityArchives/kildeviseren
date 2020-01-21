@@ -643,6 +643,24 @@ label input {
   display: none;
 }
 
+/*
+@media (min-width: 320px) {
+    top: 51.8%;
+    width: 40px;
+    height: 40px;
+  }
+  @media (min-width: 768px) {
+    top: 52.5%;
+    width: 60px;
+    height: 60px;
+  }
+  @media (min-width: 1224px) {
+    top: 53%;
+    width: 70px;
+    height: 70px;
+  }
+  */
+
 .info-big {
   height: 85.5px;
   line-height: 85.5px;
@@ -652,6 +670,13 @@ label input {
   margin-top: -133px;
   font-size: 2em;
   font-weight: 400;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+  font-size: 15px;
+  line-height: normal;
+  width: 70px;
+  top: 65%;
+  }
 }
 
 .info-small {
@@ -662,6 +687,13 @@ label input {
   position: fixed;
   top: 50%;
   margin-top: -35px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    width: 80px;
+    top: 57%;
+    }
 }
 
 .info-menu {
@@ -678,10 +710,16 @@ label input {
   font-size: 2em;
   font-weight: 400;
   height: 50px;
-  width: 140px;
+  width: 70px;
   position: fixed;
   top: 5px;
-  right: 65px;
+  right: 13.5px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    top: 50px;
+  }
 }
 
 .info-map {
@@ -702,6 +740,15 @@ label input {
   position: fixed;
   bottom: 95px;
   left: 20px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    width: 80px;
+    bottom: 85px;
+    left: 35px;
+
+    }
 }
 
 .info-sidetal {
@@ -712,6 +759,14 @@ label input {
   position: fixed;
   bottom: 135px;
   right: 60px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    width: 80px;
+    bottom: 110px;
+
+    }
 }
 
 #infoClose {
@@ -723,6 +778,12 @@ label input {
   margin: -50px 0 0 -50px;
   font-size: 4em;
   color: #fff;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 50px;
+    line-height: normal;
+    width: 100px;    
+    }
 }
 
 #infoClose:hover {
@@ -933,11 +994,11 @@ label input {
   display: table;
 
   @media (max-height: 450px) {
-    display: none;
+    display: table;
   }
 
   @media (max-width: 768px) {
-    display: none;
+    display: table;
   }
 }
 
