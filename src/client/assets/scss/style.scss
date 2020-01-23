@@ -847,6 +847,7 @@ label input {
     top: 41.5%;
     width: 85px;
     height: 75px;
+  }
   
   @include landscape{
     width: 10%;
@@ -892,7 +893,7 @@ label input {
     top: 53%;
     width: 70px;
     height: 65px;
-
+  }
   @include portrait {
     display: table;
     border-bottom: 3px solid #354a5b;
