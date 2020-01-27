@@ -452,23 +452,28 @@ $(document).on('click','.labelforradio', function() {
                 //alert( this.width+' '+ this.height );
                 // create the slippy map
                 var map = L.map('map', {
-                    //minZoom: 9,
-                    //maxZoom: 16,
-                    //zoom: 1,
+                    //minZoom: 1,
+                    //maxZoom: 5,
                     zoomControl: false,
+                    center: [0,0],
                     imageFormat: 'jpeg',
-                    crs: L.CRS.Simple,
-                }).setView([0, 0], 0);
+                    crs: L.CRS.Simple
+                });
                 map.addControl(L.control.zoom({
                     position: 'bottomleft'
                 }));
                 // calculate the edges of the image, in coordinate space
-                var southWest = map.unproject([0, this.height], 12);
-                var northEast = map.unproject([this.width, 0], 12);
-                //console.log(southWest);
-                //console.log(northEast);
+                var southWest = map.unproject([0, this.height], 5);
+                var northEast = map.unproject([this.width, 0], 5);
+
+                var screenSW = map.unproject([0, screen.height], 5);
+                var screenNE = map.unproject([screen.width, 0], 5);
+               
+
                 //Setting the bounds of the map.
-                var bounds = new L.LatLngBounds(northEast,southWest);
+                var bounds = new L.LatLngBounds(southWest, northEast);
+                var screenBounds = new L.LatLngBounds(screenSW, screenNE);
+
                 //Add the image overlay,
                 //so that it covers the entire map
                 L.imageOverlay(imageSrc, bounds).addTo(map);
@@ -476,21 +481,15 @@ $(document).on('click','.labelforradio', function() {
                     map.fitBounds(savedBounds);
                 }
                 else{
-                    /*console.log(this);
-                    console.log("Testing");
-                    console.log(screen);
-                    console.log("Bounds");
-                    console.log(bounds);*/
-                    var screenNE = map.unproject([0,screen.width], 12);
-                    var screenSW = map.unproject([screen.height, 0], 12);
-                    var screenBounds = new L.LatLngBounds(screenNE, screenSW);
                     var boundsCenter = bounds.getCenter();
                     /*console.log(boundsCenter);
                     console.log((screen.width/this.width) *100)*/
                     //Centers view at width center, 3/8 of the height, zoom level 10
-                    //map.setView(map.unproject([device .width/2,(screen.height/8)*3],12),10);
-                    map.setView(boundsCenter,12,10);
+                    //map.setView(map.unproject([device.width/2,(screen.height/8)*3],12),10);
+                    map.setView(bounds.getCenter(),2);
                     //map.fitBounds();
+                    //map.setMaxBounds()
+
                 }
                 map.on('zoomend moveend dragend', function(e) {
                     savedBounds = e.target.getBounds();

@@ -1,5 +1,37 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700);
 
+// Small tablets and large smartphones (portrait view)
+$screen-sm-min: 320px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Small devices
+@mixin sm {
+  @media screen and (min-width: #{$screen-sm-min}) {
+    @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media screen and (min-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin portrait {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
 /* GENERELT */
 * {
   -webkit-box-sizing: border-box;
@@ -477,17 +509,33 @@ label input {
 
 /* TOP BAR */
 .topcontrols {
-  height: auto;
-  position: absolute;
-  width: auto;
-  top: 0;
-  left: 70px;
-  background-color: #fff;
-  z-index: 9999;
-  overflow: visible;
-  padding: 10px 20px 20px 0;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
+
+  @include sm {
+    height: auto;
+    position: absolute;
+    width: auto;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 9999;
+    overflow: visible;
+    padding: 10px 20px 20px 0;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+
+  @include md {
+    height: auto;
+    position: absolute;
+    width: auto;
+    top: 0;
+    left: 0px;
+    background-color: #fff;
+    z-index: 9999;
+    overflow: visible;
+    padding: 10px 20px 20px 0;
+  }
+
 }
 
 .topcontrols_container {
@@ -496,6 +544,10 @@ label input {
   width: 100%;
   z-index: -1;
   top: 0;
+  left: 0;
+
+  @media (min-width: 320px) {}
+
 }
 
 .topcontrols_form {
@@ -507,22 +559,32 @@ label input {
 }
 
 .topcontrols-button {
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  height: 50px;
-  position: absolute;
+  @include sm {
+    position: absolute;
+  }
+
+  @include md {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 50px;
+    position: absolute;
+  }
+
 }
 
 .findBtn {
-  border-bottom: 3px solid #354a5b;
-  background-color: #4c769c;
-  width: auto;
-  left: 470px;
-  min-width: 100px;
-  display: table;
-  @media (max-height:320px){
+  @include sm {
     display: none;
   }
+  @include md {
+    border-bottom: 3px solid #354a5b;
+    background-color: #4c769c;
+    width: auto;
+    left: 470px;
+    min-width: 100px;
+    display: table;
+  }
+
 }
 
 .findBtn:hover {
@@ -541,14 +603,26 @@ label input {
 }
 
 .sourceText {
-  background-color: #fff;
-  color: #4c769c;
-  width: auto;
-  left: 10px;
-  max-width: 460px;
-  padding: 0;
-  display: table;
-  text-align: left;
+  @include sm {
+    background-color: #fff;
+    color: #4c769c;
+    width: 100%;
+    left: 0px;
+    padding: 0;
+    display: table;
+    text-align: left;
+  }
+
+  @include md {
+    background-color: #fff;
+    color: #4c769c;
+    width: auto;
+    left: 10px;
+    max-width: 460px;
+    padding: 0;
+    display: table;
+    text-align: left;
+  }
 }
 
 .sourceText>div.sourcetext {
@@ -564,10 +638,28 @@ label input {
   z-index: 99999;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
-  height: 100%; 
+  height: 100%;
   width: 100%;
   display: none;
 }
+
+/*
+@media (min-width: 320px) {
+    top: 51.8%;
+    width: 40px;
+    height: 40px;
+  }
+  @media (min-width: 768px) {
+    top: 52.5%;
+    width: 60px;
+    height: 60px;
+  }
+  @media (min-width: 1224px) {
+    top: 53%;
+    width: 70px;
+    height: 70px;
+  }
+  */
 
 .info-big {
   height: 85.5px;
@@ -578,6 +670,13 @@ label input {
   margin-top: -133px;
   font-size: 2em;
   font-weight: 400;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+  font-size: 15px;
+  line-height: normal;
+  width: 70px;
+  top: 65%;
+  }
 }
 
 .info-small {
@@ -588,6 +687,13 @@ label input {
   position: fixed;
   top: 50%;
   margin-top: -35px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    width: 80px;
+    top: 57%;
+    }
 }
 
 .info-menu {
@@ -604,10 +710,16 @@ label input {
   font-size: 2em;
   font-weight: 400;
   height: 50px;
-  width: 140px;
+  width: 70px;
   position: fixed;
   top: 5px;
-  right: 65px;
+  right: 13.5px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    top: 50px;
+  }
 }
 
 .info-map {
@@ -628,6 +740,15 @@ label input {
   position: fixed;
   bottom: 95px;
   left: 20px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    width: 80px;
+    bottom: 85px;
+    left: 35px;
+
+    }
 }
 
 .info-sidetal {
@@ -638,6 +759,14 @@ label input {
   position: fixed;
   bottom: 135px;
   right: 60px;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 15px;
+    line-height: normal;
+    width: 80px;
+    bottom: 110px;
+
+    }
 }
 
 #infoClose {
@@ -649,6 +778,12 @@ label input {
   margin: -50px 0 0 -50px;
   font-size: 4em;
   color: #fff;
+
+  @media (min-width: 320px) and (max-device-width: 425px) {
+    font-size: 50px;
+    line-height: normal;
+    width: 100px;    
+    }
 }
 
 #infoClose:hover {
@@ -681,19 +816,25 @@ label input {
 }
 
 .controlArrowBig {
-  border-bottom: 3px solid #354a5b;
-  height: 85.5px;
-  background-color: #4c769c;
-  width: 70px;
-  position: fixed;
-  top: 25%;
-  margin-top: -130px;
-  display: table;
+  
+  @include landscape{
+    width: 10%;
+    height: 15%;
+    border-bottom: 3px solid #354a5b;
+    background-color: #4c769c;
+    position: fixed;
+    margin-top: 25%;
+    display: table;
+  }
 
-  @media (min-width: 568px) and (min-height: 320px){
-    width: 30px;
-    height: 45px;
-    top: 60%;
+  @include portrait {
+    height: 16%;
+    width: 20%;
+    border-bottom: 3px solid #354a5b;
+    background-color: #4c769c;
+    position: fixed;
+    margin-top: 70%;
+    display: table;
   }
 }
 
@@ -706,18 +847,25 @@ label input {
 
 .controlArrowSmall {
   display: none;
-  border-bottom: 3px solid #354a5b;
-  height: 50px;
-  background-color: #4c769c;
-  width: 50px;
-  position: fixed;
-  top: 50%;
-  margin-top: -35px;
-
-  @media (min-height: 320px) {
+  
+  @include landscape {
     display: table;
-    top: 55%;
-    width: 30px;
+    border-bottom: 3px solid #354a5b;
+    height: 12%;
+    background-color: #4c769c;
+    width: 7%;
+    position: fixed;
+    margin-top: 37%;
+  }
+
+  @include portrait {
+    display: table;
+    border-bottom: 3px solid #354a5b;
+    height: 12%;
+    background-color: #4c769c;
+    width: 16%;
+    position: fixed;
+    margin-top: 100%;
   }
 }
 
@@ -742,6 +890,23 @@ label input {
   background-color: #1F2B34;
   border-color: #12181D;
   cursor: pointer;
+}
+
+.arrow_container {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
+}
+
+.maxWidthImage {
+  @include sm {
+    max-width: 40%;
+  }
+
+  @include md {
+    max-width: 60%;
+  }
 }
 
 .modal {
@@ -789,8 +954,8 @@ label input {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 
-  @media (max-height: 450px){
-    display:none;
+  @media (max-height: 450px) {
+    display: none;
   }
 }
 
@@ -829,11 +994,11 @@ label input {
   display: table;
 
   @media (max-height: 450px) {
-    display: none;
+    display: table;
   }
 
   @media (max-width: 768px) {
-    display: none;
+    display: table;
   }
 }
 
@@ -859,18 +1024,17 @@ label input {
   display: table;
   padding: 0 10px;
 
-  @media (max-height: 450px) {
+  @include sm {
     border-bottom: 1.5px solid #1c262c;
-    height: 40px;
     background-color: #36495b;
     width: auto;
     position: fixed;
-    bottom: 45px;
+    bottom: 0px;
     display: table;
-    padding: 0 5px;
+    padding: 10px 10px 10px 10px;
   }
 
-  @media (max-width: 768px) {
+  @include md {
     border-bottom: 1.5px solid #1c262c;
     background-color: #36495b;
     width: auto;
@@ -882,17 +1046,14 @@ label input {
 }
 
 .pager-input {
-  border: none;
-  background: #f8f8f8;
-  padding: 0 10px;
-  font-size: 3em;
-  font-weight: 700;
-  color: #36495b;
-  text-align: center;
-  border-radius: 10px;
-  margin-right: 10px;
+  @include sm {
 
-  @media (max-height: 450px) {
+    font-size: 2em;
+    font-weight: 700;
+    color: #36495b;
+  }
+
+  @include md {
     border: none;
     background: #f8f8f8;
     padding: 0 5px;
@@ -943,20 +1104,7 @@ label input {
   }
 }
 
-.arrow_container {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  width: 100%;
-}
 
-.maxWidthImage {
-  max-width: 50%;
-
-  @media (max-width: 768px) {
-    max-width: 20%;
-  }
-}
 
 .leaflet-control-attribution>a {
   display: none;
@@ -973,17 +1121,17 @@ label input {
   background: #000;
 }
 
-#mapHolder{
+#mapHolder {
   position: relative;
   height: 100%;
   width: 100%;
 }
 
-.mapLoading{
-  background:  #000 url('../img/loading.gif') no-repeat center center;
+.mapLoading {
+  background: #000 url('../img/loading.gif') no-repeat center center;
 }
 
-.mapLoaded{
+.mapLoaded {
   background: #000;
 }
 
