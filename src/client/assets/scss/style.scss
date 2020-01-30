@@ -3,8 +3,17 @@
 // Small tablets and large smartphones (portrait view)
 $screen-sm-min: 320px;
 
+// small screen in landscape mode
+$screen-sm-max: 767px;
+
 // Small tablets (portrait view)
 $screen-md-min: 768px;
+
+// large devices like laptops and large tablets
+$screen-lg-min: 1024px;
+
+// extra large devices like desktops.
+$screen-xl-min: 1440px;
 
 // Small devices
 @mixin sm {
@@ -13,22 +22,36 @@ $screen-md-min: 768px;
   }
 }
 
+@mixin sml {
+  @media screen and (min-width: #{$screen-sm-min}) and (max-width: #{$screen-sm-max}) and (orientation:landscape) {
+    @include sm {
+      @content;
+    }
+  }
+}
+
 // Medium devices
 @mixin md {
   @media screen and (min-width: #{$screen-md-min}) {
-    @content;
+    @include sm{
+      @content;
+    }
   }
 }
 
-@mixin landscape {
-  @media (orientation: landscape) {
-    @content;
+@mixin lg {
+  @media screen and (min-width: #{$screen-lg-min}) {
+    @include md {
+      @content;
+    }
   }
 }
 
-@mixin portrait {
-  @media (orientation: portrait) {
-    @content;
+@mixin xl {
+  @media screen and (min-width: #{$screen-xl-min}) {
+    @include lg {
+      @content;
+    }
   }
 }
 
@@ -516,7 +539,6 @@ label input {
     width: auto;
     top: 0;
     left: 0;
-    background-color: #fff;
     z-index: 9999;
     overflow: visible;
     padding: 10px 20px 20px 0;
@@ -525,26 +547,9 @@ label input {
   }
 
   @include md {
-    height: auto;
-    position: absolute;
-    width: auto;
-    top: 0;
-    left: 0px;
-    background-color: #fff;
-    z-index: 9999;
-    overflow: visible;
-    padding: 10px 20px 20px 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
-  @media (min-width: 768px) {
-    left:80px;
-    width: 300px;
-  }
-  @media (min-width: 1024px) {
-    left:100px;
-    width: auto;
-  }
-  
-
 }
 
 .topcontrols_container {
@@ -554,8 +559,6 @@ label input {
   z-index: -1;
   top: 0;
   left: 0;
-
-  @media (min-width: 320px) {}
 
 }
 
@@ -577,6 +580,16 @@ label input {
     border-bottom-left-radius: 10px;
     height: 50px;
     position: absolute;
+  }
+
+  @include lg {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  @include xl {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
   }
 
 }
@@ -825,30 +838,21 @@ label input {
 }
 
 .controlArrowBig {
-  border-bottom: 3px solid #354a5b;
-  height: 6%;
-  background-color: #4c769c;
-  width: 10%;
-  position: fixed;
-  //margin-top: -130px;
-  display: table;
-
-  @media (min-width: 320px) {
-    top: 45%;
-    width: 50px;
-    height: 50px;
-  }
-  @media (min-width: 768px) {
-    top: 42%;
-    width: 75px;
-    height: 75px;
-  }
-  @media (min-width: 1224px) {
-    top: 41.5%;
-    width: 85px;
-    height: 75px;
+  @include sm {
+    border-bottom: 3px solid #354a5b;
+    height: 70px;
+    width: 65px;
+    top: 235px;
+    background-color: #4c769c;
+    position: fixed;
+    //margin-top: -130px;
+    display: table;
   }
   
+  @include sml {
+    top: 100px;
+  }
+  /*
   @include landscape{
     width: 10%;
     height: 15%;
@@ -868,6 +872,7 @@ label input {
     margin-top: 70%;
     display: table;
   }
+  */
 }
 
 .controlArrowBig:hover {
@@ -878,32 +883,21 @@ label input {
 }
 
 .controlArrowSmall {
-  display: none;
-  
-  @include landscape {
-    display: table;
+  @include sm {
     border-bottom: 3px solid #354a5b;
-    height: 12%;
+    height: 60px;
+    width: 50px;
+    top: 310px;
     background-color: #4c769c;
-    width: 7%;
     position: fixed;
-    margin-top: 37%;
-  }
-  @media (min-width: 1224px) {
-    top: 53%;
-    width: 70px;
-    height: 65px;
-  }
-  @include portrait {
+    //margin-top: -130px;
     display: table;
-    border-bottom: 3px solid #354a5b;
-    height: 12%;
-    background-color: #4c769c;
-    width: 16%;
-    position: fixed;
-    margin-top: 100%;
   }
+ @include sml {
+   top: 175px;
+ }
 }
+
 
 .controlArrowSmall:hover {
   color: #fff;
@@ -978,20 +972,22 @@ label input {
 }
 
 .controlReport {
-  border-bottom: 3px solid #1c262c;
-  height: 50px;
-  background-color: #36495b;
-  width: 50px;
-  font-size: .7em;
-  position: fixed;
-  top: 0;
-  display: table;
-  right: 15px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-
-  @media (max-height: 450px) {
-    display: none;
+  @include sm {
+    border-bottom: 3px solid #1c262c;
+    height: 50px;
+    background-color: #36495b;
+    width: 50px;
+    font-size: .7em;
+    position: fixed;
+    top: 0;
+    display: table;
+    right: 15px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  
+  @include sml {
+    display:none !important
   }
 }
 
@@ -1021,21 +1017,16 @@ label input {
 }
 
 .controlQuestionmark {
-  border-bottom: 3px solid #1c262c;
-  height: 50px;
-  background-color: #36495b;
-  width: 50px;
-  position: fixed;
-  bottom: 160px;
-  display: table;
-
-  @media (max-height: 450px) {
-    display: table;
+  @include sm {
+    display: none !important;
+    border-bottom: 3px solid #1c262c;
+    height: 50px;
+    background-color: #36495b;
+    width: 50px;
+    position: fixed;
+    bottom: 160px;
   }
 
-  @media (max-width: 768px) {
-    display: table;
-  }
 }
 
 .controlQuestionmark img {
@@ -1051,95 +1042,49 @@ label input {
 }
 
 .controlPager {
-  border-bottom: 1.5px solid #1c262c;
-  height: 87px;
-  background-color: #36495b;
-  width: auto;
-  position: fixed;
-  bottom: 60px;
-  display: table;
-  padding: 0 10px;
-
   @include sm {
     border-bottom: 1.5px solid #1c262c;
     background-color: #36495b;
     width: auto;
+    height: 60px;
+    left: auto;
     position: fixed;
-    bottom: 0px;
-    display: table;
-    padding: 10px 10px 10px 10px;
-  }
-
-  @include md {
-    border-bottom: 1.5px solid #1c262c;
-    background-color: #36495b;
-    width: auto;
-    position: fixed;
-    bottom: 60px;
+    bottom: 10px;
     display: table;
     padding: 0 10px;
   }
+  
 }
 
 .pager-input {
   @include sm {
-
-    font-size: 2em;
-    font-weight: 700;
-    color: #36495b;
-  }
-
-  @include md {
     border: none;
     background: #f8f8f8;
-    padding: 0 5px;
-    font-size: 1.5em;
-    font-weight: 700;
-    text-align: center;
-    border-radius: 10px;
-    margin-right: 10px;
-  }
-
-  @media (max-width: 768px) {
-    border: none;
-    background: #f8f8f8;
+    height: 45px;
     padding: 0 10px;
-    font-weight: 700;
     color: #36495b;
     text-align: center;
     border-radius: 10px;
+    margin-bottom: 10px;
     margin-right: 10px;
-  }
+    font-size: 2.5em;
+    font-weight: 700;
+  }  
 }
 
 .pager-pages {
-  font-size: 3em;
-  color: #fff;
-
-  @media (max-width: 768px) {
-    color: #fff;
-  }
-
-  @media (max-height: 450px) {
-    font-size: 1.5em;
+  @include sm {
+    font-size: 3em;
     color: #fff;
   }
 }
 
 .page-seperator {
-  font-size: 3em;
-  color: #fff;
-
-  @media (max-width: 768px) {
-    color: #fff;
-  }
-
-  @media (max-height: 450px) {
-    font-size: 1.5em;
+  @include sm {
+    font-size: 3em;
     color: #fff;
   }
 }
-
 
 
 .leaflet-control-attribution>a {
@@ -1147,7 +1092,12 @@ label input {
 }
 
 .leaflet-bottom {
-  bottom: 60px !important;
+  @include sm {
+    bottom: 60px !important;
+  }
+  @include sml {
+    display: none;
+  }
 }
 
 #map {
