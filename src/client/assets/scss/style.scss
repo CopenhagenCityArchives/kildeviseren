@@ -9,7 +9,7 @@ $screen-sm-max: 767px;
 // Small tablets (portrait view)
 $screen-md-min: 768px;
 
-// large devices like laptops and large tablets
+// large devices like laptops, large tablets and tablets in landscape
 $screen-lg-min: 1024px;
 
 // extra large devices like desktops.
@@ -549,6 +549,7 @@ label input {
   @include md {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    background-color: white;
   }
 }
 
@@ -594,6 +595,12 @@ label input {
 
 }
 
+.chosen-container {
+  @include md {
+    max-width:485px;
+  }
+}
+
 .findBtn {
   @include sm {
     display: none;
@@ -636,14 +643,8 @@ label input {
   }
 
   @include md {
-    background-color: #fff;
-    color: #4c769c;
-    width: auto;
     left: 10px;
     max-width: 460px;
-    padding: 0;
-    display: table;
-    text-align: left;
   }
 }
 
@@ -684,38 +685,23 @@ label input {
   */
 
 .info-big {
-  height: 85.5px;
-  line-height: 85.5px;
-  width: 200px;
-  position: fixed;
-  top: 50%;
-  margin-top: -133px;
-  font-size: 2em;
-  font-weight: 400;
-
-  @media (min-width: 320px) and (max-device-width: 425px) {
-  font-size: 15px;
-  line-height: normal;
-  width: 70px;
-  top: 65%;
+  @include md {
+    line-height: 70px;
+    position: fixed;
+    top: 472px;
+    font-size: 2em;
+    font-weight: 400;
   }
 }
 
 .info-small {
-  font-size: 2em;
-  font-weight: 400;
-  height: 50px;
-  width: 230px;
-  position: fixed;
-  top: 50%;
-  margin-top: -35px;
-
-  @media (min-width: 320px) and (max-device-width: 425px) {
-    font-size: 15px;
-    line-height: normal;
-    width: 80px;
-    top: 57%;
-    }
+  @include md {
+    font-size: 2em;
+    font-weight: 400;
+    line-height: 60px;
+    position: fixed;
+    top: 550px;
+  }
 }
 
 .info-menu {
@@ -728,14 +714,36 @@ label input {
   left: 455px;
 }
 
+.info-right {
+  margin-right: 0.5em;
+}
+
+.info-left {
+  margin-left: 0.5em;
+}
+
+.info-big.info-right {
+  right: 65px;
+}
+
+.info-big.info-left {
+  left: 65px;
+}
+
+.info-small.info-right {
+  right: 50px;
+}
+
+.info-small.info-left {
+  left: 50px;
+}
+
 .info-error {
-  font-size: 2em;
+  font-size: 1.8em;
   font-weight: 400;
-  height: 50px;
-  width: 70px;
   position: fixed;
-  top: 5px;
-  right: 13.5px;
+  top: 50px;
+  right: 0px;
 
   @media (min-width: 320px) and (max-device-width: 425px) {
     font-size: 15px;
@@ -755,40 +763,24 @@ label input {
 }
 
 .info-zoom {
-  font-size: 2em;
-  font-weight: 400;
-  height: 50px;
-  width: 150px;
-  position: fixed;
-  bottom: 95px;
-  left: 20px;
-
-  @media (min-width: 320px) and (max-device-width: 425px) {
-    font-size: 15px;
-    line-height: normal;
-    width: 80px;
-    bottom: 85px;
-    left: 35px;
-
-    }
+  @include md {
+    font-size: 2em;
+    font-weight: 400;
+    line-height: 50px;
+    position: fixed;
+    bottom: 38px;
+    left: 60px;
+  }
 }
 
 .info-sidetal {
-  font-size: 2em;
-  font-weight: 400;
-  height: 50px;
-  width: 140px;
-  position: fixed;
-  bottom: 135px;
-  right: 60px;
-
-  @media (min-width: 320px) and (max-device-width: 425px) {
-    font-size: 15px;
-    line-height: normal;
-    width: 80px;
-    bottom: 110px;
-
-    }
+  @include md {
+    font-size: 2em;
+    font-weight: 400;
+    position: fixed;
+    bottom: 70px;
+    right: 78px;
+  }
 }
 
 #infoClose {
@@ -852,27 +844,10 @@ label input {
   @include sml {
     top: 100px;
   }
-  /*
-  @include landscape{
-    width: 10%;
-    height: 15%;
-    border-bottom: 3px solid #354a5b;
-    background-color: #4c769c;
-    position: fixed;
-    margin-top: 25%;
-    display: table;
-  }
 
-  @include portrait {
-    height: 16%;
-    width: 20%;
-    border-bottom: 3px solid #354a5b;
-    background-color: #4c769c;
-    position: fixed;
-    margin-top: 70%;
-    display: table;
+  @include md {
+    top: 472px;
   }
-  */
 }
 
 .controlArrowBig:hover {
@@ -893,8 +868,13 @@ label input {
     //margin-top: -130px;
     display: table;
   }
- @include sml {
+ 
+  @include sml {
    top: 175px;
+ }
+
+ @include md {
+   top: 550px;
  }
 }
 
@@ -1019,14 +999,17 @@ label input {
 .controlQuestionmark {
   @include sm {
     display: none !important;
-    border-bottom: 3px solid #1c262c;
-    height: 50px;
-    background-color: #36495b;
-    width: 50px;
-    position: fixed;
-    bottom: 160px;
   }
 
+  @include md {
+    display: table !important;
+    border-bottom: 3px solid #1c262c;
+    background-color: #36495b;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    bottom: 70px;
+  }
 }
 
 .controlQuestionmark img {
@@ -1065,7 +1048,6 @@ label input {
     color: #36495b;
     text-align: center;
     border-radius: 10px;
-    margin-bottom: 10px;
     margin-right: 10px;
     font-size: 2.5em;
     font-weight: 700;
@@ -1074,14 +1056,15 @@ label input {
 
 .pager-pages {
   @include sm {
-    font-size: 3em;
+    font-size: 2.5em;
     color: #fff;
   }
 }
 
 .page-seperator {
   @include sm {
-    font-size: 3em;
+    font-size: 2.5em;
+    margin-right: 5px;
     color: #fff;
   }
 }
@@ -1095,8 +1078,13 @@ label input {
   @include sm {
     bottom: 60px !important;
   }
+
   @include sml {
     display: none;
+  }
+
+  @include md {
+    bottom: 0px !important;
   }
 }
 
