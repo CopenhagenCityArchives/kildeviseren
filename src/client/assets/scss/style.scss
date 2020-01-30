@@ -692,6 +692,10 @@ label input {
     font-size: 2em;
     font-weight: 400;
   }
+  
+  @include lg {
+    top: 384px;
+  }
 }
 
 .info-small {
@@ -701,6 +705,10 @@ label input {
     line-height: 60px;
     position: fixed;
     top: 550px;
+  }
+
+  @include lg {
+    top: 460px;
   }
 }
 
@@ -848,6 +856,9 @@ label input {
   @include md {
     top: 472px;
   }
+  @include lg() {
+    top: 384px;
+  }
 }
 
 .controlArrowBig:hover {
@@ -875,6 +886,10 @@ label input {
 
  @include md {
    top: 550px;
+ 
+  }
+ @include lg {
+   top: 460px;
  }
 }
 
