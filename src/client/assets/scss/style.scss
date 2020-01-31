@@ -39,6 +39,16 @@ $screen-xl-min: 1440px;
   }
 }
 
+// Medium devices with small height
+@mixin mdsh {
+  @media screen and (min-width: #{$screen-md-min}) and (max-height: 500px) {
+    @include md {
+      @content
+    }
+  }
+}
+
+// large devices 
 @mixin lg {
   @media screen and (min-width: #{$screen-lg-min}) {
     @include md {
@@ -47,6 +57,7 @@ $screen-xl-min: 1440px;
   }
 }
 
+// extra large devices
 @mixin xl {
   @media screen and (min-width: #{$screen-xl-min}) {
     @include lg {
@@ -856,6 +867,11 @@ label input {
   @include md {
     top: 472px;
   }
+
+  @include mdsh {
+    top: 150px
+  }
+
   @include lg() {
     top: 384px;
   }
@@ -886,8 +902,12 @@ label input {
 
  @include md {
    top: 550px;
- 
   }
+
+  @include mdsh {
+    top: 225px;
+  }
+
  @include lg {
    top: 460px;
  }
@@ -968,6 +988,14 @@ label input {
 
 .controlReport {
   @include sm {
+    display:none !important
+  }
+  
+  @include sml {
+    display:none !important
+  }
+  
+  @include md {
     border-bottom: 3px solid #1c262c;
     height: 50px;
     background-color: #36495b;
@@ -975,14 +1003,10 @@ label input {
     font-size: .7em;
     position: fixed;
     top: 0;
-    display: table;
     right: 15px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-  }
-  
-  @include sml {
-    display:none !important
+    display: table !important
   }
 }
 
@@ -1024,6 +1048,10 @@ label input {
     width: 50px;
     position: fixed;
     bottom: 70px;
+  }
+
+  @include mdsh {
+    display: none !important;
   }
 }
 
@@ -1101,6 +1129,11 @@ label input {
   @include md {
     bottom: 0px !important;
   }
+
+  @include mdsh {
+    display: none;
+  }
+
 }
 
 #map {
