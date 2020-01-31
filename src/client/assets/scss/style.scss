@@ -122,8 +122,13 @@ body {
 }
 
 .container-top-menu {
-  max-width: 650px;
+
+  @include md {
+    max-width: 650px;
+  }
 }
+
+
 
 /* PRELOADER */
 #preload {
@@ -853,27 +858,11 @@ label input {
     border-bottom: 3px solid #354a5b;
     height: 70px;
     width: 65px;
-    top: 235px;
+    top: calc(50% - 75px);
     background-color: #4c769c;
     position: fixed;
     //margin-top: -130px;
     display: table;
-  }
-  
-  @include sml {
-    top: 100px;
-  }
-
-  @include md {
-    top: 472px;
-  }
-
-  @include mdsh {
-    top: 150px
-  }
-
-  @include lg() {
-    top: 384px;
   }
 }
 
@@ -889,28 +878,13 @@ label input {
     border-bottom: 3px solid #354a5b;
     height: 60px;
     width: 50px;
-    top: 310px;
+    top: 50%;
     background-color: #4c769c;
     position: fixed;
     //margin-top: -130px;
     display: table;
   }
- 
-  @include sml {
-   top: 175px;
- }
 
- @include md {
-   top: 550px;
-  }
-
-  @include mdsh {
-    top: 225px;
-  }
-
- @include lg {
-   top: 460px;
- }
 }
 
 
@@ -1119,7 +1093,7 @@ label input {
 
 .leaflet-bottom {
   @include sm {
-    bottom: 60px !important;
+    bottom: 0px;
   }
 
   @include sml {
