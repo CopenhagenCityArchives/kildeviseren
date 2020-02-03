@@ -452,8 +452,8 @@ $(document).on('click','.labelforradio', function() {
                 //alert( this.width+' '+ this.height );
                 // create the slippy map
                 var map = L.map('map', {
-                    //minZoom: 1,
-                    //maxZoom: 5,
+                    minZoom: 2,
+                    maxZoom: 6,
                     zoomControl: false,
                     center: [0,0],
                     imageFormat: 'jpeg',
@@ -486,7 +486,7 @@ $(document).on('click','.labelforradio', function() {
                     console.log((screen.width/this.width) *100)*/
                     //Centers view at width center, 3/8 of the height, zoom level 10
                     //map.setView(map.unproject([device.width/2,(screen.height/8)*3],12),10);
-                    map.setView(bounds.getCenter(),2);
+                    map.setView(bounds.getCenter(), 3);
                     //map.fitBounds();
                     //map.setMaxBounds()
 
