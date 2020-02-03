@@ -199,5 +199,6 @@ var build = series(clearDist, buildScss, parallel(concatAngularApp, copyAppFile,
 var deploy = series(removeFTPFiles, deploy);
 
 exports.build = build;
+exports.deploy = deploy;
 exports.watch = series(startWebserver, watcher);
 exports.webserver = startWebserver;
