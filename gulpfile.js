@@ -171,8 +171,24 @@ function deploy(){
         .pipe(conn.dest('/public_html/kildeviser-development'));
 };
 
+function deployLive() {
+    var globs = [
+        'dist/**',
+        'dist/.htaccess'
+    ];
+
+    // using base = '.' will transfer everything to /public_html correctly
+    // turn off buffering in gulp.src for best performance
+    return src(globs, {base: './dist', buffer: false})
+        .pipe(conn.dest('/public_html/kildeviser'));
+}
+
 function removeFTPFiles(cb){
     conn.rmdir( '/public_html/kildeviser-development', cb);
+}
+
+function removeFTPFilesLive(cb){
+    conn.rmdir('/public_html/kildeviser', cb);
 }
 
 function watcher(){
@@ -197,8 +213,10 @@ function reloadWebserver(){
 
 var build = series(clearDist, buildScss, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles),reloadWebserver, clearTmp);
 var deploy = series(removeFTPFiles, deploy);
+var deployLive = series(removeFTPFilesLive, deployLive)
 
 exports.build = build;
 exports.deploy = deploy;
+exports.deployLive = deployLive;
 exports.watch = series(startWebserver, watcher);
 exports.webserver = startWebserver;
