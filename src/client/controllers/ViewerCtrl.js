@@ -117,7 +117,12 @@ angular.module('KSA_Bladr.controllers').
         //If only collection is given, redirect
         if(!item && !unit){
             var location = "https://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
-
+            
+            //Redirect to Frederiksberg if on frederiksberg domain
+            if(window.location.hostname.indexOf('frederiksberg') != -1){
+                var location = "https://stadsarkivet.frederiksberg.dk/arkiverne";
+            }
+                
             $window.location = location;
         }
 

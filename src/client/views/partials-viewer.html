@@ -15,7 +15,6 @@
     <div class="container-fluid container-top-menu">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignLeft">
-          <!-- <div class="btn btn-light goToFront" ng-click="goToFrontPage()">Forside</div> -->
         </div>
       </div>
       <div class="row">
@@ -23,7 +22,7 @@
           <div class="form_text">
             <span class="bold">{{metadata.collection.short_name}}</span>
             <span ng-bind-html="metadata.collection.info"></span>
-            <span>Læs mere på <a ng-href="{{metadata.collection.link}}">kbharkiv.dk</a></span>
+            <span>Læs mere på <a ng-href="{{metadata.collection.link}}">{{metadata.archiveUrlName}}</a></span>
           </div>
         </div>
       </div>

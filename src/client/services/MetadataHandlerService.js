@@ -29,6 +29,8 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     pubs.collectionId = false;
     //Collection name
     pubs.collectionName = false;
+    // Archive name
+    pubs.archiveUrlName = window.location.hostname.indexOf('kbharkiv.dk') != -1 ? 'kbharkiv.dk' : 'stadsarkivet.frederiksberg.dk';
     //Selected error report (id)
     pubs.selectedErrorReport = -1;
     //Error report message
