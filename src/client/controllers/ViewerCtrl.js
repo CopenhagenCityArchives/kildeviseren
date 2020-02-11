@@ -13,9 +13,6 @@ angular.module('KSA_Bladr.controllers').
 
 
     $scope.init = function(){
-
-        //$scope.template = {name:'filters', url: 'partials-filters.html'};
-
         $scope.metadata.getCollections().then(function(){
             //Check for url inputs here
             $scope.checkUrlInputs();
@@ -68,19 +65,6 @@ angular.module('KSA_Bladr.controllers').
             break;
         }
     };
-
-
-
-    //Displaying frontpage
-
-    $scope.goToFrontPage = function(){
-        $location.search('item', null);
-        $window.toogleTop();
-        $scope.template = {name:'filters', url: 'partials-filters.html'};
-        $scope.viewerLoaded = false;
-    };
-
-
 
     //Checks if viewer-partial is loaded. Used when displaying images
 
