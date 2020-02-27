@@ -613,7 +613,7 @@ label input {
 
 .chosen-container {
   @include md {
-    max-width:485px;
+    width:485px !important;
   }
 }
 
