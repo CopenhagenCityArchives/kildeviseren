@@ -17,5 +17,8 @@ Go to a workin url like 'http://localhost:8080#!?collection=2&item=3809251' to s
 
 Live reloading of the server required the LiveReload plugin for either Chrome or Firefox.
 
-To deploy to server:
+To deploy to test server:
 Run `gulp build; gulp deploy;`
+
+To deploy to live environment 
+Run `gulp build; gulp deployLive;`
