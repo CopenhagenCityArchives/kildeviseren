@@ -161,8 +161,9 @@ function watcher(){
     watch('src/client/**', build);
 }
 
-var build = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles));
-var deploy = series(removeFTPFiles, deploy);
+var buildTask = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles));
+var deployTask = series(removeFTPFiles, deploy);
 
-exports.build = build;
+exports.build = buildTask;
+exports.deploy = deployTask;
 exports.watch = watcher;
