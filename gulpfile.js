@@ -158,7 +158,7 @@ function deploy(){
 };
 
 function watcher(){
-    watch('src/client/**', build);
+    watch('src/client/**', buildTask);
 }
 
 var buildTask = series(clearDist, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles));
