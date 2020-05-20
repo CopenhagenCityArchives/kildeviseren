@@ -24,7 +24,9 @@ app.config(['$locationProvider', function ($locationProvider) {
 
 }]);
 
+
 app.run(['$window', function($window) {
+    // Setup Analytics only if statistics consent is given
     var onStatisticsConsent = function() {
         if ($window.Cookiebot.consent.statistics) {
             console.log("Initializing Google Analytics.");
