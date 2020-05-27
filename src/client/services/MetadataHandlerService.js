@@ -6,7 +6,7 @@
 //Getting the main module
 var app = angular.module('KSA_Bladr.services');
 
-app.service('MetadataHandlerService', function(MetadataManagerService, BrowseService, $location){
+app.service('MetadataHandlerService', function(MetadataManagerService, BrowseService, $location, config){
     //Private methods and variables goes here
     var privates = {};
 
@@ -30,7 +30,7 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
     //Collection name
     pubs.collectionName = false;
     // Archive name
-    pubs.archiveUrlName = window.location.hostname.indexOf('kbharkiv.dk') != -1 ? 'kbharkiv.dk' : 'stadsarkivet.frederiksberg.dk';
+    pubs.archiveUrlName = config.archiveUrlName;
     //Selected error report (id)
     pubs.selectedErrorReport = -1;
     //Error report message

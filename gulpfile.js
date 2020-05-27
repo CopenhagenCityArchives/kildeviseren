@@ -8,15 +8,19 @@
  * 4) toprod: Kopiere filer til en produktionsmappe
  *
  */
-const { src, dest, series, parallel, watch } = require('gulp');
 
-var sass = require('gulp-sass');
- 
-sass.compiler = require('node-sass');
+// For CLI flags
+const util = require('gulp-util');
+
+// handle profile and default
+var profile = util.env.profile === undefined ? 'kbharkiv' : util.env.profile;
+if (profile != "kbharkiv" && profile != "frederiksberg") {
+    throw new Error("Invalid profile: " + profile);
+}
+console.log("Using profile '" + profile + "'");
 
 //Options
 var opt = {};
-
 
 // All js files except test files are concatenated
 opt.appSrc = [
@@ -25,7 +29,8 @@ opt.appSrc = [
     "src/client/directives/*.js",
     "src/client/controllers/*.js",
     "src/client/services/*.js",
-    '!src/client/services/mocks.js'
+    '!src/client/services/mocks.js',
+    "profile/" + profile + "/config.js"
 ];
 opt.appDest = "concat.js";
 
@@ -36,8 +41,6 @@ opt.assetsSrc = [
     "src/client/assets/fonts/**/*.*",
     "src/client/assets/img/**/*.*",
     "src/client/assets/js/**/*.*",
-    //"src/client/assets/ui_images/**/*.*",
-    "src/client/assets/favicon.ico"
 ];
 
 // Assets for directives are copied
@@ -64,13 +67,14 @@ opt.fontDest = "dist/fonts/"
 opt.viewsSrc = "src/client/views/*.html";
 
 // All server files are put in server folder
-opt.serverSrc = ["src/server/**", "src/server/.htaccess"];
-
+opt.serverSrc = ["profile/"+profile+"/server/**", "profile/"+profile+"/server/.htaccess"];
+opt.ftpProfileLocation = profile == "kbharkiv" ? "kildeviser" : "kildeviser-"+profile;
 
 //Dependencies:
 
 //Gulp!!!
-var gulp = require('gulp');
+const { src, dest, series, parallel, watch } = require('gulp');
+const sass = require('gulp-sass');
 //Put files together in a single file
 var concat = require('gulp-concat');
 //Remove files and folders
@@ -79,6 +83,7 @@ var clean = require('gulp-clean');
 var ftp = require( 'vinyl-ftp' );
 // Webserver with LiveReload
 var connect = require( 'gulp-connect');
+
 
 //Tasks:
 
@@ -122,10 +127,16 @@ function concatCssFile(){
         .pipe(dest(('dist/assets/css')));
 }
 
+
 function copyAssets(){
     //console.log('Copying assets ', opt.assetsSrc);
     return src(opt.assetsSrc, {base: './src/client'})
         .pipe(dest('./dist/'));
+}
+
+function copyFavicon(){
+    return src("profile/" + profile + "/favicon.ico")
+        .pipe(dest('./dist/assets'));
 }
 
 function copyDirectiveAssets(){
@@ -168,7 +179,7 @@ function deploy(){
     // using base = '.' will transfer everything to /public_html correctly
     // turn off buffering in gulp.src for best performance
     return src(globs, {base: './dist', buffer: false})
-        .pipe(conn.dest('/public_html/kildeviser-development'));
+        .pipe(conn.dest('/public_html/'+opt.ftpProfileLocation+'-development'));
 };
 
 function deployLive() {
@@ -184,11 +195,11 @@ function deployLive() {
 }
 
 function removeFTPFiles(cb){
-    conn.rmdir( '/public_html/kildeviser-development', cb);
+    conn.rmdir( '/public_html/'+opt.ftpProfileLocation+'-development', cb);
 }
 
 function removeFTPFilesLive(cb){
-    conn.rmdir('/public_html/kildeviser', cb);
+    conn.rmdir('/public_html/'+opt.ftpProfileLocation, cb);
 }
 
 function watcher(){
@@ -211,7 +222,7 @@ function reloadWebserver(){
         .pipe(connect.reload());
 }
 
-var build = series(clearDist, buildScss, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles),reloadWebserver, clearTmp);
+var build = series(clearDist, buildScss, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyFavicon, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles),reloadWebserver, clearTmp);
 var deploy = series(removeFTPFiles, deploy);
 var deployLive = series(removeFTPFilesLive, deployLive)
 

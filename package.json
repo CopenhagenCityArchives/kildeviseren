@@ -9,6 +9,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-connect": "^5.7.0",
     "gulp-sass": "^4.0.2",
+    "gulp-util": "^3.0.8",
     "jasmine": "^2.0.1",
     "node-sass": "^4.13.1",
     "vinyl-ftp": "^0.6.1"

@@ -2,12 +2,14 @@
 angular.module('KSA_Bladr.services',[]);
 angular.module('KSA_Bladr.controllers',[]);
 angular.module('KSA_Bladr.directives',[]);
+angular.module('KSA_Bladr.config',[]);
 //angular.module('KSA_Bladr.mocks', ['ngMockE2E']);
 
 var app = angular.module('KSA_Bladr', [
   'KSA_Bladr.controllers',
   'KSA_Bladr.services',
   'KSA_Bladr.directives',
+  'KSA_Bladr.config',
   'ngTouch',
   'angulartics',
   'angulartics.google.analytics',
@@ -25,29 +27,31 @@ app.config(['$locationProvider', function ($locationProvider) {
 }]);
 
 
-app.run(['$window', function($window) {
-    // Setup Analytics only if statistics consent is given
-    var onStatisticsConsent = function() {
-        if ($window.Cookiebot.consent.statistics) {
-            console.log("Initializing Google Analytics.");
+app.run(['$window', 'config', function($window, config) {
+    if (config.enableGoogleAnalytics) {
+        // Setup Analytics only if statistics consent is given
+        var onStatisticsConsent = function() {
+            if ($window.Cookiebot.consent.statistics) {
+                console.log("Initializing Google Analytics.");
 
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-                ga('create', 'UA-57049855-1', 'auto');
-        } else {
-            console.log("Statistics consent not given, skipping analytics.")
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                    ga('create', 'UA-57049855-1', 'auto');
+            } else {
+                console.log("Statistics consent not given, skipping analytics.")
+            }
         }
-    }
 
-    if (!$window.Cookiebot) {
-        console.log("Cookiebot not loaded, skipping analytics handling.")
-    } else if ($window.Cookiebot.consent.statistics) {
-        onStatisticsConsent();
-    } else {
-        $window.addEventListener('CookiebotOnAccept', onStatisticsConsent);
-        $window.addEventListener('CookiebotOnDecline', onStatisticsConsent);
+        if (!$window.Cookiebot) {
+            console.log("Cookiebot not loaded, skipping analytics handling.")
+        } else if ($window.Cookiebot.consent.statistics) {
+            onStatisticsConsent();
+        } else {
+            $window.addEventListener('CookiebotOnAccept', onStatisticsConsent);
+            $window.addEventListener('CookiebotOnDecline', onStatisticsConsent);
+        }
     }
 }]);
 

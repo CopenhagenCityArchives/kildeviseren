@@ -2,15 +2,14 @@
 
 angular.module('KSA_Bladr.controllers').
 
-    controller('ViewerCtrl', ['$scope', '$location', '$window', 'MetadataHandlerService', '$analytics', function($scope, $location, $window, MetadataHandlerService, $analytics){
+    controller('ViewerCtrl', ['$scope', '$location', '$window', 'MetadataHandlerService', '$analytics', 'config', function($scope, $location, $window, MetadataHandlerService, $analytics, config){
 
     //The controller vars are simply based on the corresponding data in the service
     $scope.metadata = MetadataHandlerService;
     $scope.template = {};
     $scope.showRequiredFieldsText = false;
     $scope.showCollectionsList = true;
-
-
+    $scope.showReportErrorButton = config.errorReporting;
 
     $scope.init = function(){
         $scope.metadata.getCollections().then(function(){
@@ -116,14 +115,7 @@ angular.module('KSA_Bladr.controllers').
 
         //If only collection is given, redirect
         if(!item && !unit){
-            var location = "https://www.kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet";
-            
-            //Redirect to Frederiksberg if on frederiksberg domain
-            if(window.location.hostname.indexOf('frederiksberg') != -1){
-                var location = "https://stadsarkivet.frederiksberg.dk/arkiverne";
-            }
-                
-            $window.location = location;
+            $window.location = config.redirectUrl;
         }
 
         //If collection and item: Show item

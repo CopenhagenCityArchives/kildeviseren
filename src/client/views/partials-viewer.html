@@ -59,7 +59,7 @@
     <div id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(10)"><div class="arrow_container"><img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt=""></div></div>
   <!-- DARKER CONTROLS -->
     <div id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true"><div class="arrow_container"><img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt=""></div></div>
-    <div id="darkReport" ng-show="metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report"><div class="arrow_container"><i class="view-question fa fa-exclamation"></i></div></div>
+    <div id="darkReport" ng-if="showReportErrorButton && metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report"><div class="arrow_container"><i class="view-question fa fa-exclamation"></i></div></div>
     <div id="darkQuestionmark" class="controls controlQuestionmark rightArrow"><div class="arrow_container"><i class="view-question fa fa-question"></i></div></div>
   <!-- PAGER -->
     <div class="controls controlPager rightArrow"><div class="arrow_container"><input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()" ng-click="onTextClick($event)"><span class="page-seperator">/</span><span class="pager-pages">{{metadata.itemsList.length}}</span></div></div>
