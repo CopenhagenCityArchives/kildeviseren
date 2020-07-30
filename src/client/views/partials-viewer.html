@@ -5,8 +5,7 @@
   <div class="info-small info-left">10 sider tilbage</div>
   <div class="info-small info-right">10 sider frem</div>
   <div class="info-menu">Menu</div>
-  <div class="info-error">Rapporter fejl</div>
-<!--   <div class="info-map">Overblik</div> -->
+  <div ng-if="metadata.collection.id == 2 && metadata.collection.short_name == 'Politiets Mandtal'" class="info-error">Rapporter fejl</div>
   <div class="info-zoom">Zoom</div>
   <div class="info-sidetal">Sidetal</div>
   <div id="infoClose"><i class="glyphicon glyphicon-remove"></i><span class="closeInfoText">Luk info</span></div>
