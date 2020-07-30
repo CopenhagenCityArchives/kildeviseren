@@ -383,10 +383,6 @@ label input {
   margin: 0 auto 20px auto;
 }
 
-.btnLink {
-  margin-top: 4px;
-}
-
 .top_box_input {
   width: 100%;
   min-width: 300px;
@@ -554,6 +550,10 @@ label input {
 .topcontrols {
   display: none;
 
+  & .actions .form-group {
+    margin-bottom: 0;
+  }
+
   @include sm {
     display: block;
     height: auto;
@@ -563,7 +563,7 @@ label input {
     left: 0;
     z-index: 9999;
     overflow: visible;
-    padding: 10px 20px 20px 0;
+    padding: 10px 20px 10px 0;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
   }
