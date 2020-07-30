@@ -548,8 +548,10 @@ label input {
 
 /* TOP BAR */
 .topcontrols {
+  display: none;
 
   @include sm {
+    display: block;
     height: auto;
     position: absolute;
     width: auto;
