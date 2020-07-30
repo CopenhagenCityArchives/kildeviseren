@@ -129,23 +129,18 @@ $(document).on('click','.labelforradio', function() {
         $(document).on('click', '.btnLink', function() {
             if ($(this).hasClass('active')) {
                 $(this).removeClass('active');
-                $(this).css({
-                    'border-bottom-right-radius': '10px',
-                    'border-top-right-radius': '10px'
-                });
                 $(this).find('.linkDiv').fadeOut(300);
             } else {
                 $(this).addClass('active');
-                $(this).css({
-                    'border-bottom-right-radius': '0',
-                    'border-top-right-radius': '0'
-                });
                 $(this).find('.linkDiv').fadeIn(300);
                 /* SKIFT VÆRDIEN AF LINK-BOKSEN = $(this).find('.linkDiv').val(images[currentImage]['url']).fadeIn(300).focus();*/
             }
         });
         /*==========  PRINT KNAPPEN  ==========*/
         $(document).on('click', '#print', function() {
+            if ($("#print").hasClass('disabled')) {
+                return;
+            }
             setTimeout(function() {
                 $(".printable").printThis({
                   debug: false,

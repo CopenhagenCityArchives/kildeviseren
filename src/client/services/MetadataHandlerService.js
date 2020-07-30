@@ -212,9 +212,14 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         var newItem = {};
         newItem = BrowseService.getCurrentContent();
         pubs.errorReportingStatus = "";
-        if(newItem){
-            newItem.imageUrl = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", ".jpg");
-            newItem.imageUrlPrint = pubs.collection.image_type == "image" ? BrowseService.getCurrentPage() : BrowseService.getCurrentPage().replace("_files/", "_thumb.jpg");
+        if (newItem) {
+            if (pubs.collection.image_type == "image") {
+                newItem.imageUrl = BrowseService.getCurrentPage();
+                newItem.imageUrlPrint = BrowseService.getCurrentPage();
+            } else {
+                newItem.imageUrl = null;
+                newItem.imageUrlPrint = null;
+            }
 
             newItem.metadataDescription = MetadataManagerService.getMetadataString(newItem.metadata);
             newItem.starbasRef = MetadataManagerService.getStarbasRef(newItem.metadata, pubs.collection.starbas_field_name);
