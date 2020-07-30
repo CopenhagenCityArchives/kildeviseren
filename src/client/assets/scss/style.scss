@@ -244,10 +244,6 @@ label input {
   position: relative;
 }
 
-.btnLink {
-  position: relative;
-}
-
 .gemDiv {
   height: 41px;
   position: absolute;
@@ -269,27 +265,35 @@ label input {
   color: #f8f8f8;
 }
 
+.btnLink {
+  position: relative;
+}
+.btnLink.active {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .linkDivCont {
   position: absolute;
-  left: 70px;
+  left: 100%;
   top: 0;
-  border-bottom: 4px solid #2D3F4D;
-  border-bottom-right-radius: 5px;
 }
 
 .linkDiv {
-  height: 44px;
-  position: relative;
-  width: 260px;
   display: none;
+  position: relative;
+  
+  top: -1px;
+  height: 100%;
+  width: 255px;
+
   background: #2D3F4D;
   color: #f8f8f8;
+
   padding: 0 10px;
+  border: 1px solid #1c262c;
   border-top-right-radius: 5px;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-  border-top-left-radius: 0 !important;
-  border: none;
+  border-bottom-right-radius: 5px;
 }
 
 .gemDiv>ul {
