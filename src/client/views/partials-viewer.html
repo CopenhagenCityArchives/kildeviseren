@@ -31,6 +31,24 @@
       </div>
 
       <div class="row">
+
+        <div class="topcontrols_container">
+
+          <div class="topcontrols-button sourceText">
+            <div class="sourcetext">
+              {{metadata.collection.short_name}}
+              <span class="bold">{{metadata.item.metadataDescription}}</span>
+              <span ng-show="metadata.item.starbasRef" ng-bind-html="metadata.item.starbasRef"></span>
+            </div>
+          </div>
+
+          <button id="toggleTop" class="topcontrols-button findBtn">
+            <span class="findtext">Menu</span>
+          </button>
+
+        </div>
+
+
         <form class="form padTheForm" role="form">
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topcontrols_form">
@@ -58,24 +76,14 @@
           </div>
 
         </form>
-      </div>
 
-      <div class="topcontrols_container">
-
-        <div class="topcontrols-button sourceText">
-          <div class="sourcetext">
-            {{metadata.collection.short_name}}
-            <span class="bold">{{metadata.item.metadataDescription}}</span>
-            <span ng-show="metadata.item.starbasRef" ng-bind-html="metadata.item.starbasRef"></span>
-          </div>
+        <div ng-if="metadata.collection.id == 2 && metadata.collection.short_name == 'Politiets Mandtal'">
+          <button id="darkReport" ng-if="showReportErrorButton && metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report">
+            <i class="view-question fa fa-exclamation"></i>
+          </button>
         </div>
 
-        <button id="toggleTop" class="topcontrols-button findBtn">
-          <span class="findtext">Menu</span>
-        </button>
-
       </div>
-
     </div>
   </div>
 
@@ -101,16 +109,14 @@
   <button id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true">
     <img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt="">
   </button>
-  
-  <div ng-if="metadata.collection.id == 2 && metadata.collection.short_name == 'Politiets Mandtal'">
-    <button id="darkReport" ng-if="showReportErrorButton && metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report">
-      <i class="view-question fa fa-exclamation"></i>
-    </button>
-  </div>
 
   <button id="darkQuestionmark" class="controls controlQuestionmark rightArrow">
     <i class="view-question fa fa-question"></i>
   </button>
+
+  
+  <!-- start megazoom, display:none is added in case that js is disabled! -->
+  <div id="map"></div>
 
   <!-- PAGER -->
   <div class="controls controlPager rightArrow">
@@ -120,8 +126,7 @@
       <span class="pager-pages">{{metadata.itemsList.length}}</span>
     </div>
   </div>
-  <!-- start megazoom, display:none is added in case that js is disabled! -->
-  <div id="map"></div>
+
   
   <!-- Modal -->
   <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="ReportKK" aria-hidden="true">
@@ -159,4 +164,6 @@
       <img src="{{metadata.item.imageUrlPrint}}" width="100%" />
   </div>
 </div>
+
+
 
