@@ -614,7 +614,6 @@ label input {
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
   }
-
 }
 
 .chosen-container {
@@ -646,11 +645,8 @@ label input {
 }
 
 .findBtn>span.findtext {
-  display: table-cell;
-  vertical-align: middle;
   font-size: 1.4em;
   font-weight: 400;
-  text-transform: none;
 }
 
 .sourceText {
@@ -818,7 +814,6 @@ label input {
 /* PAGE CONTROLS */
 .controls {
   z-index: 9998;
-  display: none;
 }
 
 .leftArrow {
