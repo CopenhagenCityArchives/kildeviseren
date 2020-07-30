@@ -164,9 +164,9 @@ function copyViewFiles(){
 }
 
 var conn = ftp.create( {
-    host:     'phvh-190204.cust.powerhosting.dk',
-    user:     'kbharkiv_dk',
-    password: 'kJgw650Up6',
+    host:     '***REMOVED***',
+    user:     '***REMOVED***',
+    password: '***REMOVED***',
     parallel: 10
 } );
 
