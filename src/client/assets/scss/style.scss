@@ -985,11 +985,11 @@ label input {
 
 .controlQuestionmark {
   @include sm {
-    display: none !important;
+    display: none;
   }
 
   @include md {
-    display: table !important;
+    display: table;
     border-bottom: 3px solid #1c262c;
     background-color: #36495b;
     height: 50px;
@@ -997,9 +997,9 @@ label input {
     position: fixed;
     bottom: 70px;
   }
-
+  
   @include mdsh {
-    display: none !important;
+    display: none;
   }
 }
 
