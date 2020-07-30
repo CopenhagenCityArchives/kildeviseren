@@ -613,7 +613,7 @@ label input {
 
 .chosen-container {
   @include md {
-    max-width:485px;
+    width:485px !important;
   }
 }
 
@@ -1142,15 +1142,11 @@ label input {
 }
 
 .btn {
-  text-decoration: none;
 
-  @media (max-width: 768px) {
-
-    padding: 0 20px;
-    min-height: 44px;
-    line-height: 44px;
+  @include sm {
     font-size: 1.4em;
   }
+  
 }
 
 /* MEDIA STUFF */
