@@ -553,6 +553,17 @@ $(document).on('click','.labelforradio', function() {
                     showControls();
                     findText.html('Menu');
                     fixTop();
+
+                    //fjern elementer fra tabindex
+                    
+                    $("#mere").attr("tabindex", "-1");
+                    $(".filterbox").attr("tabindex", "-1");
+                    $(".qmark").attr("tabindex", "-1");
+                    $("#print").attr("tabindex", "-1");
+                    $("#gem").attr("tabindex", "-1");
+                    $("#link").attr("tabindex", "-1");
+                    $("#find").attr("tabindex", "-1");
+
                 }
             });
         } else {
@@ -569,6 +580,19 @@ $(document).on('click','.labelforradio', function() {
                     preventControls = true;
                     $('.controls').not('#toggleTop').fadeOut(400, function() {});
                     findText.html('Luk');
+
+                    //tilføj elementer til tabindex
+                    
+                    $("#mere").attr("tabindex", "1");
+                    $(".filterbox").attr("tabindex", "1");
+                    $(".qmark").attr("tabindex", "1");
+                    $("#print").attr("tabindex", "1");
+                    $("#gem").attr("tabindex", "1");
+                    $("#link").attr("tabindex", "1");
+                    $("#find").attr("tabindex", "1");
+                    $("#mere").focus();
+                    
+
                 }
             });
         }

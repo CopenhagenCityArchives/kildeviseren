@@ -25,7 +25,7 @@
           <div class="form_text">
             <span class="bold">{{metadata.collection.short_name}}</span>
             <span ng-bind-html="metadata.collection.info"></span>
-            <span>Læs mere på <a ng-href="{{metadata.collection.link}}">{{metadata.archiveUrlName}}</a></span>
+            <span>Læs mere på <a id="mere" tabindex="-1" ng-href="{{metadata.collection.link}}">{{metadata.archiveUrlName}}</a></span>
           </div>
         </div>
       </div>
@@ -62,15 +62,16 @@
                 Print
               </button>
 
-              <a href="{{metadata.item.imageUrl}}" target="_blank" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem" analytics-on="click" analytics-category="topmenu" analytics-event="gem">Gem</a>
-              <button class="btn btn-light btnLink" analytics-on="click" analytics-category="topmenu" analytics-event="link">
+              <a href="{{metadata.item.imageUrl}}" id="gem" target="_blank" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem" analytics-on="click" analytics-category="topmenu" analytics-event="gem">Gem</a>
+              
+              <button class="btn btn-light btnLink" id="link" analytics-on="click" analytics-category="topmenu" analytics-event="link">
                 Link
                 <div class="linkDivCont"><input type="text" class="linkDiv" value="{{metadata.item.permaLink}}" id="linkInput"></div>
               </button>
             </div>
 
             <div class="form-group float-right">
-              <button type="submit" class="btn btn-default btn-submit" ng-show="metadata.canSearch" ng-click="metadata.search()">Find</button>
+              <button type="submit" class="btn btn-default btn-submit" id="find" ng-show="metadata.canSearch" ng-click="metadata.search()">Find</button>
             </div>
 
           </div>
@@ -161,7 +162,7 @@
   <div class="printable">
       <h2>{{metadata.collection.short_name}}</h2>
       <p class="breakThePage">{{metadata.item.metadataDescription}}</p>
-      <img src="{{metadata.item.imageUrlPrint}}" width="100%" />
+      <img src="{{metadata.item.imageUrlPrint}}" width="100%" alt="Kilde: {{metadata.collection.short_name}}, billedet viser: {{metadata.item.metadataDescription}}" />
   </div>
 </div>
 

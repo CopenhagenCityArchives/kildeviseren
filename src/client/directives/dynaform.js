@@ -52,7 +52,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', functi
 
                         '<div class="form-group form-100">' +
 
-                            '<select chosen disable-search="' + !scope.filters[i].searchable +'"' +
+                            '<select class="filterbox" disable-search="' + !scope.filters[i].searchable +'"' +
 
                             'allow_single_deselect="true"' +
 
@@ -71,7 +71,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', functi
 
                             '</select>' +
 
-                            '<div class="qmark qmarktop fa fa-question" data-content="' + scope.filters[i].helpText + '">' +
+                            '<div tabindex="0" class="qmark qmarktop fa fa-question" data-content="' + scope.filters[i].helpText + '">' +
 
                             '</div>' +
 
@@ -90,6 +90,14 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', functi
                 //console.log('compiling this: ', element.contents());
 
                 $compile(element.contents())(scope);
+
+                $("#mere").attr("tabindex", "-1");
+                $(".filterbox").attr("tabindex", "-1");
+                $(".qmark").attr("tabindex", "-1");
+                $("#print").attr("tabindex", "-1");
+                $("#gem").attr("tabindex", "-1");
+                $("#link").attr("tabindex", "-1");
+                $("#find").attr("tabindex", "-1");
 
             };
 
