@@ -42,8 +42,8 @@
             </div>
           </div>
 
-          <button id="toggleTop" class="topcontrols-button findBtn">
-            <span class="findtext" aria-haspopup="menu">Menu</span>
+          <button id="toggleTop" role="button" class="topcontrols-button findBtn" aria-haspopup="menu" aria-label="toggle menu" >
+            <span class="findtext">Menu</span>
           </button>
 
         </div>
@@ -79,7 +79,7 @@
         </form>
 
         <div ng-if="metadata.collection.id == 2 && metadata.collection.short_name == 'Politiets Mandtal'">
-          <button id="darkReport" ng-if="showReportErrorButton && metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report">
+          <button id="darkReport" ng-if="showReportErrorButton && metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" data-toggle="modal" data-target="#report" aria-label="rapporter fejl">
             <i class="view-question fa fa-exclamation"></i>
           </button>
         </div>
@@ -89,29 +89,29 @@
   </div>
 
   <!-- BIG ARROWS -->
-  <button id="bigLeft" type="button" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)">
+  <button id="bigLeft" type="button" class="controls controlArrowBig leftArrow" ng-click="metadata.step(-1)" aria-label="bladrer 1 side tilbage">
     <img src="assets/img/controls/bigArrowLeft.png" class="maxWidthImage" alt="">
   </button>
   
-  <button id="bigRight" class="controls controlArrowBig rightArrow"ng-click="metadata.step(1)">
+  <button id="bigRight" class="controls controlArrowBig rightArrow"ng-click="metadata.step(1)" aria-label="bladrer 1 side frem">
     <img src="assets/img/controls/bigArrowRight.png" class="maxWidthImage" alt="">
   </button>
 
   <!-- SMALLER ARROWS -->
-  <button id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-10)">
+  <button id="smallLeft" class="controls controlArrowSmall leftArrow" ng-click="metadata.step(-10)" aria-label="bladrer 10 sider tilbage">
     <img src="assets/img/controls/smallArrowLeft.png" class="maxWidthImage" alt="">
   </button>
   
-  <button id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(10)">
+  <button id="smallRight" class="controls controlArrowSmall rightArrow" ng-click="metadata.step(10)" aria-label="bladrer 10 sider frem">
     <img src="assets/img/controls/smallArrowRight.png" class="maxWidthImage" alt="">
   </button>
 
   <!-- DARKER CONTROLS -->
-  <button id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true">
+  <!--<button id="darkBackside" class="controls controlArrowDarker rightArrow" ng-hide="true">
     <img src="assets/img/controls/arrowBackside.png" class="maxWidthImage" alt="">
-  </button>
+  </button>-->
 
-  <button id="darkQuestionmark" class="controls controlQuestionmark rightArrow">
+  <button id="darkQuestionmark" class="controls controlQuestionmark rightArrow" aria-label="åben hjælpetekst">
     <i class="view-question fa fa-question"></i>
   </button>
 
@@ -122,7 +122,7 @@
   <!-- PAGER -->
   <div class="controls controlPager rightArrow">
     <div class="arrow_container">
-      <input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()" ng-click="onTextClick($event)"></input>
+      <input type="text" class="pager-input numeric" id="pageNumber" ng-model="metadata.currentPage" ng-enter="metadata.goToNumber()" ng-blur="metadata.goToNumber()" ng-click="onTextClick($event)" aria-label="side nummer"></input>
       <span class="page-seperator">/</span>
       <span class="pager-pages">{{metadata.itemsList.length}}</span>
     </div>
