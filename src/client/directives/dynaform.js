@@ -30,7 +30,6 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                 for (let i = 0; i < $scope.filters.length; i++) {
                     
                     filter = $scope.filters[i];
-                    console.log(filter)
 
                     filter.possibleValues.forEach(value => {
                         filterArray.push(value.text);

@@ -625,32 +625,9 @@ label input {
   outline-style: auto !important;
 }
 
-.filterbox {
-  overflow: visible;
-  width: 100%;
-  min-width: 300px;
-  max-width: 545px;
-  margin: 0 0 5px 0;
-  background: #4c769c;
-  border: none;
-  text-align: left;
-  font-weight: 300;
-  height: auto;
-  min-height: 44px;
-  line-height: 44px;
-  font-size: 1.5em;
-  border-radius: 5px;
-  text-decoration: none;
-  white-space: nowrap;
-  padding: 0 20px;
-
-  outline: thick !important;
-  outline-width: thick !important;
-  outline-color: yellow !important;
-
-  @include md {
-    width: 485px !important
-  }
+.btn-default:focus {
+  outline-color: invert !important;
+  outline-style: auto !important;
 }
 
 .autocomplete__wrapper {
