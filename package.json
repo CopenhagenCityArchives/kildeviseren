@@ -2,7 +2,9 @@
   "name": "kildeviseren",
   "version": "0.0.1",
   "description": "",
-  "dependencies": {},
+  "dependencies": {
+    "accessible-autocomplete": "^2.0.3"
+  },
   "devDependencies": {
     "gulp": "4.0.2",
     "gulp-clean": "^0.4.0",

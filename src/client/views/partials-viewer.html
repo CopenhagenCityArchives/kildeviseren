@@ -52,26 +52,26 @@
         <form class="form padTheForm" role="form">
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topcontrols_form">
-              <div dynaform filters="metadata.filters"></div>
+            <div dynaform filters="metadata.filters"></div>
           </div>
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
             <div class="form-group float-left">
-              <button class="btn btn-light" id="print" data-img="{{metadata.item.imageUrl}}" analytics-on="click" analytics-category="topmenu" analytics-event="print">
+              <button class="btn btn-light" id="print" tabindex="-1" data-img="{{metadata.item.imageUrl}}" analytics-on="click" analytics-category="topmenu" analytics-event="print">
                 Print
               </button>
 
-              <a href="{{metadata.item.imageUrl}}" id="gem" target="_blank" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem" analytics-on="click" analytics-category="topmenu" analytics-event="gem">Gem</a>
+              <a href="{{metadata.item.imageUrl}}" id="gem" tabindex="-1" target="_blank" download="{{metadata.item.metadataDescription}}" class="btn btn-light btnGem" analytics-on="click" analytics-category="topmenu" analytics-event="gem">Gem</a>
               
-              <button class="btn btn-light btnLink" id="link" analytics-on="click" analytics-category="topmenu" analytics-event="link">
+              <button class="btn btn-light btnLink" id="link" tabindex="-1" analytics-on="click" analytics-category="topmenu" analytics-event="link">
                 Link
                 <div class="linkDivCont"><input type="text" class="linkDiv" value="{{metadata.item.permaLink}}" id="linkInput"></div>
               </button>
             </div>
 
             <div class="form-group float-right">
-              <button type="submit" class="btn btn-default btn-submit" id="find" ng-show="metadata.canSearch" ng-click="metadata.search()">Find</button>
+              <button type="submit" class="btn btn-default btn-submit" id="find" tabindex="-1" ng-show="metadata.canSearch" ng-click="metadata.search()">Find</button>
             </div>
 
           </div>

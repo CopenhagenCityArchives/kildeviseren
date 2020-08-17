@@ -1,5 +1,4 @@
-angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', function($compile){
-
+angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$timeout', function($compile, $timeout){
     return{
 
         //Only for elements
@@ -8,7 +7,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', functi
 
         //templateUrl: 'directives/dynaform.html',
 
-        template: '',
+        templateUrl: 'dynaform-template.html',
 
         replace: true,
 
@@ -19,101 +18,48 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', functi
             //filterChange: "&"
 
         },
+        
+        controller: function($scope, $timeout) {
 
-        link: function(scope, element, attributes){
+            $scope.init = function() {
 
-            //Watching the data filters attribute. If anything changes,
+                let filterArray = [];
+                let filter;
 
-            //create the templates and compile them
+                //Create a list for each of the filters
+                for (let i = 0; i < $scope.filters.length; i++) {
+                    
+                    filter = $scope.filters[i];
+                    console.log(filter)
 
-            scope.$watch('filters', function(value) {
+                    filter.possibleValues.forEach(value => {
+                        filterArray.push(value.text);
+                    });
 
-                if(value && value.length > 0){
+                    var elem = angular.element('#filter-' + i);
 
-                    createFilterTemplates();
+                    accessibleAutocomplete({
+                        element: elem[0],
+                        id: 'filter-'+ i, // To match it to the existing <label>.
+                        source: filterArray,
+                        defaultValue: filter.filter_value,
+                        displayMenu: 'overlay',
+                        showAllValues: true,                       
 
-                }
+                        tNoResults: () => 'Ingen resultater fundet',
+                        tAssistiveHint: () => ''
+                    })
 
-            });
+                    filterArray = [];
+                };
 
-
-
-            var createFilterTemplates = function(){
-
-                var template = "";
-
-                for(var i = 0; i < scope.filters.length; i++){
-
-                 //   console.log('scope.filters[' + i + ']', scope.filters[i]);
-
-                    //month.id as month.text for month in metadata.months
-
-                    template = template +
-
-                        '<div class="form-group form-100">' +
-
-                            '<select class="filterbox" disable-search="' + !scope.filters[i].searchable +'"' +
-
-                            'allow_single_deselect="true"' +
-
-                            'data-placeholder="' + scope.filters[i].placeholder + '"' +
-
-                            //'no-results-text="\'' + scope.filters[i].noResultsText + '\'"' +
-                            'no-results-text="\'' + scope.filters[i].placeholder + '\'"' +
-
-                            'ng-model="filters[' + i + '].filter_value"' +
-
-                            'ng-options="value.text as value.text for value in filters[' + i + '].possibleValues"' +
-
-                            'style="width:100%;">' +
-
-                                '<option value=""></option>' +
-
-                            '</select>' +
-
-                            '<div tabindex="0" class="qmark qmarktop fa fa-question" data-content="' + scope.filters[i].helpText + '">' +
-
-                            '</div>' +
-
-                            '<div class="form_box_input_help input_help_top"></div>' +
-
-                        '</div>';
-
-                }
-
-
-
-
-
-                element.html(template);
-
-                //console.log('compiling this: ', element.contents());
-
-                $compile(element.contents())(scope);
-
-                $("#mere").attr("tabindex", "-1");
-                $(".filterbox").attr("tabindex", "-1");
+                $(".autocomplete__input").attr("tabindex", "-1");
                 $(".qmark").attr("tabindex", "-1");
-                $("#print").attr("tabindex", "-1");
-                $("#gem").attr("tabindex", "-1");
-                $("#link").attr("tabindex", "-1");
-                $("#find").attr("tabindex", "-1");
+            }
 
-            };
-
-
-
-            // console.log('Here is the scope of parent: ',scope);
-
-            // console.log('Those are the attributes of parent: ',attributes);
-
-
-
+            $timeout($scope.init);
+             
         }
 
-    };
-
+    }
 }]);
-
-
-

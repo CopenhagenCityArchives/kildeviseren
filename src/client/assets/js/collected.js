@@ -557,7 +557,7 @@ $(document).on('click','.labelforradio', function() {
                     //fjern elementer fra tabindex
                     
                     $("#mere").attr("tabindex", "-1");
-                    $(".filterbox").attr("tabindex", "-1");
+                    $(".autocomplete__input").attr("tabindex", "-1");
                     $(".qmark").attr("tabindex", "-1");
                     $("#print").attr("tabindex", "-1");
                     $("#gem").attr("tabindex", "-1");
@@ -584,7 +584,7 @@ $(document).on('click','.labelforradio', function() {
                     //tilføj elementer til tabindex
                     
                     $("#mere").attr("tabindex", "1");
-                    $(".filterbox").attr("tabindex", "1");
+                    $(".autocomplete__input").attr("tabindex", "1");
                     $(".qmark").attr("tabindex", "1");
                     $("#print").attr("tabindex", "1");
                     $("#gem").attr("tabindex", "1");

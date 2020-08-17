@@ -30,7 +30,8 @@ opt.appSrc = [
     "src/client/controllers/*.js",
     "src/client/services/*.js",
     '!src/client/services/mocks.js',
-    "profile/" + profile + "/config.js"
+    "profile/" + profile + "/config.js",
+    'node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js'
 ];
 opt.appDest = "concat.js";
 
@@ -57,6 +58,7 @@ opt.cssSrc = [
     "src/client/directives/chosen.css",
     "src/client/assets/css/extras.css",
     "tmp/style.css",
+    "node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.css",
 ];
 opt.cssFileName = "concat.css";
 

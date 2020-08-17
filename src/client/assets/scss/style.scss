@@ -1,4 +1,5 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,300,700);
+@use "accessible-autocomplete";
 
 // Small tablets and large smartphones (portrait view)
 $screen-sm-min: 320px;
@@ -417,6 +418,9 @@ label input {
   right: -25px;
   top: 0;
 }
+.qmark:focus {
+  background-color: yellow;
+}
 
 .qmark img {
   max-width: 50%;
@@ -616,10 +620,101 @@ label input {
   }
 }
 
+.topcontrols-button:focus {
+  background-color: yellow;
+}
+
 .chosen-container {
   @include md {
     width:485px !important;
   }
+}
+
+.chosen-container:focus {
+  background-color: yellow;
+}
+
+.chosen-container-single:focus {
+  background-color: yellow;
+}
+
+.filerbox-container {
+  @include md {
+    width:485px !important;
+  }
+}
+
+.chosen-container:focus {
+  background-color: yellow;
+}
+
+.chosen-container-single:focus {
+  background-color: yellow;
+}
+
+.filterbox {
+  overflow: visible;
+  width: 100%;
+  min-width: 300px;
+  max-width: 545px;
+  margin: 0 0 5px 0;
+  background: #4c769c;
+  border: none;
+  text-align: left;
+  font-weight: 300;
+  height: auto;
+  min-height: 44px;
+  line-height: 44px;
+  font-size: 1.5em;
+  border-radius: 5px;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0 20px;
+
+  outline: thick !important;
+  outline-width: thick !important;
+  outline-color: yellow !important;
+
+  @include md {
+    width: 485px !important
+  }
+}
+
+.autocomplete__wrapper {
+  background-color: #4c769c;
+  width: 100%;
+  font-size: 1.5em;
+  line-height: 44px;
+  padding: 0 20px;
+  margin: 0 0 5px 0;
+  border-radius: 5px;
+}
+
+.autocomplete__input {
+  color: white;
+  background-color: transparent !important;
+  border: none !important; 
+  width: 100%;
+}
+
+.autocomplete__input:focus {
+  color: white;
+  background-color: transparent !important;
+  border: none !important;
+  width: 100%;
+}
+
+.autocomplete__hint {
+  border: none;
+}
+
+.autocomplete__option {
+  border-radius: 5px;
+  padding-left: 20px !important;
+}
+
+.autocomplete__option:focus {
+  background-color: #4c769c;
 }
 
 .findBtn {
@@ -814,6 +909,10 @@ label input {
 /* PAGE CONTROLS */
 .controls {
   z-index: 9998;
+}
+
+.controls:focus {
+  background-color: yellow;
 }
 
 .leftArrow {
