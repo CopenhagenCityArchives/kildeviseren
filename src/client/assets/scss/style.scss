@@ -621,35 +621,8 @@ label input {
 }
 
 .topcontrols-button:focus {
-  background-color: yellow;
-}
-
-.chosen-container {
-  @include md {
-    width:485px !important;
-  }
-}
-
-.chosen-container:focus {
-  background-color: yellow;
-}
-
-.chosen-container-single:focus {
-  background-color: yellow;
-}
-
-.filerbox-container {
-  @include md {
-    width:485px !important;
-  }
-}
-
-.chosen-container:focus {
-  background-color: yellow;
-}
-
-.chosen-container-single:focus {
-  background-color: yellow;
+  outline-color: invert  !important;
+  outline-style: auto !important;
 }
 
 .filterbox {
@@ -912,8 +885,21 @@ label input {
 }
 
 .controls:focus {
-  background-color: yellow;
+  //background-color: yellow;
+  outline-color: invert  !important;
+  outline-style: auto !important;
 }
+
+.leaflet-control-zoom-in:focus {
+  outline-color: invert  !important;
+  outline-style: auto !important;
+}
+
+.leaflet-control-zoom-out:focus {
+  outline-color: invert  !important;
+  outline-style: auto !important;
+}
+
 
 .leftArrow {
   border-bottom-right-radius: 10px;
