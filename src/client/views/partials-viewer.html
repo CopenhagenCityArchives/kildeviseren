@@ -143,15 +143,15 @@
           <p>{{metadata.collection.error_intro}}</p>
           <div class="modalRadioGroup">
             <!-- Dynamic, trying to combine Angular and jQuery.check -->
-            <div ng-repeat="model in metadata.collection.error_reports">
+            <!--<div ng-repeat="model in metadata.collection.error_reports">
               <input id="errortype{{model.id}}" type="radio" name="errortype" class="radios" data-color="#4c769c" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport" value="{{model.id}}" aria-labelledby="errortype{{model.id}}"></input>
               <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
-            </div>
+            </div>-->
 
-            <!--<div class="radios" role="radiogroup" ng-repeat="model in metadata.collection.error_reports">
+            <div class="radios" role="radiogroup" ng-repeat="model in metadata.collection.error_reports">
               <input id="test-{{$index}}" class="radios" type="radio" name="testGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
               <label for="test-{{$index}}">{{model.name}}</label>
-            </div>-->
+            </div>
 
           </div>
 
