@@ -42,14 +42,14 @@
             </div>
           </div>
 
-          <button id="toggleTop" role="button" class="topcontrols-button findBtn" aria-haspopup="menu" aria-label="toggle menu" >
+          <button id="toggleTop" type="button" class="topcontrols-button findBtn" aria-haspopup="menu" aria-label="toggle menu" >
             <span class="findtext">Menu</span>
           </button>
 
         </div>
 
 
-        <form class="form padTheForm" role="form">
+        <form class="form padTheForm">
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 topcontrols_form">
             <div dynaform filters="metadata.filters"></div>
@@ -149,7 +149,7 @@
             </div>-->
 
             <div class="radios" role="radiogroup" aria-label="radioGroup" ng-repeat="model in metadata.collection.error_reports">
-              <input id="test-{{$index}}" class="radios" role="radio" type="radio" name="radioGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
+              <input id="test-{{$index}}" class="radios" type="radio" name="radioGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
               <label for="test-{{$index}}">{{model.name}}</label>
             </div>
 
