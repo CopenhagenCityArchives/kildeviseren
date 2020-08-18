@@ -1,4 +1,4 @@
-<div id="page_viewer">
+<div id="page_viewer" role="heading" aria-level="1">
   <div id="infoLayer">
   <div class="info-big info-left">Forrige Side</div>
   <div class="info-big info-right">Næste Side</div>
@@ -148,7 +148,7 @@
               <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
             </div>-->
 
-            <div class="radios" role="radiogroup" ng-repeat="model in metadata.collection.error_reports">
+            <div class="radios" role="radiogroup" aria-label="radioGroup" ng-repeat="model in metadata.collection.error_reports">
               <input id="test-{{$index}}" class="radios" role="radio" type="radio" name="radioGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
               <label for="test-{{$index}}">{{model.name}}</label>
             </div>
