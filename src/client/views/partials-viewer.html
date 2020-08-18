@@ -130,7 +130,7 @@
 
   
   <!-- Modal -->
-  <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="ReportKK" aria-hidden="true">
+  <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-modal="true" aria-label="rapporter fejl" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -141,12 +141,18 @@
 
         <div class="modal-body">
           <p>{{metadata.collection.error_intro}}</p>
-          <div>
+          <div class="modalRadioGroup">
             <!-- Dynamic, trying to combine Angular and jQuery.check -->
             <div ng-repeat="model in metadata.collection.error_reports">
-              <input id="errortype{{model.id}}" type="radio" name="errortype" class="radios" data-color="#4c769c" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport" value="{{model.id}}"></input>
+              <input id="errortype{{model.id}}" type="radio" name="errortype" class="radios" data-color="#4c769c" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport" value="{{model.id}}" aria-labelledby="errortype{{model.id}}"></input>
               <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
             </div>
+
+            <!--<div class="radios" role="radiogroup" ng-repeat="model in metadata.collection.error_reports">
+              <input id="test-{{$index}}" class="radios" type="radio" name="testGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
+              <label for="test-{{$index}}">{{model.name}}</label>
+            </div>-->
+
           </div>
 
           <div class="modal-footer">

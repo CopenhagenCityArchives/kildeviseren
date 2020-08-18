@@ -446,7 +446,7 @@ label input {
 .form_text {
   font-size: 1.2em;
   line-height: 1.5em;
-  color: #4c769c;
+  color: black;
   text-align: left;
   padding: 10px 0;
 }
@@ -630,6 +630,16 @@ label input {
   outline-style: auto !important;
 }
 
+.btn-light:focus {
+  outline-color: invert !important;
+  outline-style: auto !important;
+}
+
+.btn-primary:focus {
+  outline-color: invert !important;
+  outline-style: auto !important;
+}
+
 .autocomplete__wrapper {
   background-color: #4c769c;
   width: 100%;
@@ -697,7 +707,7 @@ label input {
 .sourceText {
   @include sm {
     background-color: #fff;
-    color: #4c769c;
+    color: black;
     width: 100%;
     left: 0px;
     padding: 0;
@@ -1241,7 +1251,20 @@ label input {
 =            RADIO BUTTON            =
 ====================================*/
 .radios {
-  display: none !important;
+  //display: none !important;
+}
+
+.radios:focus {
+  outline: auto !important;
+  outline-color: deepskyblue !important;
+  outline-style: ridge !important;  
+}
+
+.modalRadioGroup {
+  border-width: thin;
+  border-style: dashed;
+  padding: 5px 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
 }
 
 .labelforradio {

@@ -46,7 +46,8 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                         showAllValues: true,                       
 
                         tNoResults: () => 'Ingen resultater fundet',
-                        tAssistiveHint: () => ''
+                        tAssistiveHint: () => 'Filtrene kan navigeres med pilekasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
+                        tStatusSelectedOption: (selectedOption, length, index) => '${selectedOption} ${index + 1} af ${length} er highlighted',
                     })
 
                     filterArray = [];
