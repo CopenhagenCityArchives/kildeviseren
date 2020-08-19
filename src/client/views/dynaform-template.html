@@ -1,4 +1,8 @@
 <div ng-repeat="filter in filters">
     <label style="color:black" for="filter-{{$index}}">{{filter.placeholder}}</label>
-    <div style="color:black" id="filter-{{$index}}-container"></div>
+    <div>
+        <div class="qmark qmarktop fa fa-question" ng-click="showErrorReports = !showErrorReports"></div>
+        <div style="color:black" id="filter-{{$index}}-container"></div>
+        <span style="color:black" ng-show="showErrorReports"> {{filter.helpText}} </span>
+    </div>
 </div>

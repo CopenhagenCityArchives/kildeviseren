@@ -415,11 +415,9 @@ label input {
 
 .qmark {
   position: absolute;
+  //top: 2.5rem;
   right: -25px;
-  top: 0;
-}
-.qmark:focus {
-  background-color: yellow;
+  //top: 0;
 }
 
 .qmark img {
@@ -427,8 +425,8 @@ label input {
 }
 
 .qmarktop {
-  right: 85px;
-  top: 0;
+  right: 29px;
+  //top: 2.5rem;
   z-index: 99;
   cursor: pointer;
   font-size: 1.9em !important;
@@ -644,7 +642,7 @@ label input {
 
 .autocomplete__wrapper {
   background-color: #4c769c;
-  width: 100%;
+  width: 89%;
   font-size: 1.5em;
   line-height: 44px;
   padding: 0 20px;
