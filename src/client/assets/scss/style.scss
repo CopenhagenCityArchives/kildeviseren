@@ -599,6 +599,7 @@ label input {
 
 .topcontrols-button {
   @include sm {
+    display: block !important;
     position: absolute;
     border:0;
   }
@@ -911,7 +912,6 @@ label input {
     background-color: #4c769c;
     position: fixed;
     //margin-top: -130px;
-    display: table;
   }
 }
 
@@ -931,7 +931,6 @@ label input {
     background-color: #4c769c;
     position: fixed;
     //margin-top: -130px;
-    display: table;
   }
 
 }
@@ -1029,7 +1028,7 @@ label input {
     right: 15px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    display: table !important
+    display: block !important
   }
 }
 
