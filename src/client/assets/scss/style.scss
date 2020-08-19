@@ -600,6 +600,7 @@ label input {
 .topcontrols-button {
   @include sm {
     position: absolute;
+    border:0;
   }
 
   @include md {
@@ -869,6 +870,7 @@ label input {
 /* PAGE CONTROLS */
 .controls {
   z-index: 9998;
+  border: 0;
 }
 
 .controls:focus {
