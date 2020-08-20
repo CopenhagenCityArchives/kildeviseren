@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/CopenhagenCityArchives/kildeviseren.svg?branch=feature-travis)](https://travis-ci.org/CopenhagenCityArchives/kildeviseren)
 # Kildeviseren
 
 ## Development
