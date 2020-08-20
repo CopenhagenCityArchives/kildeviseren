@@ -1,14 +1,12 @@
 os: linux
 dist: xenial
 
-before_script:
-    - cd ~/build/CopenhagenCityArchives/kildeviseren
+install:
     - ls -l
     - npm install gulp-cli
     - npm install -g gulp-cli
 
 script:
-    - cd ~/build/CopenhagenCityArchives/kildeviseren
     - ls -l
     - gulp build 
     - ls -l
@@ -19,7 +17,7 @@ deploy:
       secret_access_key: ${AWS_SECRET_ACCESS_KEY}
       bucket: static.kbharkiv.dk
       cache_control: 'no-cache'
-      local_dir: ~/build/CopenhagenCityArchives/kildeviseren/dist
+      local_dir: dist
       upload_dir: kildeviser
       acl: public_read
       region: eu-west-1
