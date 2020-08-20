@@ -9,11 +9,11 @@
  *
  */
 
-// For CLI flags
-const util = require('gulp-util');
+//Handle CLI flags
+var argv = require('minimist')(process.argv.slice(2));
 
 // handle profile and default
-var profile = util.env.profile === undefined ? 'kbharkiv' : util.env.profile;
+var profile = argv.profile === undefined ? 'kbharkiv' : argv.profile;
 if (profile != "kbharkiv" && profile != "frederiksberg") {
     throw new Error("Invalid profile: " + profile);
 }
