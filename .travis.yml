@@ -4,6 +4,7 @@ dist: xenial
 before_script:
     - cd ~/build/CopenhagenCityArchives/kildeviseren
     - npm install gulp-cli
+    - npm install -g gulp-cli
 
 script:
     - gulp build 
