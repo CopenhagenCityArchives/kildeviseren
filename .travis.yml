@@ -5,9 +5,10 @@ language: node_js
 
 install:
     - ls -l
-    - npm install gulp
-    - npm install gulp-cli
-
+    - npm install -g gulp-cli
+    - npm install
+    - gulp --version
+    
 script:
     - ls -l
     - gulp build 
