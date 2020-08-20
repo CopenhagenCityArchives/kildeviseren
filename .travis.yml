@@ -5,8 +5,8 @@ language: javascript
 
 install:
     - ls -l
+    - npm install gulp
     - npm install gulp-cli
-    - npm install -g gulp-cli
 
 script:
     - ls -l
