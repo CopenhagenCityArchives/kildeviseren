@@ -3,6 +3,9 @@ dist: xenial
 
 language: node_js
 
+node_js:
+- 'lts/*'
+
 install:
     - ls -l
     - npm rm -rf node_modules
