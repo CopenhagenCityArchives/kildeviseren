@@ -8,7 +8,9 @@ before_script:
     - npm install -g gulp-cli
 
 script:
+    - ls -l
     - gulp build 
+    - ls -l
 
 deploy:
     - provider: s3
