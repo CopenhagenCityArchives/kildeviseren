@@ -8,6 +8,7 @@ install:
     - npm install -g gulp-cli
     - npm install
     - gulp --version
+    - npm ls gulp-util
     
 script:
     - ls -l
