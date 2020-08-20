@@ -1,0 +1,23 @@
+os: linux
+dist: xenial
+
+before_script:
+    - npm install -g gulp-cli
+
+script: gulp build
+
+deploy:
+    - provider: s3
+      access_key_id: 
+      secret_access_key:
+      bucket: static.kbharkiv.dk
+      cache_control: 'no-cache'
+      local_dir: ./dist
+      upload_dir: kildeviser
+      acl: public_read
+      region: eu-west-1
+      on:
+        repo: CopenhagenCityArchives/kildeviseren
+        branch: feature-travis
+      edge: true
+      cleanup: true
