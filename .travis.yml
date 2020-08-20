@@ -3,6 +3,7 @@ dist: xenial
 
 before_script:
     - npm install -g gulp-cli
+    - npm install gulp-cli
 
 script:
     - gulp build 
