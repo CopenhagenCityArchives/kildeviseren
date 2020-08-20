@@ -1,7 +1,7 @@
 os: linux
 dist: xenial
 
-language: javascript
+language: node_js
 
 install:
     - ls -l
