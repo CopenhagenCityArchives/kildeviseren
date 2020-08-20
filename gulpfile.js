@@ -49,7 +49,7 @@ opt.directiveAssets = [
     "src/client/directives/*.png",
     "src/client/directives/*.css",
 ]
-opt.directiveDest = 'dist/assets/css';
+opt.directiveDest = './dist/assets/css';
 
 opt.cssSrc = [
     "src/client/assets/css/custom-theme/jquery-ui.min.css", 
@@ -63,7 +63,7 @@ opt.cssSrc = [
 opt.cssFileName = "concat.css";
 
 opt.fontSrc = "src/client/assets/fonts/*.*";
-opt.fontDest = "dist/fonts/"
+opt.fontDest = "./dist/fonts/"
 
 // Views are copied
 opt.viewsSrc = "src/client/views/*.html";
@@ -93,7 +93,7 @@ var connect = require( 'gulp-connect');
 //gulp.task('clearDist', function () {
 function clearDist() {
     //console.log('Clearing dist dir');
-    return src(['dist'], {read: false, allowEmpty: true})
+    return src(['./dist'], {read: false, allowEmpty: true})
         .pipe(clean({force: true}));
 };
 
@@ -107,13 +107,13 @@ function concatAngularApp(){
     //console.log('Concating ', opt.appSrc);
     return src(opt.appSrc)
         .pipe(concat(opt.appDest))
-        .pipe(dest('dist'));
+        .pipe(dest('./dist'));
 }
 
 function copyAppFile(){
     //console.log('Copying ', opt.appFileSrc);
     return src(opt.appFileSrc)
-        .pipe(dest('dist'));  
+        .pipe(dest('./dist'));  
 }
 
 function buildScss(){
@@ -126,7 +126,7 @@ function concatCssFile(){
     //console.log('Concating ', opt.cssSrc);
     return src(opt.cssSrc)
         .pipe(concat(opt.cssFileName))
-        .pipe(dest(('dist/assets/css')));
+        .pipe(dest(('./dist/assets/css')));
 }
 
 
@@ -186,8 +186,8 @@ function deploy(){
 
 function deployLive() {
     var globs = [
-        'dist/**',
-        'dist/.htaccess'
+        './dist/**',
+        './dist/.htaccess'
     ];
 
     // using base = '.' will transfer everything to /public_html correctly
