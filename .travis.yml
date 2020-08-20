@@ -8,6 +8,7 @@ before_script:
     - npm install -g gulp-cli
 
 script:
+    - cd ~/build/CopenhagenCityArchives/kildeviseren
     - ls -l
     - gulp build 
     - ls -l
@@ -18,7 +19,7 @@ deploy:
       secret_access_key: ${AWS_SECRET_ACCESS_KEY}
       bucket: static.kbharkiv.dk
       cache_control: 'no-cache'
-      local_dir: ./dist
+      local_dir: ~/build/CopenhagenCityArchives/kildeviseren/dist
       upload_dir: kildeviser
       acl: public_read
       region: eu-west-1
