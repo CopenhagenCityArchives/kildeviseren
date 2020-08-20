@@ -1,19 +1,14 @@
-/**
- *
- * God basis gulp fil.
- * Kan:
- * 1) con: Concate flere .js filer til én fil
- * 2) minify: Overvåge filer .js-filer og køre minify
- * 3) connomini: Concat flere .js filer uden minify (til debugging)
- * 4) toprod: Kopiere filer til en produktionsmappe
- *
- */
+const minimist = require('minimist');
 
-//Handle CLI flags
-var argv = require('minimist')(process.argv.slice(2));
+// Setup profile based on CLI flag --profile
+var argv = minimist(process.argv.slice(2));
+var profile = argv.profile;
 
-// handle profile and default
-var profile = argv.profile === undefined ? 'kbharkiv' : argv.profile;
+if (!profile) {
+    profile = "kbharkiv";
+}
+
+// handle profile
 if (profile != "kbharkiv" && profile != "frederiksberg") {
     throw new Error("Invalid profile: " + profile);
 }
