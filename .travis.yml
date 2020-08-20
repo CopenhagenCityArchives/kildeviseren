@@ -27,4 +27,4 @@ deploy:
         repo: CopenhagenCityArchives/kildeviseren
         branch: feature-travis
       edge: true
-      cleanup: true
+      cleanup: false
