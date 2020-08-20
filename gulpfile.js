@@ -70,7 +70,6 @@ opt.viewsSrc = "src/client/views/*.html";
 
 // All server files are put in server folder
 opt.serverSrc = ["profile/"+profile+"/server/**", "profile/"+profile+"/server/.htaccess"];
-opt.ftpProfileLocation = profile == "kbharkiv" ? "kildeviser" : "kildeviser-"+profile;
 
 //Dependencies:
 
@@ -81,8 +80,6 @@ const sass = require('gulp-sass');
 var concat = require('gulp-concat');
 //Remove files and folders
 var clean = require('gulp-clean');
-// Upload with ftp
-var ftp = require( 'vinyl-ftp' );
 // Webserver with LiveReload
 var connect = require( 'gulp-connect');
 
@@ -165,25 +162,6 @@ function copyViewFiles(){
         .pipe(dest('./dist'));   
 }
 
-var conn = ftp.create( {
-    host:     '***REMOVED***',
-    user:     '***REMOVED***',
-    password: '***REMOVED***',
-    parallel: 10
-} );
-
-function deploy(){
-    var globs = [
-        'dist/**',
-        'dist/.htaccess'
-    ];
-
-    // using base = '.' will transfer everything to /public_html correctly
-    // turn off buffering in gulp.src for best performance
-    return src(globs, {base: './dist', buffer: false})
-        .pipe(conn.dest('/public_html/'+opt.ftpProfileLocation+'-development'));
-};
-
 function deployLive() {
     var globs = [
         './dist/**',
@@ -194,14 +172,6 @@ function deployLive() {
     // turn off buffering in gulp.src for best performance
     return src(globs, {base: './dist', buffer: false})
         .pipe(conn.dest('/public_html/kildeviser'));
-}
-
-function removeFTPFiles(cb){
-    conn.rmdir( '/public_html/'+opt.ftpProfileLocation+'-development', cb);
-}
-
-function removeFTPFilesLive(cb){
-    conn.rmdir('/public_html/'+opt.ftpProfileLocation, cb);
 }
 
 function watcher(){
@@ -225,11 +195,8 @@ function reloadWebserver(){
 }
 
 var build = series(clearDist, buildScss, parallel(concatAngularApp, copyAppFile, concatCssFile, copyAssets, copyFavicon, copyDirectiveAssets, copyFontFiles, copyServerFiles, copyViewFiles),reloadWebserver, clearTmp);
-var deploy = series(removeFTPFiles, deploy);
-var deployLive = series(removeFTPFilesLive, deployLive)
 
 exports.build = build;
-exports.deploy = deploy;
 exports.deployLive = deployLive;
 exports.watch = series(startWebserver, watcher);
 exports.webserver = startWebserver;
