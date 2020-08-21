@@ -443,7 +443,7 @@ $(document).on('click','.labelforradio', function() {
             // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
             //Test: Lets get the image size (and counting on the browser's cache for not getting the image twice!)
             var img = new Image();
-            img.onload = function(){
+            img.onload = function(e){
                 //alert( this.width+' '+ this.height );
                 // create the slippy map
                 var map = L.map('map', {
@@ -457,6 +457,16 @@ $(document).on('click','.labelforradio', function() {
                 map.addControl(L.control.zoom({
                     position: 'bottomleft'
                 }));
+
+                console.log(e);
+                console.log($("img"));
+
+                map.on('load', function(e){
+                    setTimeout(function() {
+                        $('img.leaflet-image-layer').attr('alt', 'Test');
+                    })
+                });
+
                 // calculate the edges of the image, in coordinate space
                 var southWest = map.unproject([0, this.height], 5);
                 var northEast = map.unproject([this.width, 0], 5);

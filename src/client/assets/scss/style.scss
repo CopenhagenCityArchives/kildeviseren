@@ -413,6 +413,16 @@ label input {
   color: #fff;
 }
 
+a:focus {
+  color: white;
+  text-decoration: none;
+}
+a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
 .qmark {
   position: absolute;
   top: 2.5rem;
