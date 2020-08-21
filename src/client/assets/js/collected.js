@@ -458,12 +458,10 @@ $(document).on('click','.labelforradio', function() {
                     position: 'bottomleft'
                 }));
 
-                console.log(e);
-                console.log($("img"));
-
                 map.on('load', function(e){
                     setTimeout(function() {
-                        $('img.leaflet-image-layer').attr('alt', 'Test');
+                        var altText = $('div.sourcetext')[0].innerText;
+                        $('img.leaflet-image-layer').attr('alt', altText);
                     })
                 });
 
