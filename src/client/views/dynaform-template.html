@@ -1,6 +1,5 @@
 <div ng-repeat="filter in filters" class="form-group form-100">
     <label style="color:black" for="filter-{{$index}}">{{filter.placeholder}}</label>
     <div style="color:black" id="filter-{{$index}}-container"></div>
-    <button class="qmark qmarktop fa fa-question" role="button"  ng-click="showErrorReports = !showErrorReports" title="Vis hjælpetekst for filter-{{$index}}"></button>
-    <span style="color:black" ng-show="showErrorReports"> {{filter.helpText}} </span>
+    <span style="color:black"> {{filter.helpText}} </span>
 </div>
