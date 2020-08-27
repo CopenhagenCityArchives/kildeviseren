@@ -25,6 +25,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
 
                 let filterArray = [];
                 let filter;
+                let savedValue;
 
                 //Create a list for each of the filters
                 for (let i = 0; i < $scope.filters.length; i++) {
@@ -43,7 +44,9 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                         source: filterArray,
                         defaultValue: filter.filter_value,
                         displayMenu: 'overlay',
-                        showAllValues: true,                       
+                        showAllValues : true,    
+                        autoSelect: true,
+                        confirmOnBlur: true,             
 
                         tNoResults: () => 'Ingen resultater fundet',
                         tAssistiveHint: () => 'Filtrene kan navigeres med pilekasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
@@ -55,6 +58,26 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
 
                 $(".autocomplete__input").attr("tabindex", "-1");
                 $(".qmark").attr("tabindex", "-1");
+            }
+
+            $scope.showAllValues = function(id) {
+                let currentValue = $('#filter-'+id).val();
+                if (currentValue != '') {
+                    savedValue = currentValue
+                }
+                $('#filter-'+id).val('');
+                $('#filter-'+id).on('blur', function() {
+                    if ($('#filter-'+id).val() == '') {
+                        $('#filter-'+id).val(savedValue);
+                    }
+                });
+                //$('#filter-'+id).attr('placeholder',$('#filter-'+id).val());
+                //$('#filter-'+id).val('');
+                /*$('#filter-'+id).on('blur', function() {
+                  if ($('#filter-'+id).val() == '') {
+                    $('#filter-'+id).val($('#filter-'+id).attr('placeholder'));
+                  }
+                });*/
             }
 
             $timeout($scope.init);

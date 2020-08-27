@@ -1,5 +1,5 @@
 <div ng-repeat="filter in filters" class="form-group form-100">
     <label style="color:black" for="filter-{{$index}}">{{filter.placeholder}}</label>
-    <div style="color:black" id="filter-{{$index}}-container"></div>
+    <div style="color:black" id="filter-{{$index}}-container" ng-focus="showAllValues($index)" ng-click="showAllValues($index)" ></div>
     <span style="color:black"> {{filter.helpText}} </span>
 </div>
