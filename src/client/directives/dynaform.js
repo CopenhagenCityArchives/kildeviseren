@@ -61,7 +61,9 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
             }
 
             $scope.showAllValues = function(id) {
-                savedValue = $('#filter-'+id).val();
+                if ($('#filter-'+id).val() != ''){
+                    savedValue = $('#filter-'+id).val();
+                }
                 $('#filter-'+id).val('');
                 $('#filter'+id).off('blur');
                 $('#filter-'+id).on('blur', function() {
