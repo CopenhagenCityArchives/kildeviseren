@@ -45,7 +45,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                         defaultValue: filter.filter_value,
                         displayMenu: 'overlay',
                         showAllValues : true,    
-                        autoSelect: true,
+                        autoSelect: false,
                         confirmOnBlur: true,             
 
                         tNoResults: () => 'Ingen resultater fundet',
@@ -61,23 +61,20 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
             }
 
             $scope.showAllValues = function(id) {
-                let currentValue = $('#filter-'+id).val();
-                if (currentValue != '') {
-                    savedValue = currentValue
-                }
+                savedValue = $('#filter-'+id).val();
                 $('#filter-'+id).val('');
+                $('#filter'+id).off('blur');
                 $('#filter-'+id).on('blur', function() {
-                    if ($('#filter-'+id).val() == '') {
+                    $('#filter-'+id).off('blur');
+                    if (!$('#filter-'+id).val()) {
                         $('#filter-'+id).val(savedValue);
+                        setTimeout(function() {
+                            var focused = $(':focus');
+                            $('#filter-'+id+'__listbox').find('li').first().click();
+                            focused.focus();
+                        });
                     }
                 });
-                //$('#filter-'+id).attr('placeholder',$('#filter-'+id).val());
-                //$('#filter-'+id).val('');
-                /*$('#filter-'+id).on('blur', function() {
-                  if ($('#filter-'+id).val() == '') {
-                    $('#filter-'+id).val($('#filter-'+id).attr('placeholder'));
-                  }
-                });*/
             }
 
             $timeout($scope.init);
