@@ -227,7 +227,9 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
             pubs.currentPage = BrowseService.currentPage;
 
             $location.search('item', newItem.id);
-            newItem.permaLink = $location.absUrl();
+
+            // "Permalink" can be the permalink based on configuration or, if not set, the link to the current page
+            newItem.permaLink = config.permalinkUrl ? config.permalinkUrl + pubs.collection.id + '/' + pubs.item.id :  $location.absUrl(); //should be: https://kbharkiv.dk/permalink/source/collection/item
         }
         else{
             console.log("Could not get current content in updateItem()");

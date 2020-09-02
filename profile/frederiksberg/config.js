@@ -5,5 +5,6 @@ config.constant('config', {
     enableGoogleAnalytics: false,
     redirectUrl: "https://stadsarkivet.frederiksberg.dk/arkiverne",
     archiveUrl: "https://stadsarkivet.frederiksberg.dk",
-    archiveUrlName: "Frederiksberg Stadsarkiv"
+    archiveUrlName: "Frederiksberg Stadsarkiv",
+    permalinkUrl: false
 });
