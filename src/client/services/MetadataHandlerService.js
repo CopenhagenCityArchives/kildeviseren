@@ -202,11 +202,11 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
         BrowseService.goTo(id);
         pubs.updateItem();
     };
-
+ 
     pubs.goToNumber = function(){
         BrowseService.goTo(pubs.currentPage);
         pubs.updateItem();
-    };
+    }; 
 
     pubs.updateItem = function(){
         var newItem = {};

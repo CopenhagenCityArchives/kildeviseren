@@ -14,7 +14,6 @@ var app = angular.module('KSA_Bladr', [
   'angulartics',
   'angulartics.google.analytics',
   'ngSanitize',
- /* 'youtube-embed',*/
   'localytics.directives'
 ]);
 
@@ -28,7 +27,7 @@ app.config(['$locationProvider', function ($locationProvider) {
 
 
 app.run(['$window', 'config', function($window, config) {
-    if (config.enableGoogleAnalytics) {
+    if (config.googleAnalyticsTrackingCode) {
         // Setup Analytics only if statistics consent is given
         var onStatisticsConsent = function() {
             if ($window.Cookiebot.consent.statistics) {
@@ -38,7 +37,7 @@ app.run(['$window', 'config', function($window, config) {
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-                    ga('create', 'UA-57049855-1', 'auto');
+                    ga('create', config.googleAnalyticsTrackingCode, 'auto');
             } else {
                 console.log("Statistics consent not given, skipping analytics.")
             }
