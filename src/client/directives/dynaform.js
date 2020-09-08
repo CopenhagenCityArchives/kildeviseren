@@ -12,28 +12,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
         replace: true,
 
         scope: {
-
-            filters: "="//,
-
-            //filterChange: "&"
-
-        },
-
-        link: function(scope, element, attributes){
-
-            //Watching the data filters attribute. If anything changes,
-
-            //create the templates and compile them
-
-            scope.$watch('filters', function(value) {
-                console.log("link");
-                if(value && value.length > 0){
-                   
-                    //scope.createFilters();
-
-                }
-
-            });
+            filters: "="
         },
         
         controller: function($scope, $timeout) {
@@ -47,11 +26,16 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                 }
             }
 
-            $scope.$watch('filters', function(value) {
-                console.log("hit");
-                if(value && value.length > 0){
+            // Deep watch filters
+            $scope.$watch(function(scope){return scope.filters;}, function(value, oldValue) {
+                if(value == oldValue){ return; }
+
+                // Compare every filter in new and old filters list. Reset filter values if possibleValues has changed
+                for(let i = 0; i < value.length; i++){
+                    if(!oldValue[i] || !angular.equals(value[i].possibleValues,oldValue[i].possibleValues)){
+                        resetFilterValue(i);
+                    }
                 }
-            })
 
             function resetFilterValue(index) {
                 angular.element('#filter-' + index + '-container').empty();
@@ -60,72 +44,34 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
             }
 
             function setupFilterAutocomplete(index) {
-                let filter = $scope.filters[index];
+
                 let elem = angular.element('#filter-' + index + '-container');
+
                 let filterSource = [];
-                filter.possibleValues.forEach(function(value) {
+                $scope.filters[index].possibleValues.forEach(function(value) {
                     filterSource.push(value.text);
                 });
-
-                console.log('Setting up filter',index,'source',filter,filterSource);
-
+                
                 accessibleAutocomplete({
                     element: elem[0],
                     id: 'filter-'+ index, // To match it to the existing <label>.
                     source: filterSource,
-                    defaultValue: filter.filter_value,
+                    defaultValue: $scope.filters[index].filter_value,
                     displayMenu: 'overlay',
                     showAllValues : true,    
                     autoSelect: false,
-                    confirmOnBlur: false,             
+                    confirmOnBlur: false,   
 
                     tNoResults: () => 'Ingen resultater fundet',
-                    tAssistiveHint: () => 'Filtrene kan navigeres med pilekasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
+                    tAssistiveHint: () => 'Filtrene kan navigeres med piletasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
                     tStatusSelectedOption: (selectedOption, length, index) => `${selectedOption} ${index + 1} af ${length} er highlighted`,
                     onConfirm: function(val) {
-                        filter.filter_value = val;
-                        for (var i = index + 1; i < $scope.filters.length; i++) {
+                        $scope.filters[index].filter_value = val;
+                        //console.log("onConfirm", val,$scope.filters[index].filter_value);
                             resetFilterValue(i);
-                        }
+                        }*/
                     }
                 })
-            }
-
-            $scope.createFilters = function() {
-                let filterArray = [];
-                let filter;
-
-                //Create a list for each of the filters
-                for (let i = 0; i < $scope.filters.length; i++) {
-                    
-                    filter = $scope.filters[i];
-
-                    filter.possibleValues.forEach(value => {
-                        filterArray.push(value.text);
-                    });
-
-                    var elem = angular.element('#filter-' + i + '-container');
-                    console.log("elem", elem, elem[0]);
-                    accessibleAutocomplete({
-                        element: elem[0],
-                        id: 'filter-'+ i, // To match it to the existing <label>.
-                        source: filterArray,
-                        defaultValue: filter.filter_value,
-                        displayMenu: 'overlay',
-                        showAllValues : true,    
-                        autoSelect: false,
-                        confirmOnBlur: false,             
-
-                        tNoResults: () => 'Ingen resultater fundet',
-                        tAssistiveHint: () => 'Filtrene kan navigeres med pilekasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
-                        tStatusSelectedOption: (selectedOption, length, index) => `${selectedOption} ${index + 1} af ${length} er highlighted`,
-                        onConfirm: function(val) {
-                            $scope.filters[i].filter_value = val;
-                        }
-                    })
-
-                    filterArray = [];
-                };
             }
 
             $scope.showAllValues = function(id) {
@@ -148,8 +94,6 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
             }
 
             $timeout($scope.init);
-             
         }
-
     }
 }]);
