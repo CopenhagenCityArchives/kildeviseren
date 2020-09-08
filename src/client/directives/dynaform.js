@@ -36,6 +36,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                         resetFilterValue(i);
                     }
                 }
+            }, true)
 
             function resetFilterValue(index) {
                 angular.element('#filter-' + index + '-container').empty();
@@ -68,6 +69,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                     onConfirm: function(val) {
                         $scope.filters[index].filter_value = val;
                         //console.log("onConfirm", val,$scope.filters[index].filter_value);
+                 /*       for (var i = index + 1; i < $scope.filters.length; i++) {
                             resetFilterValue(i);
                         }*/
                     }
