@@ -12,55 +12,68 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
         replace: true,
 
         scope: {
-
-            filters: "="//,
-
-            //filterChange: "&"
-
+            filters: "="
         },
         
         controller: function($scope, $timeout) {
 
             $scope.init = function() {
-
-                let filterArray = [];
-                let filter;
-                let savedValue;
-
-                //Create a list for each of the filters
-                for (let i = 0; i < $scope.filters.length; i++) {
-                    
-                    filter = $scope.filters[i];
-
-                    filter.possibleValues.forEach(value => {
-                        filterArray.push(value.text);
-                    });
-
-                    var elem = angular.element('#filter-' + i + '-container');
-
-                    accessibleAutocomplete({
-                        element: elem[0],
-                        id: 'filter-'+ i, // To match it to the existing <label>.
-                        source: filterArray,
-                        defaultValue: filter.filter_value,
-                        displayMenu: 'overlay',
-                        showAllValues : true,    
-                        autoSelect: false,
-                        confirmOnBlur: false,             
-
-                        tNoResults: () => 'Ingen resultater fundet',
-                        tAssistiveHint: () => 'Filtrene kan navigeres med pilekasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
-                        tStatusSelectedOption: (selectedOption, length, index) => `${selectedOption} ${index + 1} af ${length} er highlighted`,
-                        onConfirm: function(val) {
-                            $scope.filters[i].filter_value = val;
-                        }
-                    })
-
-                    filterArray = [];
-                };
-
                 $(".autocomplete__input").attr("tabindex", "-1");
                 $(".qmark").attr("tabindex", "-1");
+
+                for (var i = 0; i < $scope.filters.length; i++) {
+                    setupFilterAutocomplete(i);
+                }
+            }
+
+            // Deep watch filters
+            $scope.$watch(function(scope){return scope.filters;}, function(value, oldValue) {
+                if(value == oldValue){ return; }
+
+                // Compare every filter in new and old filters list. Reset filter values if possibleValues has changed
+                for(let i = 0; i < value.length; i++){
+                    if(!oldValue[i] || !angular.equals(value[i].possibleValues,oldValue[i].possibleValues)){
+                        resetFilterValue(i);
+                    }
+                }
+            }, true)
+
+            function resetFilterValue(index) {
+                angular.element('#filter-' + index + '-container').empty();
+                $scope.filters[index].filter_value = "";
+                setupFilterAutocomplete(index);
+            }
+
+            function setupFilterAutocomplete(index) {
+
+                let elem = angular.element('#filter-' + index + '-container');
+
+                let filterSource = [];
+                $scope.filters[index].possibleValues.forEach(function(value) {
+                    filterSource.push(value.text);
+                });
+                
+                accessibleAutocomplete({
+                    element: elem[0],
+                    id: 'filter-'+ index, // To match it to the existing <label>.
+                    source: filterSource,
+                    defaultValue: $scope.filters[index].filter_value,
+                    displayMenu: 'overlay',
+                    showAllValues : true,    
+                    autoSelect: false,
+                    confirmOnBlur: false,   
+
+                    tNoResults: () => 'Ingen resultater fundet',
+                    tAssistiveHint: () => 'Filtrene kan navigeres med piletasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
+                    tStatusSelectedOption: (selectedOption, length, index) => `${selectedOption} ${index + 1} af ${length} er highlighted`,
+                    onConfirm: function(val) {
+                        $scope.filters[index].filter_value = val;
+                        //console.log("onConfirm", val,$scope.filters[index].filter_value);
+                 /*       for (var i = index + 1; i < $scope.filters.length; i++) {
+                            resetFilterValue(i);
+                        }*/
+                    }
+                })
             }
 
             $scope.showAllValues = function(id) {
@@ -83,8 +96,6 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
             }
 
             $timeout($scope.init);
-             
         }
-
     }
 }]);
