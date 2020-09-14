@@ -17,6 +17,9 @@ class KildeViserSEO {
 	public $MetadataString;
 	public $SiteURL;
 
+	private $apiUrl = 'https://api.kbharkiv.dk/';
+	private $kildeviserUrl = 'https://kildeviser.kbharkiv.dk/';
+
 	public function KildeViserSEO() {
 		error_reporting(E_ALL);
 		$input = $this->getURLParameters();
@@ -24,9 +27,9 @@ class KildeViserSEO {
 			$this->collectionId = $input['collection'];
 			$this->itemId = $input['item'];
 
-			$this->collectionUrl = "https://www.kbhkilder.dk/api/collections/" . $this->collectionId;
-			$this->levelsUrl = "https://www.kbhkilder.dk/api/levels/" . $this->collectionId;
-			$this->dataUrl = "https://www.kbhkilder.dk/api/data/" . $this->collectionId . "?id=" . $this->itemId;
+			$this->collectionUrl = $apiUrl . "collections/" . $this->collectionId;
+			$this->levelsUrl = $apiUrl . "levels/" . $this->collectionId;
+			$this->dataUrl = $apiUrl . "data/" . $this->collectionId . "?id=" . $this->itemId;
 
 			$this->_fetchJSONData();
 			$this->_buildOutput();
@@ -113,7 +116,7 @@ class KildeViserSEO {
 
 	private function _createItemURLs() {
 		foreach ($this->Items as $key => $item) {
-			$this->Items[$key]['url'] = "https://$_SERVER[HTTP_HOST]/kildeviser/#!?collection=" . $this->collectionId . '&item=' . $item['id'];
+			$this->Items[$key]['url'] = $kildeviserUrl . "#!?collection=" . $this->collectionId . '&item=' . $item['id'];
 		}
 	}
 
@@ -144,7 +147,7 @@ class KildeViserSEO {
 
 	//Building a search for similar items based on already loaded filters and data
 	private function _buildSearchURL() {
-		$searchUrl = 'https://www.kbhkilder.dk/api/data/' . $this->collectionId . '/?';
+		$searchUrl = $apiUrl . 'data/' . $this->collectionId . '/?';
 		$parameters = '';
 		foreach ($this->Levels as $level) {
 			if ($level['searchable'] && isset($this->Data['metadata'][$level['name']])) {

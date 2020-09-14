@@ -6,5 +6,6 @@ config.constant('config', {
     redirectUrl: "https://stadsarkivet.frederiksberg.dk/arkiverne",
     archiveUrl: "https://stadsarkivet.frederiksberg.dk",
     archiveUrlName: "Frederiksberg Stadsarkiv",
-    permalinkUrl: false
+    permalinkUrl: false,
+    apiUrl: "https://api.kbharkiv.dk/"
 });

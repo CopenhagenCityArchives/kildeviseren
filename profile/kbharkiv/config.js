@@ -6,6 +6,7 @@ config.constant('config', {
     redirectUrl: "https://kbharkiv.dk/sog-i-arkivet/kilder-pa-nettet",
     archiveUrl: "https://kbharkiv.dk",
     archiveUrlName: "Københavns Stadsarkiv",
-    permalinkUrl: "https://kbharkiv.dk/permalink/source/"
+    permalinkUrl: "https://kbharkiv.dk/permalink/source/",
+    apiUrl: "https://api.kbharkiv.dk/"
 });
     

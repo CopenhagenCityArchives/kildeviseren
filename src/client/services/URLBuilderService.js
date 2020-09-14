@@ -6,7 +6,7 @@
 
 //Retrieves the module KSA_Bladr.services, and adds a new services
 angular.module('KSA_Bladr.services').
-    service('URLBuilderService', function(){
+    service('URLBuilderService', function(config){
         //Private methods and variables goes here
         var privates = {};
 
@@ -53,8 +53,7 @@ angular.module('KSA_Bladr.services').
         };
 
         //Url of the remote server, base of all requests
-        pubs.remoteServerUrl = "https://www.kbhkilder.dk/1508/stable/api/";
-        //pubs.remoteServerUrl = "http://localhost:8000/api/";
+        pubs.remoteServerUrl =  config.apiUrl;
 
         pubs.collectionsUrl = function(){
             return pubs.remoteServerUrl + 'collections/' + '?callback=JSON_CALLBACK';
