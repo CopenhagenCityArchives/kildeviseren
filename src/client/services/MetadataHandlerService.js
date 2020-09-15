@@ -229,7 +229,7 @@ app.service('MetadataHandlerService', function(MetadataManagerService, BrowseSer
             $location.search('item', newItem.id);
 
             // "Permalink" can be the permalink based on configuration or, if not set, the link to the current page
-            newItem.permaLink = config.permalinkUrl ? config.permalinkUrl + pubs.collection.id + '/' + pubs.item.id :  $location.absUrl(); //should be: https://kbharkiv.dk/permalink/source/collection/item
+            newItem.permaLink = config.permalinkUrl !== false  ? config.permalinkUrl + pubs.collection.id + '/' + pubs.item.id :  $location.absUrl(); //should be: https://kbharkiv.dk/permalink/source/collection/item
         }
         else{
             console.log("Could not get current content in updateItem()");
