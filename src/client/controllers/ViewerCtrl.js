@@ -10,12 +10,9 @@ angular.module('KSA_Bladr.controllers').
     $scope.showRequiredFieldsText = false;
     $scope.showCollectionsList = true;
     $scope.showReportErrorButton = config.errorReporting;
-
-    $scope.init = function(){
-        $scope.metadata.getCollections().then(function(){
-            //Check for url inputs here
-            $scope.checkUrlInputs();
-        });
+ 
+    $scope.init = function(){ 
+        $scope.checkUrlInputs();
     };
 
     //Hides preloader when view is loaded
