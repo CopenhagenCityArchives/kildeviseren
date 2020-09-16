@@ -654,6 +654,10 @@ a:focus {
   outline-style: auto !important;
 }
 
+.mereLink {
+  color: #337ab7 !important;
+}
+
 .autocomplete__wrapper {
   background-color: #4c769c;
   font-size: 1.5em;
@@ -684,6 +688,13 @@ a:focus {
 .autocomplete__option {
   border-radius: 5px;
   padding-left: 20px !important;
+}
+
+.autocomplete__hint,
+.autocomplete__input,
+.autocomplete__option {
+    font-size  : 1em !important;
+    line-height: 1.31579
 }
 
 .autocomplete__option:focus {
