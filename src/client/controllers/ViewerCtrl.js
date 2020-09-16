@@ -51,14 +51,15 @@ angular.module('KSA_Bladr.controllers').
     $scope.keydown = function($event){
         if($scope.metadata.itemsList === 0)
             return;
-
-        switch($event.keyCode){
-            case 37:
-                $scope.metadata.step(-1);
-            break;
-            case 39:
-                $scope.metadata.step(1);
-            break;
+        if($event.target.id != "map") {
+            switch($event.keyCode){
+                case 37:
+                    $scope.metadata.step(-1);
+                break;
+                case 39:
+                    $scope.metadata.step(1);
+                break;
+            }
         }
     };
 

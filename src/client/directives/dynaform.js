@@ -20,6 +20,7 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
             $scope.init = function() {
                 $(".autocomplete__input").attr("tabindex", "-1");
                 $(".qmark").attr("tabindex", "-1");
+                $("#map").attr("tabindex", "3");
 
                 for (var i = 0; i < $scope.filters.length; i++) {
                     setupFilterAutocomplete(i);
