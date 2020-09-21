@@ -18,12 +18,13 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
         controller: function($scope, $timeout) {
 
             $scope.init = function() {
-                $(".autocomplete__input").attr("tabindex", "-1");
                 $(".qmark").attr("tabindex", "-1");
                 $("#map").attr("tabindex", "3");
 
                 for (var i = 0; i < $scope.filters.length; i++) {
                     setupFilterAutocomplete(i);
+                    $('#filter-' + i).attr('tabindex', '-1')
+                    console.log($('#filter-' + i)[0]);
                 }
             }
 
@@ -60,19 +61,15 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                     source: filterSource,
                     defaultValue: $scope.filters[index].filter_value,
                     displayMenu: 'overlay',
-                    showAllValues : true,    
+                    showAllValues : true,
                     autoSelect: false,
-                    confirmOnBlur: false,   
+                    confirmOnBlur: false,
 
                     tNoResults: () => 'Ingen resultater fundet',
                     tAssistiveHint: () => 'Filtrene kan navigeres med piletasterne, og enter for at vælge. Filtrene indeholder nuværende værdier der kan slettes for at se alle tilgænglige værdier',
                     tStatusSelectedOption: (selectedOption, length, index) => `${selectedOption} ${index + 1} af ${length} er highlighted`,
                     onConfirm: function(val) {
                         $scope.filters[index].filter_value = val;
-                        //console.log("onConfirm", val,$scope.filters[index].filter_value);
-                 /*       for (var i = index + 1; i < $scope.filters.length; i++) {
-                            resetFilterValue(i);
-                        }*/
                     }
                 })
             }

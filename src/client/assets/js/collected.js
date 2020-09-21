@@ -563,7 +563,6 @@ $(document).on('click','.labelforradio', function() {
                     fixTop();
 
                     //fjern elementer fra tabindex
-                    $("#map").attr("tabindex", "-1");
                     $("#mere").attr("tabindex", "-1");
                     $(".autocomplete__input").attr("tabindex", "-1");
                     $(".qmark").attr("tabindex", "-1");
