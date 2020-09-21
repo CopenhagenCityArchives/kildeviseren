@@ -24,7 +24,6 @@ angular.module('KSA_Bladr.directives').directive('dynaform', ['$compile', '$time
                 for (var i = 0; i < $scope.filters.length; i++) {
                     setupFilterAutocomplete(i);
                     $('#filter-' + i).attr('tabindex', '-1')
-                    console.log($('#filter-' + i)[0]);
                 }
             }
 
