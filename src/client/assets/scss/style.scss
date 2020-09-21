@@ -657,6 +657,9 @@ a:focus {
 .mereLink {
   color: #337ab7 !important;
 }
+.mereLink:focus {
+  text-decoration: underline !important;
+}
 
 .leaflet-container.leaflet-fade-anim:focus {
   outline-style: solid !important;
