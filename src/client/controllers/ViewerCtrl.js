@@ -93,6 +93,7 @@ angular.module('KSA_Bladr.controllers').
             //console.log('load because item has changed');
             $analytics.pageTrack('/kildeviser/' + $location.url());
             $scope.loadImage();
+            $("#map").attr("tabindex", "3");
         }
     });
 
