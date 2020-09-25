@@ -78,11 +78,13 @@
 
         </form>
 
-        <div ng-if="metadata.collection.id == 2 && metadata.collection.short_name == 'Politiets Mandtal'">
+        <!-- Udkommenteret error reporting -->
+
+        <!-- <div ng-if="metadata.collection.id == 2 && metadata.collection.short_name == 'Politiets Mandtal'">
           <button id="darkReport" ng-if="showReportErrorButton && metadata.collection.error_reports.length > 0" class="controls controlReport topRightArrow" tabindex="2" data-toggle="modal" data-target="#report" aria-label="rapporter fejl">
             <i class="view-question fa fa-exclamation"></i>
           </button>
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -130,7 +132,7 @@
 
   
   <!-- Modal -->
-  <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-modal="true" aria-label="rapporter fejl" aria-hidden="true">
+  <!-- <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-modal="true" aria-label="rapporter fejl" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -148,7 +150,7 @@
               <label for="errortype{{model.id}}" class="labelforradio">{{model.name}}</label>
             </div>-->
 
-            <div class="radios" role="radiogroup" aria-label="radioGroup" ng-repeat="model in metadata.collection.error_reports">
+            <!-- <div class="radios" role="radiogroup" aria-label="radioGroup" ng-repeat="model in metadata.collection.error_reports">
               <input id="test-{{$index}}" class="radios" type="radio" name="radioGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
               <label for="test-{{$index}}">{{model.name}}</label>
             </div>
@@ -163,7 +165,7 @@
 
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="printable">
       <h2>{{metadata.collection.short_name}}</h2>
