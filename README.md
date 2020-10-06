@@ -26,6 +26,8 @@ Run `gulp build; gulp deploy;`
 The project contains profile configurations that change aspects of the resulting build, specified with
 the flag `--profile <PROFILE>`. The default profile is `kbharkiv`.
 
+Example: ``npm run build -- --profile frederiksberg``
+
 In the *profile* directory is a subdirectory for each supported profile. A profile directory contains:
 
 - a `config.js`, which
