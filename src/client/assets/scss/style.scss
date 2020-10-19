@@ -745,7 +745,9 @@ a:focus {
     width: 100%;
     left: 0px;
     padding: 0;
-    display: table !important;
+    // display: table !important;
+    height: auto;
+    min-height: 50px;
     text-align: left;
   }
 
