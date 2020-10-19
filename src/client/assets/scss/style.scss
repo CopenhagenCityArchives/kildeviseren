@@ -611,7 +611,6 @@ a:focus {
 
 .topcontrols-button {
   @include sm {
-    // display: block !important;
     position: absolute;
     border:0;
   }
@@ -745,7 +744,6 @@ a:focus {
     width: 100%;
     left: 0px;
     padding: 0;
-    // display: table !important;
     height: auto;
     min-height: 50px;
     text-align: left;
