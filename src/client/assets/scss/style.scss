@@ -611,7 +611,7 @@ a:focus {
 
 .topcontrols-button {
   @include sm {
-    display: block !important;
+    // display: block !important;
     position: absolute;
     border:0;
   }
