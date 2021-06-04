@@ -30,7 +30,7 @@ app.run(['$window', 'config', function($window, config) {
     if (config.googleAnalyticsTrackingCode) {
         // Setup Analytics only if statistics consent is given
         var onStatisticsConsent = function() {
-            if ($window.Cookiebot.consent.statistics) {
+            if ($window.Cookiebot && $window.Cookiebot.consent && $window.Cookiebot.consent.statistics) {
                 console.log("Initializing Google Analytics.");
 
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -45,7 +45,7 @@ app.run(['$window', 'config', function($window, config) {
 
         if (!$window.Cookiebot) {
             console.log("Cookiebot not loaded, skipping analytics handling.")
-        } else if ($window.Cookiebot.consent.statistics) {
+        } else if ($window.Cookiebot.consent && $window.Cookiebot.consent.statistics) {
             onStatisticsConsent();
         } else {
             $window.addEventListener('CookiebotOnAccept', onStatisticsConsent);
