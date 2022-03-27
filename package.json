@@ -12,7 +12,7 @@
     "gulp-connect": "^5.7.0",
     "gulp-sass": "^4.1.0",
     "jasmine": "^2.0.1",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "node-sass": "^4.14.1"
   },
   "scripts": {
