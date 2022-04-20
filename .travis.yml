@@ -12,6 +12,7 @@ install:
     - gulp --version
     
 script:
+    - nvm use 16
     - gulp build 
 
 deploy:
