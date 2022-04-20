@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "dependencies": {
-    "accessible-autocomplete": "^2.0.3"
+    "accessible-autocomplete": "^2.0.4"
   },
   "devDependencies": {
     "gulp": "4.0.2",
