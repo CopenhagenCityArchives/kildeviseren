@@ -70,7 +70,7 @@ opt.serverSrc = ["profile/"+profile+"/server/**", "profile/"+profile+"/server/.h
 
 //Gulp!!!
 const { src, dest, series, parallel, watch } = require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 //Put files together in a single file
 var concat = require('gulp-concat');
 //Remove files and folders
