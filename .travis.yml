@@ -7,12 +7,12 @@ node_js:
 - 'lts/*'
 
 install:
+    - nvm use 16
     - npm install -g gulp-cli
     - npm install
     - gulp --version
     
 script:
-    - nvm use 16
     - gulp build 
 
 deploy:
