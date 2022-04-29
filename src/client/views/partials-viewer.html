@@ -149,7 +149,7 @@
             </div>-->
 
             <div class="radios" role="radiogroup" aria-label="radioGroup" ng-repeat="model in metadata.collection.error_reports">
-              <input id="test-{{$index}}" class="radios" type="radio" name="radioGroup" value="model.id" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
+              <input id="test-{{$index}}" class="radios" type="radio" name="radioGroup" value="{{model.id}}" data-label="{{model.name}}" ng-model="metadata.selectedErrorReport">
               <label for="test-{{$index}}">{{model.name}}</label>
             </div>
 
