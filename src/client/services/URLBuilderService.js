@@ -33,7 +33,7 @@ angular.module('KSA_Bladr.services').
             var parametersAdded = false;
 
             //if parameters is array, add to the url
-            if(parameters instanceof Array){
+            if(parameters instanceof Array && parameters.length > 0){
                 for(var i = 0; i<parameters.length; i++){
                     url = url + parameters[i].name + "=" + parameters[i].value + "&";
                 }
