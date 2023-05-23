@@ -4,12 +4,6 @@
 ## Development
 Run `npm install` to get started.
 
-### Test
-Right now only Angular functionality is tested.
-
-Tests are run with Jasmine using the included specRunner.html file.
-
-### Deployment
 To run the server locally:
 Run `gulp watch`
 
@@ -18,15 +12,12 @@ Go to a workin url like 'http://localhost:8080#!?collection=2&item=3809251' to s
 
 Live reloading of the server required the LiveReload plugin for either Chrome or Firefox.
 
-To deploy to server:
-Run `gulp build; gulp deploy;`
-
-#### Profiles
+#### Building and profiles
 
 The project contains profile configurations that change aspects of the resulting build, specified with
-the flag `--profile <PROFILE>`. The default profile is `kbharkiv`.
+the flag `-p <PROFILE>`. The default profile is `kbharkiv`.
 
-Example: ``npm run build -- --profile frederiksberg``
+Example: ``gulp build -p frederiksberg``
 
 In the *profile* directory is a subdirectory for each supported profile. A profile directory contains:
 
@@ -41,3 +32,9 @@ The profile name is used during ftp upload to decide the remote folder name. If 
 `kbharkiv`, it is omitted. 
 
 The allowed profiles are hardcoded in `gulpfile.js`.
+
+### Test
+Right now only Angular functionality is tested.
+
+Tests are run with Jasmine using the included specRunner.html file.
+
