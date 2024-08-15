@@ -13,7 +13,7 @@ install:
     - gulp --version
     
 script:
-    - gulp build 
+    - gulp build --profile kbharkiv-staging
 
 deploy:
     - provider: s3
@@ -30,6 +30,7 @@ deploy:
         branch: development
       edge: true
       cleanup: false
+
     - provider: s3
       access_key_id: ${AWS_ACCESS_KEY}
       secret_access_key: ${AWS_SECRET_ACCESS_KEY}
@@ -42,5 +43,20 @@ deploy:
       on:
         repo: CopenhagenCityArchives/kildeviseren
         branch: master
+      edge: true
+      cleanup: false
+    
+    - provider: s3
+      access_key_id: ${AWS_ACCESS_KEY}
+      secret_access_key: ${AWS_SECRET_ACCESS_KEY}
+      bucket: static.kbharkiv.dk
+      cache_control: 'no-cache'
+      local_dir: dist
+      upload_dir: kildeviser-staging
+      acl: public_read
+      region: eu-west-1
+      on:
+        repo: CopenhagenCityArchives/kildeviseren
+        branch: staging
       edge: true
       cleanup: false
