@@ -13,7 +13,7 @@ install:
     - gulp --version
     
 script:
-    - gulp build -p kbharkiv-staging
+    - gulp build -p ${BUILD_CONFIG}
 
 deploy:
     - provider: s3
