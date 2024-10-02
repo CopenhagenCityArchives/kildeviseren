@@ -2,16 +2,11 @@ const minimist = require('minimist');
 
 // Setup profile based on CLI flag --profile
 var knownOptions = {
-    string: 'p',
-    default: { p:'kbharkiv' }
+    string: 'p'
   };
 
 var argv = minimist(process.argv.slice(2), knownOptions);
 var profile = argv.p;
-
-if (!profile) {
-    profile = "kbharkiv";
-}
 
 // handle profile
 if (profile != "kbharkiv" &&  profile != "kbharkiv-staging" && profile != "frederiksberg" ) {
