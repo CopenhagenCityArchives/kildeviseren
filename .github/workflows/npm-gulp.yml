@@ -1,14 +1,16 @@
-name: NodeJS with Gulp
+name: Build and deploy
 
 on:
   push:
-    branches: [ "staging" ]
+    branches: [ "staging", "master" ]
   pull_request:
-    branches: [ "staging" ]
+    branches: [ "staging", "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+     name: ${{ github.REF_NAME }}
 
     strategy:
       matrix:
@@ -21,29 +23,22 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        
+
     - name: Install node and gulp cli
       run: |
         npm install -g gulp-cli
-        npm install 
+        npm install
         gulp --version
-        
+
     - name: Run gulp
       run: |
-        gulp build -p kbharkiv-staging
-        
+        gulp build -p ${{ vars.BUILD_CONFIG }}
+
     - name: Upload S3
       uses: shallwefootball/upload-s3-action@v1.3.3
       with:
-       # aws key id
        aws_key_id: ${{ secrets.AWS_KEY_ID }}
-       # aws secret access key
        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-       # aws bucket name
        aws_bucket: ${{ secrets.AWS_BUCKET }}
-       # directory to upload
        source_dir: dist
-       # destination directory for upload
-       destination_dir: action_test
-          
-              
+       destination_dir: ${{ vars.DEPLOY_DIR }}

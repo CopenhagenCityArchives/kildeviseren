@@ -15,7 +15,7 @@ if (!profile) {
 
 // handle profile
 if (profile != "kbharkiv" &&  profile != "kbharkiv-staging" && profile != "frederiksberg" ) {
-    throw new Error("Invalid profile: " + profile);
+    throw new Error("Invalid profile: '" + profile + "'");
 }
 console.log("Using profile '" + profile + "'");
 
