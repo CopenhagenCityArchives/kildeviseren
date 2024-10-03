@@ -9,20 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-     name: ${{ github.REF_NAME }}
-
-    strategy:
-      matrix:
-        node-version: [17]
+    environment: ${{ github.REF_NAME }}
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 17
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 17
 
     - name: Install node and gulp cli
       run: |
@@ -30,11 +25,11 @@ jobs:
         npm install
         gulp --version
 
-    - name: Run gulp
+    - name: "Run gulp config: ${{ vars.BUILD_CONFIG }}"
       run: |
         gulp build -p ${{ vars.BUILD_CONFIG }}
 
-    - name: Upload S3
+    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR }}"
       uses: shallwefootball/upload-s3-action@v1.3.3
       with:
        aws_key_id: ${{ secrets.AWS_KEY_ID }}
