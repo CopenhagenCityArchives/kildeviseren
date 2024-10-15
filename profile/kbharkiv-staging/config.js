@@ -7,6 +7,6 @@ config.constant('config', {
     archiveUrl: "https://dev.kbharkiv.dk",
     archiveUrlName: "Københavns Stadsarkiv",
     permalinkUrl: "https://dev.kbharkiv.dk/permalink/source/",
-    apiUrl: "https://api-dev.kbharkiv.dk/"
+    apiUrl: "https://api-staging.kbharkiv.dk/"
 });
     
