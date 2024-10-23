@@ -2,9 +2,11 @@ name: Build and deploy
 
 on:
   push:
-    branches: [ "staging", "master" ]
-  pull_request:
-    branches: [ "staging", "master" ]
+    branches: [ "staging", "production" ]
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   build:
@@ -29,11 +31,23 @@ jobs:
       run: |
         gulp build -p ${{ vars.BUILD_CONFIG }}
 
-    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR }}"
-      uses: shallwefootball/upload-s3-action@v1.3.3
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
       with:
-       aws_key_id: ${{ secrets.AWS_KEY_ID }}
-       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-       aws_bucket: ${{ vars.AWS_BUCKET }}
-       source_dir: dist
-       destination_dir: ${{ vars.DEPLOY_DIR }}
+       role-to-assume: arn:aws:iam::282251075226:role/gh-deploy-s3-cloudfront
+       aws-region: eu-west-1
+
+    - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR }}"
+      env:
+        LOCAL_DIR: dist/page-access-editor
+        AWS_BUCKET: ${{ vars.AWS_BUCKET }}
+        DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}
+      run: |
+        aws s3 sync "$LOCAL_DIR" "s3://${AWS_BUCKET}/${DEPLOY_DIR}"
+
+    - name: Request Invalidation to AWS Cloudfront
+      env:
+        CLOUDFRONT_DISTRIBUTION: ${{ vars.CLOUDFRONT_DISTRIBUTION }}
+        PATHS: /*
+      run: |
+        aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION --paths "$PATHS"
