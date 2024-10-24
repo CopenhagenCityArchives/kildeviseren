@@ -39,7 +39,7 @@ jobs:
 
     - name: "Upload to S3: ${{ vars.AWS_BUCKET }} / ${{ vars.DEPLOY_DIR }}"
       env:
-        LOCAL_DIR: dist/page-access-editor
+        LOCAL_DIR: dist
         AWS_BUCKET: ${{ vars.AWS_BUCKET }}
         DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}
       run: |
